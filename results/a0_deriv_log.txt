@@ -1,0 +1,14 @@
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_diag.py:132: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+deriv ep1: whitened one-step MSE 0.281385
+deriv ep2: whitened one-step MSE 0.045571
+deriv ep3: whitened one-step MSE 0.012599
+deriv ep4: whitened one-step MSE 0.008179
+deriv ep5: whitened one-step MSE 0.005745
+deriv ep6: whitened one-step MSE 0.004638
+deriv ep7: whitened one-step MSE 0.004014
+deriv ep8: whitened one-step MSE 0.003594
+one-step RMSE (V,m,h,n): [0.019713999703526497, 0.010688000358641148, 0.0031689999159425497, 0.001259000040590763]
+one-step RMSE / target std: [0.09989999979734421, 0.048700001090765, 0.05849999934434891, 0.022700000554323196]
+RESULT {"mode": "deriv", "one_step_rel": [0.09989999979734421, 0.048700001090765, 0.05849999934434891, 0.022700000554323196], "v_rmse_mv": 84.27, "spike_f1": 0.01, "fi_rmse_hz": 53.0, "rebound_spikes": 4}

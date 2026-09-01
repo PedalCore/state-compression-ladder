@@ -1,0 +1,42 @@
+[
+ {
+  "k": 1,
+  "params": 209,
+  "test_rmse_mv": 24.18,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 2,
+  "params": 294,
+  "test_rmse_mv": 22.03,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 3,
+  "params": 385,
+  "test_rmse_mv": 24.6,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 4,
+  "params": 482,
+  "test_rmse_mv": 25.47,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 8,
+  "params": 930,
+  "test_rmse_mv": 23.67,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ }
+]

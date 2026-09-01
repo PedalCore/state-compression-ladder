@@ -1,0 +1,16 @@
+lif restart 1: best loss 0.7354
+lif restart 2: best loss 0.7354
+lif restart 3: best loss 0.7354
+lif restart 4: best loss 0.7354
+RESULT {"arm": "lif", "spike_f1": 0.279, "fi_rmse_hz": 107.5, "rebound_spikes": 0, "theta": [-3.142, -1.695, 0.417, 0.894, 0.637]}
+izhikevich restart 1: best loss 0.6118
+izhikevich restart 2: best loss 0.6005
+izhikevich restart 3: best loss 0.5936
+izhikevich restart 4: best loss 0.5936
+RESULT {"arm": "izhikevich", "spike_f1": 0.335, "fi_rmse_hz": 44.7, "rebound_spikes": 0, "theta": [0.526, 0.322, -1.521, 0.707, -0.681, -1.673]}
+adex restart 1: best loss 0.5944
+adex restart 2: best loss 0.5944
+adex restart 3: best loss 0.5935
+adex restart 4: best loss 0.5935
+RESULT {"arm": "adex", "spike_f1": 0.368, "fi_rmse_hz": 49.0, "rebound_spikes": 0, "theta": [3.166, 2.717, -0.349, -1.091, 3.832, 3.272, 1.074]}
+=== R2 DONE ===

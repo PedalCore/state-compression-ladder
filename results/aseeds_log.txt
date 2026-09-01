@@ -1,0 +1,72 @@
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /Users/marycarrigan/.netrc.
+wandb: Currently logged in as: mouldysoul to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run cl44kzgp
+wandb: Tracking run with wandb version 0.29.0
+wandb: Run data is saved locally in /Users/marycarrigan/coding/morpho-0.2/morpho/wandb/run-20260902_004214-cl44kzgp
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run expA-mech
+wandb: ⭐️ View project at https://wandb.ai/mouldysoul/m13-state
+wandb: 🚀 View run at https://wandb.ai/mouldysoul/m13-state/runs/cl44kzgp
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_mech.py:138: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+k=4 ep1: train 0.13176 val V-RMSE 25.34 mV gates 0.188 F1 0.00
+k=4 ep2: train 0.10178 val V-RMSE 25.80 mV gates 0.198 F1 0.00
+k=4 ep3: train 0.10137 val V-RMSE 24.83 mV gates 0.185 F1 0.00
+k=4 ep4: train 0.10105 val V-RMSE 25.22 mV gates 0.197 F1 0.00
+k=4 ep5: train 0.10089 val V-RMSE 25.02 mV gates 0.190 F1 0.00
+k=4 ep6: train 0.10068 val V-RMSE 23.77 mV gates 0.186 F1 0.00
+k=4 ep7: train 0.10076 val V-RMSE 23.92 mV gates 0.185 F1 0.00
+k=4 ep8: train 0.10060 val V-RMSE 24.21 mV gates 0.186 F1 0.00
+k=4 ep9: train 0.10074 val V-RMSE 23.15 mV gates 0.182 F1 0.00
+k=4 ep10: train 0.10038 val V-RMSE 24.97 mV gates 0.190 F1 0.00
+k=4 ep11: train 0.10038 val V-RMSE 29.70 mV gates 0.224 F1 0.00
+k=4 ep12: train 0.10027 val V-RMSE 26.31 mV gates 0.201 F1 0.00
+k=4 ep13: train 0.10011 val V-RMSE 27.14 mV gates 0.203 F1 0.00
+k=4 ep14: train 0.10022 val V-RMSE 25.53 mV gates 0.195 F1 0.00
+k=4 ep15: train 0.10015 val V-RMSE 24.44 mV gates 0.186 F1 0.00
+k=4 ep16: train 0.09993 val V-RMSE 26.18 mV gates 0.199 F1 0.00
+k=4 ep17: train 0.10044 val V-RMSE 26.29 mV gates 0.197 F1 0.00
+k=4 ep18: train 0.09984 val V-RMSE 25.76 mV gates 0.198 F1 0.00
+k=4 ep19: train 0.09979 val V-RMSE 26.24 mV gates 0.201 F1 0.00
+k=4 ep20: train 0.09977 val V-RMSE 26.35 mV gates 0.201 F1 0.00
+RESULT {"k": 4, "seed": 1, "params": 1244, "v_rmse_mv": 25.15, "gate_rmse": 0.1922, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+k=4 ep1: train 0.13749 val V-RMSE 26.36 mV gates 0.204 F1 0.00
+k=4 ep2: train 0.10270 val V-RMSE 24.14 mV gates 0.185 F1 0.00
+k=4 ep3: train 0.10186 val V-RMSE 23.83 mV gates 0.193 F1 0.00
+k=4 ep4: train 0.10128 val V-RMSE 24.08 mV gates 0.191 F1 0.00
+k=4 ep5: train 0.09890 val V-RMSE 25.06 mV gates 0.201 F1 0.04
+k=4 ep6: train 0.08640 val V-RMSE 23.94 mV gates 0.183 F1 0.27
+k=4 ep7: train 0.07385 val V-RMSE 23.11 mV gates 0.173 F1 0.34
+k=4 ep8: train 0.06713 val V-RMSE 21.74 mV gates 0.163 F1 0.44
+k=4 ep9: train 0.06453 val V-RMSE 22.42 mV gates 0.159 F1 0.47
+k=4 ep10: train 0.06144 val V-RMSE 21.76 mV gates 0.163 F1 0.53
+k=4 ep11: train 0.06048 val V-RMSE 21.30 mV gates 0.156 F1 0.55
+k=4 ep12: train 0.05967 val V-RMSE 21.39 mV gates 0.154 F1 0.61
+k=4 ep13: train 0.05802 val V-RMSE 20.50 mV gates 0.152 F1 0.55
+k=4 ep14: train 0.05752 val V-RMSE 20.53 mV gates 0.152 F1 0.59
+k=4 ep15: train 0.05673 val V-RMSE 19.22 mV gates 0.137 F1 0.59
+k=4 ep16: train 0.05575 val V-RMSE 20.84 mV gates 0.151 F1 0.64
+k=4 ep17: train 0.05531 val V-RMSE 18.93 mV gates 0.139 F1 0.62
+k=4 ep18: train 0.05627 val V-RMSE 19.44 mV gates 0.144 F1 0.62
+k=4 ep19: train 0.05445 val V-RMSE 19.03 mV gates 0.140 F1 0.64
+k=4 ep20: train 0.05420 val V-RMSE 19.22 mV gates 0.141 F1 0.65
+RESULT {"k": 4, "seed": 2, "params": 1244, "v_rmse_mv": 18.39, "gate_rmse": 0.1353, "spike_f1": 0.642, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+k=4 ep1: train 0.11123 val V-RMSE 26.62 mV gates 0.205 F1 0.00
+k=4 ep2: train 0.10209 val V-RMSE 24.84 mV gates 0.193 F1 0.00
+k=4 ep3: train 0.10155 val V-RMSE 25.64 mV gates 0.197 F1 0.00
+k=4 ep4: train 0.10139 val V-RMSE 23.72 mV gates 0.184 F1 0.00
+k=4 ep5: train 0.10119 val V-RMSE 25.63 mV gates 0.198 F1 0.00
+k=4 ep6: train 0.10081 val V-RMSE 23.26 mV gates 0.179 F1 0.00
+k=4 ep7: train 0.10079 val V-RMSE 26.74 mV gates 0.204 F1 0.00
+k=4 ep8: train 0.10026 val V-RMSE 24.14 mV gates 0.186 F1 0.00
+k=4 ep9: train 0.09878 val V-RMSE 23.62 mV gates 0.181 F1 0.04
+k=4 ep10: train 0.08712 val V-RMSE 22.70 mV gates 0.174 F1 0.14
+k=4 ep11: train 0.07023 val V-RMSE 21.92 mV gates 0.161 F1 0.37
+k=4 ep12: train 0.06455 val V-RMSE 20.65 mV gates 0.154 F1 0.41
+k=4 ep13: train 0.06167 val V-RMSE 21.04 mV gates 0.156 F1 0.53
+k=4 ep14: train 0.06101 val V-RMSE 21.35 mV gates 0.158 F1 0.57
+k=4 ep15: train 0.05971 val V-RMSE 20.28 mV gates 0.150 F1 0.56
+k=4 ep16: train 0.05873 val V-RMSE 20.72 mV gates 0.153 F1 0.59
+k=4 ep17: train 0.05798 val V-RMSE 20.59 mV gates 0.152 F1 0.59
+k=4 ep18: train 0.05772 val V-RMSE 19.71 mV gates 0.146 F1 0.58

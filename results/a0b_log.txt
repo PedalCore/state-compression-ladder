@@ -1,0 +1,46 @@
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_diag.py:136: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+deriv ep1: whitened one-step MSE 0.964069
+deriv ep2: whitened one-step MSE 0.055078
+deriv ep3: whitened one-step MSE 0.029220
+deriv ep4: whitened one-step MSE 0.021163
+deriv ep5: whitened one-step MSE 0.016744
+deriv ep6: whitened one-step MSE 0.013507
+deriv ep7: whitened one-step MSE 0.010564
+deriv ep8: whitened one-step MSE 0.008284
+deriv ep9: whitened one-step MSE 0.006532
+deriv ep10: whitened one-step MSE 0.005806
+deriv ep11: whitened one-step MSE 0.004960
+deriv ep12: whitened one-step MSE 0.004374
+deriv ep13: whitened one-step MSE 0.003629
+deriv ep14: whitened one-step MSE 0.003300
+deriv ep15: whitened one-step MSE 0.002913
+deriv ep16: whitened one-step MSE 0.002656
+deriv ep17: whitened one-step MSE 0.002162
+deriv ep18: whitened one-step MSE 0.002173
+deriv ep19: whitened one-step MSE 0.001920
+deriv ep20: whitened one-step MSE 0.001606
+deriv ep21: whitened one-step MSE 0.001489
+deriv ep22: whitened one-step MSE 0.001344
+deriv ep23: whitened one-step MSE 0.001204
+deriv ep24: whitened one-step MSE 0.001075
+deriv ep25: whitened one-step MSE 0.001010
+deriv ep26: whitened one-step MSE 0.000879
+deriv ep27: whitened one-step MSE 0.000844
+deriv ep28: whitened one-step MSE 0.000762
+deriv ep29: whitened one-step MSE 0.000676
+deriv ep30: whitened one-step MSE 0.000635
+deriv ep31: whitened one-step MSE 0.000606
+deriv ep32: whitened one-step MSE 0.000539
+deriv ep33: whitened one-step MSE 0.000509
+deriv ep34: whitened one-step MSE 0.000470
+deriv ep35: whitened one-step MSE 0.000454
+deriv ep36: whitened one-step MSE 0.000428
+deriv ep37: whitened one-step MSE 0.000419
+deriv ep38: whitened one-step MSE 0.000402
+deriv ep39: whitened one-step MSE 0.000388
+deriv ep40: whitened one-step MSE 0.000373
+one-step RMSE (V,m,h,n): [0.003470999887213111, 0.0031769999768584967, 0.0005540000274777412, 0.000387999985832721]
+one-step RMSE / target std: [0.01759999990463257, 0.014499999582767487, 0.010200000368058681, 0.007000000216066837]
+RESULT {"mode": "deriv", "one_step_rel": [0.01759999990463257, 0.014499999582767487, 0.010200000368058681, 0.007000000216066837], "v_rmse_mv": 11.35, "spike_f1": 0.864, "fi_rmse_hz": 10.1, "rebound_spikes": 1}

@@ -1,0 +1,47 @@
+[
+ {
+  "k": 8,
+  "params": 1940,
+  "v_rmse_mv": 17.88,
+  "gate_rmse": 0.1309,
+  "spike_f1": 0.712,
+  "fi_rmse_hz": 44.7,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 4,
+  "params": 1244,
+  "v_rmse_mv": 21.69,
+  "gate_rmse": 0.1602,
+  "spike_f1": 0.468,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 3,
+  "params": 1085,
+  "v_rmse_mv": 22.81,
+  "gate_rmse": 0.1767,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 2,
+  "params": 932,
+  "v_rmse_mv": 24.96,
+  "gate_rmse": 0.1916,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 1,
+  "params": 785,
+  "v_rmse_mv": 25.11,
+  "gate_rmse": 0.1919,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ }
+]

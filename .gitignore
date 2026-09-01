@@ -1,0 +1,4 @@
+__pycache__/
+*.pt
+results/hh_data*.npz
+wandb/

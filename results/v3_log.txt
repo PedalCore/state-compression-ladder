@@ -1,0 +1,119 @@
+teacher rebound spikes: 1
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_surrogate.py:168: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+k=1 ep1 eps=0.00: train 0.58445 val-RMSE 51.22 mV F1 0.05
+k=1 ep2 eps=0.08: train 0.32941 val-RMSE 61.12 mV F1 0.10
+k=1 ep3 eps=0.17: train 0.20267 val-RMSE 61.02 mV F1 0.04
+k=1 ep4 eps=0.25: train 0.17657 val-RMSE 73.03 mV F1 0.04
+k=1 ep5 eps=0.33: train 0.16554 val-RMSE 72.14 mV F1 0.04
+k=1 ep6 eps=0.42: train 0.15883 val-RMSE 69.91 mV F1 0.04
+k=1 ep7 eps=0.50: train 0.14975 val-RMSE 69.13 mV F1 0.04
+k=1 ep8 eps=0.58: train 0.15640 val-RMSE 69.84 mV F1 0.06
+k=1 ep9 eps=0.67: train 0.17730 val-RMSE 17.91 mV F1 0.00
+k=1 ep10 eps=0.75: train 0.21180 val-RMSE 17.79 mV F1 0.00
+k=1 ep11 eps=0.83: train 0.28137 val-RMSE 17.83 mV F1 0.00
+k=1 ep12 eps=0.92: train 0.42888 val-RMSE 50.93 mV F1 0.00
+k=1 ep13 eps=1.00: train 0.61610 val-RMSE 22.26 mV F1 0.00
+k=1 ep14 eps=1.00: train 0.54830 val-RMSE 23.04 mV F1 0.00
+k=1 ep15 eps=1.00: train 0.54098 val-RMSE 24.52 mV F1 0.00
+k=1 ep16 eps=1.00: train 0.54050 val-RMSE 23.52 mV F1 0.00
+k=1 ep17 eps=1.00: train 0.54017 val-RMSE 24.50 mV F1 0.00
+k=1 ep18 eps=1.00: train 0.53998 val-RMSE 24.72 mV F1 0.00
+k=1 ep19 eps=1.00: train 0.53987 val-RMSE 25.22 mV F1 0.00
+k=1 ep20 eps=1.00: train 0.53971 val-RMSE 25.32 mV F1 0.00
+RESULT {"k": 1, "params": 209, "test_rmse_mv": 24.18, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+k=2 ep1 eps=0.00: train 0.60813 val-RMSE 25.19 mV F1 0.00
+k=2 ep2 eps=0.08: train 0.37435 val-RMSE 121.86 mV F1 0.00
+k=2 ep3 eps=0.17: train 0.17480 val-RMSE 92.85 mV F1 0.00
+k=2 ep4 eps=0.25: train 0.12810 val-RMSE 95.60 mV F1 0.00
+k=2 ep5 eps=0.33: train 0.12323 val-RMSE 92.74 mV F1 0.01
+k=2 ep6 eps=0.42: train 0.12374 val-RMSE 88.52 mV F1 0.00
+k=2 ep7 eps=0.50: train 0.12501 val-RMSE 80.86 mV F1 0.00
+k=2 ep8 eps=0.58: train 0.12830 val-RMSE 70.03 mV F1 0.00
+k=2 ep9 eps=0.67: train 0.13398 val-RMSE 72.11 mV F1 0.00
+k=2 ep10 eps=0.75: train 0.14959 val-RMSE 68.16 mV F1 0.00
+k=2 ep11 eps=0.83: train 0.18844 val-RMSE 52.90 mV F1 0.00
+k=2 ep12 eps=0.92: train 0.40887 val-RMSE 49.39 mV F1 0.02
+k=2 ep13 eps=1.00: train 0.58698 val-RMSE 25.05 mV F1 0.00
+k=2 ep14 eps=1.00: train 0.54674 val-RMSE 22.66 mV F1 0.00
+k=2 ep15 eps=1.00: train 0.54287 val-RMSE 23.56 mV F1 0.00
+k=2 ep16 eps=1.00: train 0.54455 val-RMSE 26.21 mV F1 0.00
+k=2 ep17 eps=1.00: train 0.54404 val-RMSE 24.07 mV F1 0.00
+k=2 ep18 eps=1.00: train 0.54361 val-RMSE 26.20 mV F1 0.00
+k=2 ep19 eps=1.00: train 0.54481 val-RMSE 30.01 mV F1 0.00
+k=2 ep20 eps=1.00: train 0.54248 val-RMSE 22.99 mV F1 0.00
+RESULT {"k": 2, "params": 294, "test_rmse_mv": 22.03, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+k=3 ep1 eps=0.00: train 0.42062 val-RMSE 35.88 mV F1 0.16
+k=3 ep2 eps=0.08: train 0.20930 val-RMSE 68.87 mV F1 0.02
+k=3 ep3 eps=0.17: train 0.16372 val-RMSE 70.47 mV F1 0.05
+k=3 ep4 eps=0.25: train 0.13496 val-RMSE 69.92 mV F1 0.07
+k=3 ep5 eps=0.33: train 0.13116 val-RMSE 70.19 mV F1 0.05
+k=3 ep6 eps=0.42: train 0.13005 val-RMSE 68.33 mV F1 0.05
+k=3 ep7 eps=0.50: train 0.13078 val-RMSE 71.74 mV F1 0.06
+k=3 ep8 eps=0.58: train 0.13364 val-RMSE 71.29 mV F1 0.03
+k=3 ep9 eps=0.67: train 0.13921 val-RMSE 38.43 mV F1 0.00
+k=3 ep10 eps=0.75: train 0.15630 val-RMSE 48.81 mV F1 0.01
+k=3 ep11 eps=0.83: train 0.19521 val-RMSE 67.56 mV F1 0.03
+k=3 ep12 eps=0.92: train 0.31865 val-RMSE 48.40 mV F1 0.00
+k=3 ep13 eps=1.00: train 0.63116 val-RMSE 25.35 mV F1 0.00
+k=3 ep14 eps=1.00: train 0.55541 val-RMSE 23.95 mV F1 0.00
+k=3 ep15 eps=1.00: train 0.54509 val-RMSE 25.84 mV F1 0.00
+k=3 ep16 eps=1.00: train 0.54264 val-RMSE 25.23 mV F1 0.00
+k=3 ep17 eps=1.00: train 0.54168 val-RMSE 25.60 mV F1 0.00
+k=3 ep18 eps=1.00: train 0.54211 val-RMSE 25.80 mV F1 0.00
+k=3 ep19 eps=1.00: train 0.54290 val-RMSE 26.50 mV F1 0.00
+k=3 ep20 eps=1.00: train 0.54119 val-RMSE 25.60 mV F1 0.00
+RESULT {"k": 3, "params": 385, "test_rmse_mv": 24.6, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+k=4 ep1 eps=0.00: train 0.38327 val-RMSE 74.05 mV F1 0.05
+k=4 ep2 eps=0.08: train 0.17610 val-RMSE 75.26 mV F1 0.10
+k=4 ep3 eps=0.17: train 0.12888 val-RMSE 65.85 mV F1 0.04
+k=4 ep4 eps=0.25: train 0.11664 val-RMSE 106.06 mV F1 0.00
+k=4 ep5 eps=0.33: train 0.11401 val-RMSE 96.67 mV F1 0.00
+k=4 ep6 eps=0.42: train 0.11290 val-RMSE 63.97 mV F1 0.00
+k=4 ep7 eps=0.50: train 0.11232 val-RMSE 64.14 mV F1 0.06
+k=4 ep8 eps=0.58: train 0.11335 val-RMSE 56.43 mV F1 0.08
+k=4 ep9 eps=0.67: train 0.10640 val-RMSE 44.90 mV F1 0.03
+k=4 ep10 eps=0.75: train 0.09542 val-RMSE 50.06 mV F1 0.03
+k=4 ep11 eps=0.83: train 0.18276 val-RMSE 41.49 mV F1 0.01
+k=4 ep12 eps=0.92: train 0.51284 val-RMSE 47.73 mV F1 0.00
+k=4 ep13 eps=1.00: train 0.56610 val-RMSE 23.17 mV F1 0.00
+k=4 ep14 eps=1.00: train 0.54542 val-RMSE 24.65 mV F1 0.00
+k=4 ep15 eps=1.00: train 0.54442 val-RMSE 24.15 mV F1 0.00
+k=4 ep16 eps=1.00: train 0.54396 val-RMSE 25.83 mV F1 0.00
+k=4 ep17 eps=1.00: train 0.54392 val-RMSE 24.66 mV F1 0.00
+k=4 ep18 eps=1.00: train 0.54337 val-RMSE 23.64 mV F1 0.00
+k=4 ep19 eps=1.00: train 0.54281 val-RMSE 26.40 mV F1 0.00
+k=4 ep20 eps=1.00: train 0.54230 val-RMSE 26.62 mV F1 0.00
+RESULT {"k": 4, "params": 482, "test_rmse_mv": 25.47, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+k=8 ep1 eps=0.00: train 0.39109 val-RMSE 75.01 mV F1 0.05
+k=8 ep2 eps=0.08: train 0.16507 val-RMSE 68.28 mV F1 0.13
+k=8 ep3 eps=0.17: train 0.07652 val-RMSE 49.43 mV F1 0.03
+k=8 ep4 eps=0.25: train 0.02049 val-RMSE 27.59 mV F1 0.05
+k=8 ep5 eps=0.33: train 0.01484 val-RMSE 33.52 mV F1 0.09
+k=8 ep6 eps=0.42: train 0.01343 val-RMSE 29.52 mV F1 0.07
+k=8 ep7 eps=0.50: train 0.01271 val-RMSE 28.76 mV F1 0.08
+k=8 ep8 eps=0.58: train 0.02270 val-RMSE 23.40 mV F1 0.10
+k=8 ep9 eps=0.67: train 0.04044 val-RMSE 27.87 mV F1 0.17
+k=8 ep10 eps=0.75: train 0.09501 val-RMSE 17.20 mV F1 0.00
+k=8 ep11 eps=0.83: train 0.16050 val-RMSE 16.89 mV F1 0.00
+k=8 ep12 eps=0.92: train 0.43475 val-RMSE 45.96 mV F1 0.02
+k=8 ep13 eps=1.00: train 0.58297 val-RMSE 23.06 mV F1 0.00
+k=8 ep14 eps=1.00: train 0.54519 val-RMSE 26.43 mV F1 0.00
+k=8 ep15 eps=1.00: train 0.54331 val-RMSE 22.87 mV F1 0.00
+k=8 ep16 eps=1.00: train 0.54408 val-RMSE 25.82 mV F1 0.00
+k=8 ep17 eps=1.00: train 0.54232 val-RMSE 26.64 mV F1 0.00
+k=8 ep18 eps=1.00: train 0.54135 val-RMSE 25.05 mV F1 0.00
+k=8 ep19 eps=1.00: train 0.54117 val-RMSE 24.47 mV F1 0.00
+k=8 ep20 eps=1.00: train 0.54076 val-RMSE 24.62 mV F1 0.00
+RESULT {"k": 8, "params": 930, "test_rmse_mv": 23.67, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+
+=== LADDER ===
+{'k': 1, 'params': 209, 'test_rmse_mv': 24.18, 'spike_f1': 0.0, 'fi_rmse_hz': 53.0, 'rebound_spikes': 0}
+{'k': 2, 'params': 294, 'test_rmse_mv': 22.03, 'spike_f1': 0.0, 'fi_rmse_hz': 53.0, 'rebound_spikes': 0}
+{'k': 3, 'params': 385, 'test_rmse_mv': 24.6, 'spike_f1': 0.0, 'fi_rmse_hz': 53.0, 'rebound_spikes': 0}
+{'k': 4, 'params': 482, 'test_rmse_mv': 25.47, 'spike_f1': 0.0, 'fi_rmse_hz': 53.0, 'rebound_spikes': 0}
+{'k': 8, 'params': 930, 'test_rmse_mv': 23.67, 'spike_f1': 0.0, 'fi_rmse_hz': 53.0, 'rebound_spikes': 0}
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mrung1-ladder-v3[0m at: [34mhttps://wandb.ai/mouldysoul/m13-state/runs/73hib6wy[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20260901_231016-73hib6wy/logs[0m
