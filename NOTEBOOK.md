@@ -1577,3 +1577,98 @@ microscope from the field to the rollout itself. The plateau's
 cause remains unfound; three non-causes are now measured
 (representation, scalar error, m-bias marker), which is how the
 space shrinks.
+
+## TRAJECTORY-DIVERGENCE ATLAS declared (2026-09-03, before
+## running) — instrument, not fix
+
+Question: starting from a synchronized state, what is the FIRST
+statistically reliable divergence between model rollout and
+teacher that predicts an eventual entry miss? Walk backward from
+each event (tau = 2..50 ms), per-component clock-aligned
+divergence D_j(tau) = (mu_entry - mu_cc)/pooled dispersion, plus
+PHASE-ALIGNED distance (nearest teacher point in +-3 ms — 
+distinguishes wrong-state from time-displaced), plus divergence
+amplification A(tau). Events split into FOUR transitions:
+correct->correct, correct->miss (ENTRY), miss->miss
+(CONTINUATION), miss->correct (RECOVERY) — likely different
+phenomena. Run on stage-0 AND the dir checkpoints.
+
+Pre-registered sub-hypothesis (collaborator), with immediate
+partial support from existing counts: the directional fix
+repaired CONTINUATION, not entry — stage-0 cont-fraction ~0.65 /
+entry-rate 0.126 vs dir_s0 ~0.54 / 0.148. If confirmed, the
+dir-fix headline upgrades from "marker not cause" to "the dm/dt
+signature participates in miss PERSISTENCE, not initiation" — 
+mechanistic change hidden under a flat scalar score. Candidate
+unifying object: state-dependent AMPLIFICATION of ordinary-sized
+pre-existing rollout error, which would reconcile every negative
+so far. The research pattern: stop intervening on the latest
+visible symptom (the system reorganizes around it); walk backward
+to the earliest causal bifurcation.
+
+## ATLAS RESULTS (2026-09-03): initiation lives in the inter-spike
+## recovery dynamics
+
+1. Persistence-vs-initiation CONFIRMED: dir-fix reduced
+   continuation (0.653 -> 0.536, s0) while raising entry rate
+   (0.141 -> 0.170/0.218). Flat F1 hid a real trade. Headline
+   upgraded: the dm/dt signature participates in PERSISTENCE, not
+   initiation.
+2. Entry chronology: divergence reliably visible by -5 ms
+   (norm 0.79 sigma), maximal phase-aligned at -2 ms (1.26 — 
+   wrong-STATE, not time-displaced), with consistent signs:
+   dn > 0, dh < 0, dV < 0 — the rollout drifts UNDER-EXCITABLE
+   (excess K-activation, depleted h) during the inter-spike
+   interval, so marginal spikes fail. Amplification discriminates
+   (amp_100 0.78): ordinary errors preceding misses GROW faster —
+   state-dependent amplification supported.
+3. The locational irony: every loss to date weighted the spike
+   and decision band; the causal drift accumulates in the
+   SUBTHRESHOLD RECOVERY region (n/h relaxation, -70..-50 mV,
+   weighted 1x throughout). The instrument-first strategy paid:
+   the fix candidates were all aimed downstream of the cause.
+
+RECOVERY-BAND ARM declared (before running): dir-fix protocol but
+band = -70..-50 mV with n/h component errors x10 (m x1) — aimed
+at the measured drift, upstream of initiation. P-rec1: entry rate
+DROPS below stage-0's 0.141 (the causal test); P-rec2: F1 exits
+the band upward if initiation dominates the budget; P-rec3:
+rebound preserved (recovery dynamics are what produce it — this
+weighting should HELP it). Atlas rerun on the trained model
+closes the loop.
+
+## Recovery-band arm scored + the weighting program closes
+## (2026-09-03)
+
+rec-field: F1 {0.734, 0.746} (in band), f-I {8.7, 10.0}, rebound
+1/1 (P-rec3 CONFIRMED — upstream weighting is benign where
+downstream weighting broke the rebound). Entry rate 0.130/0.140
+vs 0.141 (P-rec1 marginal — right direction, tiny); continuation
+0.593/0.625 vs 0.653. P-rec2 FAILED.
+
+THE WEIGHTING PROGRAM CLOSES with a coherent negative: three
+placement interventions (scalar-sensitivity, decision-band
+directional, recovery-band upstream) all null-to-marginal on F1 —
+and A0c already showed that 3x LOWER total error (sub-1%) stays
+in the same band. Neither error size nor error placement moves
+the plateau WITHIN this architecture. What has exceeded it:
+a lucky seed (0.864), a transient 5 ms composition dose (0.802),
+and a different dynamics class (GRU, 0.869, sequential training).
+Working conclusion (restrained): the ~0.74 plateau is STRUCTURAL
+to the MLP-field + explicit-integrator formulation under iid
+training on this drive — plausibly because a recurrent
+integrator learns its own state coordinates in which marginal
+decisions are less marginal, while the fixed x-space field
+inherits the teacher's razor-edge decision geometry along with
+its dynamics. The causal atlas stands as the arc's product:
+initiation = inter-spike under-excitability drift, amplified
+state-dependently; persistence = the dm/dt mechanism (repairable);
+recovery = entrainment (~5.4 ms).
+
+Next-session queue (updated): (1) hybrid architecture test —
+learned x-space field + tiny learned correction state (the
+credit/memory slot, now with a measured job: absorb the marginal-
+decision geometry); (2) stable low-dose composition (the 0.802
+exists — find the reliable schedule); (3) flow compilation of the
+best checkpoint; (4) R3 adapting teacher; (5) round-5 post after
+any of these lands.

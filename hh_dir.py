@@ -32,11 +32,13 @@ OUT = pathlib.Path('results')
 VS, VOFF, IS = 100.0, 65.0, 10.0
 BAND = (0.15, 0.45)          # normalized V: -50..-20 mV
 W_M, W_HN = 10.0, 5.0
+REC_BAND = (-0.05, 0.15)     # normalized V: -70..-50 mV
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--seed', type=int, default=0)
+    ap.add_argument('--recovery', action='store_true')
     ap.add_argument('--epochs', type=int, default=40)
     ap.add_argument('--dev', default='cpu')
     args = ap.parse_args()
@@ -54,11 +56,17 @@ def main():
     Y = torch.tensor(hh_rhs(Sall, Iall), dtype=torch.float32)
     scale = Y.std(0, keepdim=True) + 1e-8
     Wrow = torch.where(X[:, 0] > 0.45, 10.0, 1.0)   # scalar part
-    in_band = (X[:, 0] > BAND[0]) & (X[:, 0] < BAND[1])
     Wcomp = torch.ones(len(X), 4)
-    Wcomp[in_band, 1] = W_M
-    Wcomp[in_band, 2] = W_HN
-    Wcomp[in_band, 3] = W_HN
+    if args.recovery:
+        in_band = ((X[:, 0] > REC_BAND[0])
+                   & (X[:, 0] < REC_BAND[1]))
+        Wcomp[in_band, 2] = 10.0     # h
+        Wcomp[in_band, 3] = 10.0     # n
+    else:
+        in_band = (X[:, 0] > BAND[0]) & (X[:, 0] < BAND[1])
+        Wcomp[in_band, 1] = W_M
+        Wcomp[in_band, 2] = W_HN
+        Wcomp[in_band, 3] = W_HN
     print(f'decision band: {float(in_band.float().mean()):.4f} '
           f'of states', flush=True)
     torch.manual_seed(args.seed)
@@ -84,12 +92,14 @@ def main():
             print(f'dir s={args.seed} ep{ep + 1}', flush=True)
     ts = time.time() - t0
     ev = full_eval(model, d, Ste, rest, dev)
-    res = dict(arm='dir-field', seed=args.seed,
+    arm = 'rec-field' if args.recovery else 'dir-field'
+    res = dict(arm=arm, seed=args.seed,
                train_seconds=round(ts, 1), **ev)
     print('RESULT', json.dumps(res), flush=True)
-    torch.save(model.state_dict(),
-               OUT / f'dir_s{args.seed}.pt')
-    json.dump(res, open(OUT / f'dir_s{args.seed}.json', 'w'))
+    tag = ('rec' if args.recovery else 'dir') + \
+        f'_s{args.seed}'
+    torch.save(model.state_dict(), OUT / f'{tag}.pt')
+    json.dump(res, open(OUT / f'{tag}.json', 'w'))
 
 
 if __name__ == '__main__':
