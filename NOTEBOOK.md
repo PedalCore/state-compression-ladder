@@ -1369,3 +1369,133 @@ failure-frontier correction -> longer horizon, with phase/
 transverse metrics separated. The ledger is positive: plausible
 explanations killed, search space smaller, next experiments
 attack temporal composition itself rather than proxies for it.
+
+## COMPOSITION EXPERIMENT declared (2026-09-03, before running)
+
+Design (one mechanism per arm; semigroup loss reserved as arm 2):
+Stage 0: iid field training, A0b config (deriv, width 256,
+  spike-weighted, 40 ep), checkpoint SAVED (fixes the no-saved-
+  fields gap).
+Stage 0.5: INTEGRATOR ISOLATION on the stage-0 field — identical
+  weights rolled out under Euler (10 substeps, current) vs RK4
+  (0.1 ms step): if stability/F1 changes materially, part of
+  gate 3 was discretization.
+Stages 1-4: SHORT-HORIZON COMPOSITION curriculum — segments of
+  H = 5, 10, 20, 40 ms starting from TEACHER states (multiple-
+  shooting style; parallel across segments, BPTT only inside a
+  segment; Euler 5 substeps in training, standard 10 at eval),
+  full-state trajectory loss, 3 epochs per stage, lr 3e-4 -> 1e-4.
+Metrics after each stage: F1, V-RMSE, TTD, f-I, rebound, and
+  F1-BY-TIME-WINDOW (4 quartiles of the 1 s test rollout — the
+  declining-vs-flat discriminator for phase drift vs event
+  failure). Seeds {0, 1}.
+
+Predictions:
+P-comp1: integrator check comes back NULL — RK4 ~ Euler-10 (the
+  field's ~1.5% error dominates discretization error at 0.01 ms).
+P-comp2 (the point): composition fine-tuning lifts F1 above the
+  0.736-0.770 plateau band.
+P-comp3: stage-0 F1-by-window DECLINES across the second
+  (confirming 3b drift); composition training flattens the
+  decline.
+P-comp4: TTD grows with stage horizon — the frontier moves out.
+
+## Composition v1 (2026-09-03): stage 0 delivered two verdicts,
+## stage 1 exposed a design bug — killed and fixed
+
+Stage-0 verdicts (stand regardless): (1) P-comp1 CONFIRMED NULL —
+RK4-0.1ms vs Euler-10 on identical weights: F1 0.727 vs 0.742,
+same TTD/f-I/rebound. Discretization is not a gate-3 component;
+the compiled cell won't inherit Euler artifacts. (2) P-comp3
+REFUTED, and with it the 3b-drift reading of the plateau:
+F1-by-window is FLAT ({0.757, 0.723, 0.777, 0.706}). The plateau
+is a THIRD thing nobody had listed: a stationary per-event miss
+rate (~25% of near-threshold decisions) with each error locally
+HEALED by the entraining drive (input-driven reliability, the
+Mainen-Sejnowski phenomenon, working in our favor). Errors recur;
+they do not compound. Also: best f-I ever (1.4 Hz).
+
+Stage 1 (5 ms segments) DESTROYED the model (0.742 -> 0.028):
+catastrophic forgetting by DESIGN BUG — the segment loss REPLACED
+the tangent objective instead of joining it, unlearning the field
+everywhere segments don't constrain. (Stage 2's partial rebound
+to 0.301 was the curriculum re-learning from wreckage — not the
+designed experiment.) Run killed by PID inspection. Fix declared
+before rerun: JOINT loss (segment trajectory term + iid tangent
+anchor term each update — literally the mostly-parallel + some-
+trajectory hybrid formula), segment lr 3e-4 -> 1e-4, stage-0
+checkpoint reused. P-comp2/4 remain unscored pending v2.
+
+The stationary-miss-rate finding also pre-registers a revised
+expectation: if errors do not accumulate, long-horizon
+composition training may buy little — the discriminating question
+v2 actually answers.
+
+## Gate 3 RESTATED (2026-09-03, per review): event-decision
+## fidelity, not rollout stability
+
+New split: 3a EVENT FIDELITY (does the learned field cross the
+same qualitative decision boundaries as the teacher?) vs 3b'
+COMPOSITION STABILITY (do errors accumulate once decisions are
+correct?). Evidence points to 3a limiting and 3b' largely SOLVED
+BY THE INPUT for this driven regime: entrainment washes errors
+out. TTD is downgraded as a proxy (it detects divergences the
+system later repairs). Composition-v2's degradation is now
+EXPECTED: multiple shooting corrects a non-accumulating problem
+by perturbing an already-good global field. If seed 1 confirms,
+the multiple-shooting branch STOPS.
+
+Declared next (all zero-training, on existing artifacts):
+E1. MISS AUTOCORRELATION: P(miss n+1 | miss n) vs P(miss) — if
+    ~equal, misses are independent stationary events and the
+    locally-healed story is confirmed. Plus T_recover: time from
+    mismatch until model-teacher re-synchronization (measures
+    entrainment directly).
+E2. DECISION-CONDITIONED COLLISION: the sufficiency instrument
+    restricted to the decision band (-50..-20 mV, matched I) with
+    a BINARY label (teacher spikes within horizon H): do delay-
+    space near-neighbours agree on the outcome? Event sufficiency
+    vs global sufficiency — if ambiguity concentrates at the
+    boundary, the 12 ms representation lacks RESOLUTION for
+    decisions (fix: window/lag/extra observable), not state.
+E3. PRE-EVENT ERROR ANATOMY: classify events (hit / miss / FP /
+    shifted); compare field error magnitude AND direction, hidden
+    state, and delay-ambiguity in 5-15 ms pre-event windows. If
+    field RMSE is IDENTICAL between correct and wrong decisions,
+    scalar field accuracy has hit the wrong target, and the
+    useful credit map is the DECISION MARGIN m(x) = distance to
+    the spike/no-spike boundary — not lambda_max.
+Also declared: gradient norm-ratio + cosine logging between
+segment and tangent terms before any further hybrid tuning.
+Boxed: Gate 3 = can locally accurate dynamics preserve discrete
+event decisions? — with entrainment preventing event errors from
+becoming instability.
+
+## E1-E3 results (2026-09-03): the plateau is EPISODIC — and both
+## representation and scalar field error are exonerated
+
+E1: P(miss) 0.294, P(miss | prev miss) 0.692 — misses strongly
+autocorrelated. The independence half of the locally-healed story
+is REFUTED: the failure unit is a DESYNCHRONIZED EPISODE (2-3+
+spikes), entered rarely, exited by entrainment (T_recover median
+5.4 ms, p90 32 ms). Flat F1-by-window survives (episodes evenly
+distributed, non-accumulating).
+E2: decision-band delay near-neighbours agree on the spike
+outcome 99.2% (disagreement 0.008 vs 0.496 random; ratio 0.015).
+Event sufficiency EXCELLENT — the 12 ms window resolves decisions;
+representation exonerated.
+E3: pre-event whitened field error median 0.0174 (hits) vs 0.0176
+(misses) — IDENTICAL. Scalar field accuracy does not distinguish
+correct from incorrect decisions. Confirmed: the wrong target.
+
+Corrected causal chain: rare initial decision error (cause not in
+scalar error) -> state desync -> consecutive misses while
+desynced -> re-entrainment -> hits resume. F1 ~ 1 - (episode
+rate x episode length). Two levers, both measurable:
+L1 EPISODE ENTRY — E3-v2 declared: analyze the FIRST miss of each
+   episode specifically; compare field-error DIRECTION (decision-
+   normal component) and margin against matched hits. Scalar
+   failed; the direction/margin hypothesis is what remains.
+L2 EPISODE DURATION — is 5.4 ms the drive's entrainment constant
+   (fixed) or shortenable? Compare teacher-vs-teacher-perturbed
+   re-entrainment as the physical bound.

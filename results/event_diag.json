@@ -1,0 +1,38 @@
+{
+ "e1": {
+  "p_miss": 0.294,
+  "p_miss_given_miss": 0.692,
+  "n_spikes": 855,
+  "n_miss_pairs": 237,
+  "t_recover_med_ms": 5.4,
+  "t_recover_p90_ms": 32.4
+ },
+ "e2": {
+  "global": {
+   "frac_states": 1.0,
+   "pairs": 160000,
+   "neighbour_disagree": 0.113,
+   "random_disagree": 0.3671,
+   "ratio": 0.308
+  },
+  "decision_band": {
+   "frac_states": 0.0352,
+   "pairs": 4756,
+   "neighbour_disagree": 0.0076,
+   "random_disagree": 0.4964,
+   "ratio": 0.015
+  }
+ },
+ "e3": {
+  "hit": {
+   "n": 604,
+   "med": 0.0174,
+   "p90": 0.0326
+  },
+  "miss": {
+   "n": 251,
+   "med": 0.0176,
+   "p90": 0.028
+  }
+ }
+}
