@@ -1499,3 +1499,34 @@ L1 EPISODE ENTRY — E3-v2 declared: analyze the FIRST miss of each
 L2 EPISODE DURATION — is 5.4 ms the drive's entrainment constant
    (fixed) or shortenable? Compare teacher-vs-teacher-perturbed
    re-entrainment as the physical bound.
+
+## Composition v2 final + E3-v2: THE PLATEAU MECHANISM FOUND
+## (2026-09-03)
+
+Composition v2 final: seed 0 monotone harm (0.742 -> 0.293);
+seed 1 TRANSIENT BREAKTHROUGH — 5 ms stage lifted 0.732 -> 0.802
+(best OU-timing F1 of the project; checkpoint comp_stage1_s1.pt
+SAVED) then collapsed (0.363) and partially recovered (0.667).
+Verdict: composition fine-tuning is violently unstable — a small
+dose CAN exceed the plateau (so the plateau is NOT irreducible at
+this field size) but the procedure is unreliable. P-comp4 failed
+(no TTD growth). Branch closed per criterion; gradient-conflict
+logging remains the post-mortem tool if ever reopened.
+
+E3-v2 (episode-entry anatomy): the entry misses have a
+DIRECTIONAL gate-error signature. Separations (|dmedian|/IQR,
+hit vs entry): e_m 1.16 (SIGN FLIP: +0.0017 hits vs -0.0047
+entries — the model systematically UNDERESTIMATES dm/dt before
+missed spikes), e_n 1.00, e_h 0.95, e_V 0.48; scalar norm
+identical (E3). Entries sit at lower h (low sodium availability
+— marginal decisions). Mechanism: I_Na ~ m^3 h; a lagging m
+during upstroke initiation at a low-margin state kills the spike.
+Same-size error, wrong DIRECTION, at marginal decisions — the
+~0.74 plateau explained.
+
+Prescribed next (declared): directional decision-band training —
+weight the m/h/n COMPONENT errors (signed-aware) in the measured
+decision band; predicted to beat scalar lambda+-weighting (which
+failed: P-sens2 null) because it targets the discovered
+signature. The decision-margin credit map q(x) = margin-to-
+boundary gets its concrete first job.

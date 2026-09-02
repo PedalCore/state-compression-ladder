@@ -1,0 +1,14 @@
+stage0: reusing comp_stage0_s0.pt
+RESULT-STAGE {"stage": 0, "seed": 0, "secs": 17.1, "spike_f1": 0.742, "v_rmse_mv": 14.16, "f1_by_window": [0.757, 0.723, 0.777, 0.706], "ttd_ms": 39.2, "fi_rmse_hz": 1.4, "rebound_spikes": 1}
+RESULT-INTEG {"seed": 0, "method": "rk4-0.1ms", "spike_f1": 0.727, "v_rmse_mv": 14.41, "f1_by_window": [0.737, 0.71, 0.758, 0.701], "ttd_ms": 39.2, "fi_rmse_hz": 1.5, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 1, "horizon_ms": 5.0, "seed": 0, "secs": 26.4, "spike_f1": 0.463, "v_rmse_mv": 22.33, "f1_by_window": [0.496, 0.477, 0.427, 0.451], "ttd_ms": 12.5, "fi_rmse_hz": 22.2, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 2, "horizon_ms": 10.0, "seed": 0, "secs": 34.5, "spike_f1": 0.523, "v_rmse_mv": 21.6, "f1_by_window": [0.574, 0.456, 0.532, 0.52], "ttd_ms": 12.6, "fi_rmse_hz": 23.9, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 3, "horizon_ms": 20.0, "seed": 0, "secs": 56.9, "spike_f1": 0.423, "v_rmse_mv": 22.79, "f1_by_window": [0.419, 0.379, 0.43, 0.461], "ttd_ms": 39.2, "fi_rmse_hz": 43.9, "rebound_spikes": 0}
+RESULT-STAGE {"stage": 4, "horizon_ms": 40.0, "seed": 0, "secs": 108.4, "spike_f1": 0.293, "v_rmse_mv": 31.1, "f1_by_window": [0.323, 0.274, 0.264, 0.306], "ttd_ms": 11.4, "fi_rmse_hz": 138.2, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 0, "seed": 1, "secs": 219.1, "spike_f1": 0.732, "v_rmse_mv": 15.53, "f1_by_window": [0.733, 0.757, 0.715, 0.722], "ttd_ms": 39.2, "fi_rmse_hz": 9.3, "rebound_spikes": 1}
+RESULT-INTEG {"seed": 1, "method": "rk4-0.1ms", "spike_f1": 0.736, "v_rmse_mv": 15.53, "f1_by_window": [0.739, 0.758, 0.701, 0.747], "ttd_ms": 39.2, "fi_rmse_hz": 9.4, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 1, "horizon_ms": 5.0, "seed": 1, "secs": 29.3, "spike_f1": 0.802, "v_rmse_mv": 13.17, "f1_by_window": [0.758, 0.842, 0.851, 0.756], "ttd_ms": 49.0, "fi_rmse_hz": 1.9, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 2, "horizon_ms": 10.0, "seed": 1, "secs": 34.9, "spike_f1": 0.363, "v_rmse_mv": 26.19, "f1_by_window": [0.428, 0.296, 0.353, 0.371], "ttd_ms": 11.6, "fi_rmse_hz": 34.8, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 3, "horizon_ms": 20.0, "seed": 1, "secs": 54.4, "spike_f1": 0.489, "v_rmse_mv": 24.37, "f1_by_window": [0.583, 0.451, 0.438, 0.478], "ttd_ms": 12.3, "fi_rmse_hz": 24.9, "rebound_spikes": 1}
+RESULT-STAGE {"stage": 4, "horizon_ms": 40.0, "seed": 1, "secs": 92.5, "spike_f1": 0.667, "v_rmse_mv": 16.51, "f1_by_window": [0.678, 0.662, 0.626, 0.703], "ttd_ms": 38.4, "fi_rmse_hz": 15.8, "rebound_spikes": 1}
+=== COMP-V2 DONE ===
