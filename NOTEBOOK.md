@@ -521,3 +521,27 @@ The original single-seed 3->4 "transition" was NOT a hard state-
 dimension boundary; it survives only as a distributional
 trainability effect. No significance claims at n=5 — the raw
 distributions are the result.
+
+## A0c result (2026-09-02): precision-behavior mapping goes
+## MULTIDIMENSIONAL
+
+Sub-1% one-step error (V 0.87% / m 0.64% / h 0.36% / n 0.32%),
+4x better than A0b. Behaviors DIVERGED: f-I RMSE 10.1 -> 3.0 Hz
+(near-perfect), rebound stays exactly 1, but OU-drive spike F1
+0.864 -> 0.738 and V-RMSE 11.4 -> 15.0. Gate NOT passed.
+
+The naive hinge branch ("fidelity still improving -> smooth
+curve") is refuted in its scalar form: past ~1% error, aggregate
+one-step precision stops predicting all behaviors monotonically.
+Two readings, both recorded pending discrimination:
+(a) behavior-specific fidelity — fluctuation-driven timing
+    depends on subthreshold phase accuracy that spike-weighted
+    training trades away; f-I/rebound depend on attractor
+    geometry that it buys;
+(b) run-to-run variance — A0b/A0c are single runs, and A-seeds
+    just quantified what single runs are worth.
+Declared next (before running): seeds n=3 on the A0b config and
+A0c config; if the F1 ordering is stable across seeds, (a) wins
+and "which aspects of the field does each behavior need" becomes
+its own rung — the behavior-ordering observation upgraded from
+curiosity to mechanism.
