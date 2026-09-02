@@ -477,3 +477,47 @@ not find. The latent-field k=2 rung now has its sanity range:
 match the reduction ~ instrument tracks classical model
 reduction; fall far below it while the reduction stands ~
 dimension is not sufficient, structure is.
+
+## Framing consolidation (2026-09-02, per review)
+
+Boundary wording: under this GRU regime BOTH k=3 and k=4 reach
+spiking solutions; k=4 apparently more reliably and with higher
+F1. The single-seed 3->4 transition was not a hard state-dimension
+boundary. Report as distributions (success rate, median F1,
+best-of-N), no significance claims at n=5.
+
+The project's axis is now dimension x coordinates x dynamics x
+objective — not state count alone. The latent-field k=2 question
+is correspondingly: can learning DISCOVER a two-dimensional
+coordinate system that preserves the same dynamical invariants a
+human-derived reduction preserves?
+
+A0c hinge, both branches declared: pass -> trusted instrument,
+everything prior = calibration story. Narrow fail with fidelity
+still improving -> the instrument is a smooth accuracy-to-
+behavior curve, not dead.
+
+The behavior ordering (firing -> f-I -> rebound) is preserved as
+an empirical observation of THIS regime, potentially reflecting
+that different dynamical signatures need different fidelity —
+worth its own rung later.
+
+Headline research question (superseding "how many states does HH
+need"): what information must a reduced dynamical representation
+preserve for particular biological behaviors to survive, and how
+do state dimension, coordinates, and inductive bias trade off?
+
+## A-seeds final (2026-09-02): boundary dissolves into a
+## reliability difference
+
+Five seeds each, identical config (20 ep):
+k=3: F1 {0.00, 0.00, 0.34, 0.00, 0.00} — success 1/5, median 0.00
+k=4: F1 {0.47, 0.00, 0.64, 0.60, 0.16} — success 4/5, median 0.47
+
+Statement of record: under this GRU training regime both k=3 and
+k=4 can reach spiking solutions; k=4 reaches them far more
+reliably (4/5 vs 1/5) and with higher median F1 (0.47 vs 0.00).
+The original single-seed 3->4 "transition" was NOT a hard state-
+dimension boundary; it survives only as a distributional
+trainability effect. No significance claims at n=5 — the raw
+distributions are the result.

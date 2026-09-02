@@ -1,0 +1,82 @@
+[
+ {
+  "k": 4,
+  "seed": 1,
+  "params": 1244,
+  "v_rmse_mv": 25.15,
+  "gate_rmse": 0.1922,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 4,
+  "seed": 2,
+  "params": 1244,
+  "v_rmse_mv": 18.39,
+  "gate_rmse": 0.1353,
+  "spike_f1": 0.642,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 4,
+  "seed": 3,
+  "params": 1244,
+  "v_rmse_mv": 19.07,
+  "gate_rmse": 0.1409,
+  "spike_f1": 0.6,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 4,
+  "seed": 4,
+  "params": 1244,
+  "v_rmse_mv": 23.19,
+  "gate_rmse": 0.1759,
+  "spike_f1": 0.155,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 3,
+  "seed": 1,
+  "params": 1085,
+  "v_rmse_mv": 24.05,
+  "gate_rmse": 0.1847,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 3,
+  "seed": 2,
+  "params": 1085,
+  "v_rmse_mv": 21.15,
+  "gate_rmse": 0.1621,
+  "spike_f1": 0.336,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 3,
+  "seed": 3,
+  "params": 1085,
+  "v_rmse_mv": 24.9,
+  "gate_rmse": 0.1911,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ },
+ {
+  "k": 3,
+  "seed": 4,
+  "params": 1085,
+  "v_rmse_mv": 23.87,
+  "gate_rmse": 0.1842,
+  "spike_f1": 0.0,
+  "fi_rmse_hz": 53.0,
+  "rebound_spikes": 0
+ }
+]
