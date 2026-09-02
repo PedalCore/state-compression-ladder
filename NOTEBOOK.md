@@ -1269,3 +1269,19 @@ Standing result regardless of sensw outcome: the hand-designed
 weight emphasized the EVENT; measured geometry says much of the
 expansion lives in the pre-spike DECISION region — plausible
 intuition replaced by measurement, which is the project's job.
+
+## P-sens2 scored (2026-09-02): NULL — no plateau shift
+
+sensw-field: {0.735, 0.788} vs A0b-config band {0.736, 0.737,
+0.770} (+0.864 lucky seed). Seed 0 at band center, seed 1
+marginally above band max — within seed variance at these n.
+Rebound correct both seeds, f-I 9.3/14.0. Verdict: scalar
+lambda+-weighted training does NOT move the OU-timing plateau,
+even with measured (vs guessed) placement. Under the weakened
+fork this does not uniquely identify the cause; the declared
+discriminators stand: (b)-vs-(c) is the iPRC map's question
+(is timing error concentrated where q_phase, not q_expand,
+peaks?) and the directional-weighting arm tests whether the
+scalar-vs-vector distinction was the miss. The standing
+diagnostic result (decision-zone geometry, metric-robust) is
+unaffected by this null.
