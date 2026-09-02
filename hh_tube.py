@@ -73,9 +73,10 @@ def short_rollout_states(model, X0, I_seq, dev, steps=20):
     return zs
 
 
-def train_geo_variant(arm, seed, d, Str, Ste, rest, dev, epochs):
+def train_geo_variant(arm, seed, d, Str, Ste, rest, dev, epochs,
+                      k=4):
     torch.manual_seed(seed)
-    model = Geo(4).to(dev)
+    model = Geo(k).to(dev)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(
         opt, T_max=epochs, eta_min=1e-4)
@@ -136,9 +137,10 @@ def train_geo_variant(arm, seed, d, Str, Ste, rest, dev, epochs):
     return model, time.time() - t0
 
 
-def train_rollout(seed, d, Str, dev, epochs=6, chunk=250, sub=2):
+def train_rollout(seed, d, Str, dev, epochs=6, chunk=250, sub=2,
+                  k=4):
     torch.manual_seed(seed)
-    model = Geo(4).to(dev)
+    model = Geo(k).to(dev)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
     Itr = torch.tensor(d['train_I'] / IS, dtype=torch.float32)
     Ytr = torch.tensor(Str)
@@ -184,6 +186,7 @@ def main():
                     choices=['geo_noise', 'geo_restore',
                              'geo_onpolicy', 'rollout'])
     ap.add_argument('--seed', type=int, default=0)
+    ap.add_argument('--k', type=int, default=4)
     ap.add_argument('--epochs', type=int, default=20)
     ap.add_argument('--dev', default='cpu')
     args = ap.parse_args()
@@ -194,19 +197,21 @@ def main():
     rest = np.array([(V0[0] + VOFF) / VS, m0[0], h0[0], n0[0]],
                     np.float32)
     if args.arm == 'rollout':
-        model, ts = train_rollout(args.seed, d, Str, args.dev)
+        model, ts = train_rollout(args.seed, d, Str, args.dev,
+                                  k=args.k)
     else:
         model, ts = train_geo_variant(args.arm, args.seed, d, Str,
                                       Ste, rest, args.dev,
-                                      args.epochs)
+                                      args.epochs, k=args.k)
     vr, f1, fi, reb = eval_all(model, d, Ste, rest, args.dev)
-    res = dict(arm=args.arm, k=4, seed=args.seed,
+    res = dict(arm=args.arm, k=args.k, seed=args.seed,
                train_seconds=round(ts, 1), v_rmse_mv=round(vr, 2),
                spike_f1=round(f1, 3), fi_rmse_hz=round(fi, 1),
                rebound_spikes=reb)
     print('RESULT', json.dumps(res), flush=True)
     json.dump(res, open(
-        OUT / f'tube_{args.arm}_s{args.seed}.json', 'w'))
+        OUT / f'tube_{args.arm}_k{args.k}_s{args.seed}.json',
+        'w'))
 
 
 if __name__ == '__main__':

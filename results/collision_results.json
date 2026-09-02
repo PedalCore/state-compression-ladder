@@ -1,5 +1,59 @@
 [
  {
+  "ckpt": "geo_k1_s0",
+  "k": 1,
+  "pairs": 160000,
+  "near_med": 0.7578,
+  "near_p95": 7.2031,
+  "rand_med": 2.8795,
+  "ratio_med": 0.2632
+ },
+ {
+  "ckpt": "geo_k1_s1",
+  "k": 1,
+  "pairs": 160000,
+  "near_med": 0.7393,
+  "near_p95": 7.4422,
+  "rand_med": 2.735,
+  "ratio_med": 0.2703
+ },
+ {
+  "ckpt": "geo_k2_s0",
+  "k": 2,
+  "pairs": 160000,
+  "near_med": 0.4854,
+  "near_p95": 1.6572,
+  "rand_med": 2.0385,
+  "ratio_med": 0.2381
+ },
+ {
+  "ckpt": "geo_k2_s1",
+  "k": 2,
+  "pairs": 160000,
+  "near_med": 0.4917,
+  "near_p95": 1.624,
+  "rand_med": 2.0756,
+  "ratio_med": 0.2369
+ },
+ {
+  "ckpt": "geo_k3_s0",
+  "k": 3,
+  "pairs": 160000,
+  "near_med": 0.2815,
+  "near_p95": 0.717,
+  "rand_med": 2.0804,
+  "ratio_med": 0.1353
+ },
+ {
+  "ckpt": "geo_k3_s1",
+  "k": 3,
+  "pairs": 160000,
+  "near_med": 0.2882,
+  "near_p95": 0.7306,
+  "rand_med": 2.104,
+  "ratio_med": 0.137
+ },
+ {
   "ckpt": "geo_k4_s0",
   "k": 4,
   "pairs": 160000,
@@ -16,5 +70,23 @@
   "near_p95": 0.6981,
   "rand_med": 2.0332,
   "ratio_med": 0.1387
+ },
+ {
+  "ckpt": "geo_k8_s0",
+  "k": 8,
+  "pairs": 160000,
+  "near_med": 0.2947,
+  "near_p95": 0.7332,
+  "rand_med": 2.0874,
+  "ratio_med": 0.1412
+ },
+ {
+  "ckpt": "geo_k8_s1",
+  "k": 8,
+  "pairs": 160000,
+  "near_med": 0.2802,
+  "near_p95": 0.7292,
+  "rand_med": 2.1094,
+  "ratio_med": 0.1328
  }
 ]

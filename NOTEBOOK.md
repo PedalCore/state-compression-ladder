@@ -714,3 +714,71 @@ independently by the collision diagnostic), a workable middle.
 The two instruments (tube arms for the drift side, collision
 ratio for the collapse side) now bracket the ladder from both
 ends.
+
+## Hypothesis update + memory-as-geometry program (2026-09-02)
+
+UPDATED (k=2 blow-up forces it): off-manifold drift is a GENERIC
+failure of tangent-only training across latent dimensions — k
+modulates probability/severity but is not the root cause. The
+learned on-manifold field lands in different off-manifold
+geometries across seeds even when the supervised tangent fit is
+acceptable. Raw geometric F1-by-k will NOT be interpreted as a
+ladder; the baseline's job (speed win + missing stability
+constraint exposed) is done.
+
+Tube outcome branches (declared): (1) rescues every k ->
+off-manifold support was dominant; (2) rescues high k only ->
+low-k information loss re-emerges once stability is fixed;
+(3) fails broadly -> tangent supervision misses something deeper.
+Tube arms scored on TWO axes: mean AND cross-seed variance
+(consistent 0.65 beats sometimes-0.8-sometimes-explodes).
+Collision diagnostic on the full geo ladder separates
+representation failure / field-support failure / optimizer
+variance; k=2 passing collision despite terrible rollout would
+localize failure downstream of the encoder.
+
+MEMORY AS GEOMETRY (user proposal + collaborator refinement,
+adopted as the B-track program): convert history into current
+geometric state rather than sequential recurrence. Progression
+(strictly one ingredient at a time): (D0) delay-coordinate
+sufficiency WITHOUT TRAINING — the collision diagnostic applied
+to delay vectors (V_t, V_{t-tau}, ...): dispersion of the hidden
+(m,h,n) among delay-space near-pairs at matched input, vs random
+pairs. Takens predicts dispersion falls as delays are added.
+(B2/B3) delay-augmented latent fields if D0 passes; then fixed
+reservoir (fading history as state), multi-timescale traces (the
+program's oldest primitive, again), Hopfield/prototype memory
+only if a task needs discrete recall; associatively-composable
+flow maps (parallel-scan structure, S4/Mamba lineage) as the
+parallel-training-compatible recurrence. Unifying criterion:
+memory is extra geometry whose coordinates make the future
+single-valued.
+
+## COLLISION LADDER (2026-09-02): the sufficiency knee is at k=3
+## — the cleanest result of the project
+
+Full geo ladder, both seeds (ratio = near-pair velocity
+dispersion / random-pair, matched input):
+k=1: 0.263/0.270 (p95 7.2/7.4 — catastrophic collisions)
+k=2: 0.238/0.237 (p95 1.66/1.62)
+k=3: 0.135/0.137 (p95 0.72/0.73)  <- knee
+k=4: 0.140/0.139 (p95 0.71/0.70)
+k=8: 0.141/0.133 (p95 0.73/0.73)
+
+Monotone, halving between k=2 and k=3, flat floor thereafter;
+seed agreement to the third decimal — this instrument involves NO
+rollout and no optimization luck in the measurement itself.
+Physical reading (restrained): consistent with m being fast-
+slaved to V (m ~ m_inf(V)), i.e. HH's EFFECTIVE dimension under
+this drive is ~3 — the classical (V, n, h) reduction. k=2's
+1.7x-above-floor ratio explains why hand-picked 2-D coordinates
+(our reduction control) work while learned 2-D encoders strain.
+Caveats: conditioned on this encoder family/objective (E trained
+jointly with G); the floor ~0.14 includes legitimate within-
+radius variation. Cross-check available: rerun with an E trained
+on reconstruction only.
+
+Note the instrument inversion: rollout F1 (optimizer-dominated)
+produced no readable ladder; the training-free geometric
+diagnostic produced a textbook one. Measurement quality came from
+REMOVING learning from the measurement.
