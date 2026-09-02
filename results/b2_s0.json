@@ -1,0 +1,1 @@
+{"arm": "b2-delay", "seed": 0, "params": 67841, "train_seconds": 117.0, "v_rmse_mv": 153.22, "spike_f1": 0.007, "fi_rmse_hz": 53.0, "rebound_spikes": 0}

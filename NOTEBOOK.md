@@ -943,3 +943,30 @@ for free. Latent tubes remain interesting for the compression
 question but are no longer the critical path. On-policy joint
 arms and rollout references still complete the preregistered
 table.
+
+## B2-delay v1 (2026-09-02): FAILED both seeds — strong data-native
+## hypothesis falsified
+
+F1 {0.007, 0.172}, V-RMSE {153, 97}, 26 spurious rebounds on s1;
+training 117 s (fastest arm yet — the speed result keeps holding).
+Diagnosis: in rollout the lag components are the model's own past
+predictions — errors feed back through the REPRESENTATION itself
+(a mistimed spike corrupts the window for 12 ms), and rollout-
+generated windows leave the thin manifold of teacher windows just
+as latent trajectories left the encoded manifold. Data-nativeness
+of the coordinates was not the distinguishing variable; A0's
+distinguishing property is now sharper: it integrates COMPLETE
+Markov coordinates whose true field is contracting, so state
+error does not corrupt the state representation. Third
+independent instance of sufficiency NOT implying rollout adequacy.
+
+B2 v2 declared (before running): denoising supervision — train on
+teacher windows with small Gaussian corruption of the lag
+components, target = analytic dV/dt at the TRUE underlying state.
+Stationary targets, iid, parallel; teaches projection-back-to-
+manifold in delay space (the restore idea, without moving
+coordinates). If v2 also fails, the honest conclusion is that
+one-step/tangent supervision of ANY data-native form is
+insufficient for this system's rollout, and sequential
+supervision (v4-style, or hybrid mostly-parallel + short-rollout
+correction) is genuinely load-bearing.
