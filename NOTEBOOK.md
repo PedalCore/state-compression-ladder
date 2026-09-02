@@ -1672,3 +1672,124 @@ decision geometry); (2) stable low-dose composition (the 0.802
 exists — find the reliable schedule); (3) flow compilation of the
 best checkpoint; (4) R3 adapting teacher; (5) round-5 post after
 any of these lands.
+
+## HYBRID FIELD + CORRECTION STATE declared (2026-09-03, before
+## running)
+
+Architecture: FROZEN stage-0 field F(x, I) + tiny recurrent
+corrector — GRUCell([x, I] -> c in R^8) updated once per record
+step, additive field term delta = Head(c) (Head ZERO-INITIALIZED:
+training step 0 IS the 0.742 baseline; the design cannot lose to
+it). Only the corrector (~500 params) trains, sequentially
+(TBPTT, full-state loss, spike-weighted) — the hybrid formula as
+an architectural split: parallel-trained bulk + sequentially-
+trained tiny state. The corrector's measured job: counteract the
+inter-spike under-excitability drift and soften the inherited
+razor-edge decision geometry. Seeds {0,1} on their respective
+stage-0 checkpoints.
+
+P-hyb1: F1 exceeds the band (> 0.77) on both seeds — the first
+        STABLE exceedance (composition's 0.802 was transient).
+P-hyb2: entry rate drops materially (< 0.12) — the drift is
+        counteracted where weighting could not.
+P-hyb3: rebound + f-I preserved (frozen field + zero-init
+        guarantee the floor).
+P-hyb4: corrector training normalizes the exchange rate: minutes
+        of sequential supervision on hundreds of params, vs v4's
+        ~1 h on the whole model.
+
+## Hybrid refined into the MARGIN-STATE LADDER (2026-09-03, per
+## review; declared before running)
+
+Scoped conclusion adopted: "within the tested MLP-field +
+explicit-integrator formulation, under these drives and budgets,
+the plateau behaves like a coordinate/model-class limitation
+rather than a field-error limitation" — stronger than 'training
+failed', safer than 'mathematically intrinsic'.
+
+The correction state is NOT a generic latent: it is an
+EXCITABILITY-MARGIN state. dx/dt = F_frozen + Head(c) (zero-init),
+c updated recurrently from (x, I); c starts 1-D. Ladder arms,
+same protocol/params-budget/sequential training throughout:
+  A. frozen field alone (0.742 baseline)
+  B. + STATIC feedforward correction (no memory) — the capacity
+     control: if B ~ C/D, the ingredient was capacity, not state
+  C. + 1-state recurrent correction
+  D. + 2-state recurrent correction
+  (E. the running 8-D GRU arm = capacity-ceiling reference)
+All corrections carry L_corr = lambda * |delta|^2 (lambda 0.1) —
+rewarded for leaving the field untouched except where the state
+earns its keep; c should be ~0 outside marginal regimes, making
+the corrector INSPECTABLE.
+
+Falsifiable activation prediction (the strong one): |c| rises
+during the inter-spike interval BEFORE episode-entry decisions,
+discriminates impending misses from correct events at -5 ms, and
+collapses after recovery. Scored alongside the four-way outcome:
+performance (stable band exit, not another transient), initiation
+(entry rate down), persistence (no entry/continuation trade),
+preservation (f-I + rebound intact).
+
+## HISTORY-CONTAMINATION LADDER declared (2026-09-03, before
+## running)
+
+Positive results consolidated per review: history-as-information
+WORKED (D0: 12 ms window reaches the sufficiency floor; v4's GRU
+proves implicit history suffices behaviorally at 0.869). What
+failed was the SIMPLE FIELD OVER EXPLICIT HISTORY (B2) under
+self-generated buffers. The clean split: the history BUFFER need
+not be learned (deterministic shift register); only the newest
+value is model-generated, and contamination spreads lag by lag.
+
+Experiment: B2 checkpoints rolled out at contamination levels
+g = 0..4 (g = number of lag slots filled from the model's own
+history, most-recent first; the rest supplied by the teacher;
+the integrated V_t is always the model's). F1 vs g.
+P-contam1: F1 falls monotonically with g.
+P-contam2 (the decisive fork): if g=0 (oracle lags) F1 is HIGH
+(>0.8), the delay field itself is good and self-contamination is
+the failure — the formulation is rehabilitated pending better
+V-prediction; if g=0 also sits low, the H -> dV map lacks
+marginal-decision precision regardless of contamination.
+
+## Hybrid confound + safety note (2026-09-03, per review)
+
+Recorded: seed and lambda changed together in the running pair —
+seed 0 vs seed 1 cannot prove the penalty is load-bearing; a
+MATCHED same-seed lambda=0 vs 0.1 ablation is declared and queued
+(hyb seed 0, lambda 0.1). Seed 0's lambda=0 trajectory already
+teaches two things: the corrector CAN touch the intended
+mechanism (ep3: entry 0.141->0.133, cont 0.653->0.576, F1 0.751)
+and unconstrained it rewrites dynamics the frozen field had right
+(ep6+: F1 0.583->0.372, f-I wrecked). Early stopping is NOT the
+solution — the OPTIMUM itself must be safe, or the architecture/
+objective is underconstrained. Delta-logging declared: ||delta||
+by voltage band + by time-to-event; the cartoon success picture
+is delta ~ 0 almost everywhere, rising during the ISI drift
+before marginal decisions, vanishing after entrainment — the
+credit state observed doing its predicted job, or not.
+
+## Contamination ladder result (2026-09-03): the delay-FIELD is
+## dead at the map level — contamination exonerated
+
+g=0 (ALL lags oracle-true): F1 0.004 (b2_s0) / 0.006 (denoised) —
+the map fails with PERFECT history. P-contam1 falsified (non-
+monotone); P-contam2 resolves to the harsh branch: the
+(H, I) -> dV map lacks the precision/stability to maintain even
+the current V trajectory between lag anchors, independent of
+buffer quality. Quirk recorded: the denoised model scores BETTER
+with slightly contaminated lags (g=1: 0.26) than pristine ones —
+trained-on-corruption makes oracle history off-distribution.
+
+The three-way dissociation this completes:
+  delay coordinates are STATICALLY SUFFICIENT (D0: 0.140)
+  a GRU over the same information WORKS (v4: 0.869)
+  a memoryless field over the same information FAILS UTTERLY
+  (0.004 even with oracle context)
+Same information three ways: what differs is the COMPUTATIONAL
+FORM. Recurrent integration of history succeeds where direct
+functional readout of history cannot — the strongest single
+piece of evidence in the project that internal state is not
+merely an information cache but a COMPUTATIONAL RESOURCE.
+The B2 formulation closes; the internal-state route (GRU, hybrid
+corrector) is the road.
