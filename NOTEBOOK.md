@@ -1530,3 +1530,50 @@ decision band; predicted to beat scalar lambda+-weighting (which
 failed: P-sens2 null) because it targets the discovered
 signature. The decision-margin credit map q(x) = margin-to-
 boundary gets its concrete first job.
+
+## DIRECTIONAL FIX declared (2026-09-03, before running)
+
+Training: from-scratch A0b protocol (deriv field, width 256,
+40 ep, standard spike-region weight) + COMPONENT weighting in the
+measured decision band (V in -50..-20 mV): m-error x10, h/n-error
+x5, V-error x1. Symmetric loss (no asymmetric anti-bias term —
+risk of inducing the opposite bias); the component boost targets
+the discovered signature (dm/dt underestimation at low-margin
+decisions). Seeds {0,1}. Post-hoc: rerun the E3-v2 anatomy on the
+trained model — the mechanistic closure test.
+
+P-dir1: F1 exceeds the A0b band and the scalar-weight arms
+        (> 0.788) on at least one seed; both seeds above band
+        center.
+P-dir2: the episode-entry e_m separation/bias SHRINKS vs stage-0
+        (1.16 -> substantially less) — if F1 rises AND the
+        signature shrinks, the causal loop closes.
+P-dir3: f-I and rebound preserved (band-local component weighting
+        must not damage global structure — the failure mode that
+        killed composition training).
+
+## Directional fix scored (2026-09-03): MARKER, NOT CAUSE
+
+P-dir2 CONFIRMED: the intervention removed its target — em
+separation 1.16 -> 0.68/0.32, en 0.99 -> 0.42/0.01 across seeds.
+P-dir1 FAILED: F1 {0.757, 0.703} straddles the band; plateau
+unmoved. P-dir3 HALF-FAILED: f-I preserved (1.5/3.3), rebound
+LOST both seeds (h/n band-weighting distorts recovery dynamics).
+Episode structure reshaped, not shrunk (s0: entries 87 -> 108,
+continuations 164 -> 125).
+
+The lesson, now twice-taught (P-sens2, P-dir1): weighting
+interventions keep REMOVING their measured targets without moving
+F1. The E3-v2 signature was downstream of the true cause. Sharper
+diagnosis forced: every anatomy instrument so far evaluates the
+field ON THE TEACHER TRAJECTORY, but misses happen on the MODEL'S
+trajectory — the causal desync likely begins between spikes, in
+ways invisible to on-teacher diagnostics. Declared next
+instrument: TRAJECTORY-DIVERGENCE ANATOMY — measure model-vs-
+teacher state divergence in the inter-spike interval BEFORE each
+entry miss (where does the rollout actually leave the teacher's
+path, in which state components, how early?) — moving the
+microscope from the field to the rollout itself. The plateau's
+cause remains unfound; three non-causes are now measured
+(representation, scalar error, m-bias marker), which is how the
+space shrinks.

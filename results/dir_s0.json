@@ -1,0 +1,1 @@
+{"arm": "dir-field", "seed": 0, "train_seconds": 161.5, "spike_f1": 0.757, "v_rmse_mv": 15.18, "f1_by_window": [0.744, 0.755, 0.74, 0.784], "ttd_ms": 39.2, "fi_rmse_hz": 1.5, "rebound_spikes": 0}
