@@ -1,0 +1,1 @@
+{"arm": "rollout", "k": 4, "seed": 1, "train_seconds": 159.3, "v_rmse_mv": 19.3, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}

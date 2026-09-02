@@ -1020,3 +1020,29 @@ supervision now has a measured exchange rate, not just a verdict.
 Open per declaration: whether many more rounds/denser collection
 change the rate; the frozen-chart latent on-policy remains
 undone; rollout references still completing the tube table.
+
+## TUBE TABLE COMPLETE (2026-09-02): final scores and verdicts
+
+Spike F1 per arm (seeds 0,1):
+  geo baseline    k4 {0.199, 0.031}  k8 {0.049, 0.093}
+  geo_noise       k4 {0.115, 0.263}  k8 {0.000, 0.000}
+  geo_restore     k4 {0.000, 0.045}  k8 {0.034, 0.000}
+  geo_onpolicy    k4 {0.045, 0.008}  k8 {0.002, 0.045}
+  frozen noise    k4 s0 0.193 | frozen restore k4 s0 0.166
+  rollout ref     k4 {0.000, 0.000} (6 ep, SUB=2 —
+                  BUDGET-STARVED; not a valid upper bound)
+
+Verdicts: joint tube arms land in preregistered branch 3 (fail
+broadly) on both axes — means near zero AND variance unchanged.
+P-tube FALSIFIED: k=8 tube arms did worse, not better. Frozen
+charts remain the only partial rescue. Final architectural
+observation: the Euler-integrated latent field (Geo) never fired
+under ANY supervision tried (tangent, tube, corrective,
+sequential-at-low-budget), while the GRU-cell latent transition
+(experiment A) fired at equal state and less budget — the
+DISCRETE TRANSITION CLASS of the latent dynamics matters more
+than the supervision mode for escaping silence. The GRU's gating
+may act as an implicit stabilizer that the raw Euler field lacks.
+Fair-fight caveat: the rollout reference needs a full-budget
+rerun before "sequential supervision fails for this architecture"
+is claimed; queued, not run.

@@ -1,0 +1,1 @@
+{"arm": "geo_noise", "k": 4, "seed": 1, "train_seconds": 371.5, "v_rmse_mv": 64.67, "spike_f1": 0.263, "fi_rmse_hz": 31.9, "rebound_spikes": 0}

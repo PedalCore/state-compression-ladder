@@ -1,0 +1,131 @@
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+geo_noise s=0 ep5: loss 0.019910
+geo_noise s=0 ep10: loss 0.039514
+geo_noise s=0 ep15: loss 0.019196
+geo_noise s=0 ep20: loss 0.010966
+RESULT {"arm": "geo_noise", "k": 4, "seed": 0, "train_seconds": 396.5, "v_rmse_mv": 249.27, "spike_f1": 0.115, "fi_rmse_hz": 35.7, "rebound_spikes": 7}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_teacher.py:31: RuntimeWarning: invalid value encountered in divide
+  x / (1.0 - np.exp(-x / scale)))
+geo_noise s=1 ep5: loss 0.010660
+geo_noise s=1 ep10: loss 0.053212
+geo_noise s=1 ep15: loss 0.105130
+geo_noise s=1 ep20: loss 0.255409
+RESULT {"arm": "geo_noise", "k": 4, "seed": 1, "train_seconds": 371.5, "v_rmse_mv": 64.67, "spike_f1": 0.263, "fi_rmse_hz": 31.9, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_teacher.py:31: RuntimeWarning: invalid value encountered in divide
+  x / (1.0 - np.exp(-x / scale)))
+geo_noise s=0 ep5: loss 0.007575
+geo_noise s=0 ep10: loss 0.007583
+geo_noise s=0 ep15: loss 0.007860
+geo_noise s=0 ep20: loss 0.004770
+RESULT {"arm": "geo_noise", "k": 8, "seed": 0, "train_seconds": 474.2, "v_rmse_mv": 355.22, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+geo_noise s=1 ep5: loss 0.010581
+geo_noise s=1 ep10: loss 0.011379
+geo_noise s=1 ep15: loss 0.016237
+geo_noise s=1 ep20: loss 0.015602
+RESULT {"arm": "geo_noise", "k": 8, "seed": 1, "train_seconds": 273.3, "v_rmse_mv": 122.89, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+geo_restore s=0 ep5: loss 0.012542
+geo_restore s=0 ep10: loss 0.018802
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_teacher.py:31: RuntimeWarning: invalid value encountered in divide
+  x / (1.0 - np.exp(-x / scale)))
+geo_restore s=0 ep15: loss 0.009307
+geo_restore s=0 ep20: loss 0.004895
+RESULT {"arm": "geo_restore", "k": 4, "seed": 0, "train_seconds": 296.9, "v_rmse_mv": 301.18, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_teacher.py:31: RuntimeWarning: invalid value encountered in divide
+  x / (1.0 - np.exp(-x / scale)))
+geo_restore s=1 ep5: loss 0.009036
+geo_restore s=1 ep10: loss 0.019445
+geo_restore s=1 ep15: loss 0.030124
+geo_restore s=1 ep20: loss 0.166873
+RESULT {"arm": "geo_restore", "k": 4, "seed": 1, "train_seconds": 432.2, "v_rmse_mv": 142.83, "spike_f1": 0.045, "fi_rmse_hz": 49.5, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:138: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_teacher.py:31: RuntimeWarning: invalid value encountered in divide
+  x / (1.0 - np.exp(-x / scale)))
+geo_restore s=0 ep5: loss 0.006385
+geo_restore s=0 ep10: loss 0.003112
+geo_restore s=0 ep15: loss 0.001514
+geo_restore s=0 ep20: loss 0.001050
+RESULT {"arm": "geo_restore", "k": 8, "seed": 0, "train_seconds": 452.5, "v_rmse_mv": 282.91, "spike_f1": 0.034, "fi_rmse_hz": 52.9, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:138: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_teacher.py:31: RuntimeWarning: invalid value encountered in divide
+  x / (1.0 - np.exp(-x / scale)))
+geo_restore s=1 ep5: loss 0.007812
+geo_restore s=1 ep10: loss 0.009446
+geo_restore s=1 ep15: loss 0.011092
+geo_restore s=1 ep20: loss 0.012482
+RESULT {"arm": "geo_restore", "k": 8, "seed": 1, "train_seconds": 403.4, "v_rmse_mv": 180.59, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:138: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+geo_onpolicy s=0 ep5: loss 1.134077
+geo_onpolicy s=0 ep10: loss 0.319985
+geo_onpolicy s=0 ep15: loss 0.337444
+geo_onpolicy s=0 ep20: loss 0.149567
+RESULT {"arm": "geo_onpolicy", "k": 4, "seed": 0, "train_seconds": 172.2, "v_rmse_mv": 193.97, "spike_f1": 0.045, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:138: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+geo_onpolicy s=1 ep5: loss 0.028262
+geo_onpolicy s=1 ep10: loss 0.012036
+geo_onpolicy s=1 ep15: loss 1.411344
+geo_onpolicy s=1 ep20: loss 0.327611
+RESULT {"arm": "geo_onpolicy", "k": 4, "seed": 1, "train_seconds": 170.4, "v_rmse_mv": 593.42, "spike_f1": 0.008, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:138: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+geo_onpolicy s=0 ep5: loss 0.129277
+geo_onpolicy s=0 ep10: loss 0.189310
+geo_onpolicy s=0 ep15: loss 0.019268
+geo_onpolicy s=0 ep20: loss 0.504435
+RESULT {"arm": "geo_onpolicy", "k": 8, "seed": 0, "train_seconds": 220.5, "v_rmse_mv": 118.11, "spike_f1": 0.002, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:138: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * len(idx)
+geo_onpolicy s=1 ep5: loss 2.708911
+geo_onpolicy s=1 ep10: loss 0.145055
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_teacher.py:31: RuntimeWarning: invalid value encountered in divide
+  x / (1.0 - np.exp(-x / scale)))
+geo_onpolicy s=1 ep15: loss 0.493889
+geo_onpolicy s=1 ep20: loss 0.161856
+RESULT {"arm": "geo_onpolicy", "k": 8, "seed": 1, "train_seconds": 252.0, "v_rmse_mv": 163.57, "spike_f1": 0.045, "fi_rmse_hz": 53.0, "rebound_spikes": 1}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:183: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+rollout s=0 ep1: loss 0.12642
+rollout s=0 ep2: loss 0.12417
+rollout s=0 ep3: loss 0.12160
+rollout s=0 ep4: loss 0.12134
+rollout s=0 ep5: loss 0.12133
+rollout s=0 ep6: loss 0.12103
+RESULT {"arm": "rollout", "k": 4, "seed": 0, "train_seconds": 190.3, "v_rmse_mv": 38.65, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_tube.py:183: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+rollout s=1 ep1: loss 0.12860
+rollout s=1 ep2: loss 0.12129
+rollout s=1 ep3: loss 0.12231
+rollout s=1 ep4: loss 0.12163
+rollout s=1 ep5: loss 0.12168
+rollout s=1 ep6: loss 0.12090
+RESULT {"arm": "rollout", "k": 4, "seed": 1, "train_seconds": 159.3, "v_rmse_mv": 19.3, "spike_f1": 0.0, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
+=== TUBE DONE ===
