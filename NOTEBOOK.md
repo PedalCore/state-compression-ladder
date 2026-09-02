@@ -401,3 +401,79 @@ A0c declared (before running): 80 epochs, width 512, same
 protocol. If the gate (F1 > 0.95 equivalent, V-RMSE continuing
 down) passes, the calibration demanded by the redesign exists and
 compression becomes an instrument.
+
+## Canonical public home (2026-09-02):
+## github.com/PedalCore/state-compression-ladder
+
+M13 now has a standalone public repo (like heu-replication):
+ported scripts (imports flattened, results/ layout), NOTEBOOK.md =
+this file, results JSONs + logs committed, dataset/checkpoints
+regenerable. Development continues here in whitebox/ while runs
+are live (A0c, A-seeds, v4 execute against these paths); files
+sync to the repo on each milestone. The repo link supersedes
+whitebox-lm in future project posts.
+
+## Claim tightening (2026-09-02, per review) + restructure around A0
+
+TIGHTENED: (1) A0b does NOT show the GRU failures were "just
+budget/precision" — the representation class changed between
+those experiments. Defensible version: A0 rules out HH being
+intrinsically too difficult for a learned approximation at this
+scale; the remaining GRU failures arise from some combination of
+optimization and the discrete recurrent transition
+parametrization, while the vector-field formulation is a
+substantially better-conditioned route to autonomous dynamics.
+The representation of time may matter more than training budget.
+(2) "which behaviors become REPRESENTABLE, in what order" ->
+"as vector-field fidelity increases, behaviors are RECOVERED BY
+THIS TRAINED APPROXIMATION in a reproducible-looking hierarchy:
+firing -> f-I -> rebound." Open question (a rung of its own): is
+the hierarchy intrinsic — do behaviors require systematically
+different approximation fidelity — or specific to this training
+distribution and objective?
+
+RESTRUCTURE: the project skeleton is now A0 -> A -> B -> C -> D
+(learn the known dynamics -> hide the coordinates -> infer state
+from observables -> preserve behavior -> preserve computation).
+The compression instrument INHERITS the A0 representation:
+z = E(x), dz/dt = F(z, I) explicitly integrated, x_hat = D(z) —
+one change only vs the positive control: the dimension of the
+dynamical state. The GRU is retired as the primary compression
+instrument (kept as the B-track historical baseline).
+
+## Declared (before running): latent-field ladder + 2-D reduction
+## control
+
+hh_latentfield.py: E (4 -> k, memoryless) -> learned latent
+vector field dz/dt = F(z, I) integrated with Euler substeps ->
+D (k -> 4, memoryless). Sweep k = 1,2,3,4,8 AFTER A0c settles
+the uncompressed positive control.
+
+hh_reduced.py (control, no training): the classical Krinsky-
+Kokoz/Rinzel-style 2-D HH reduction — m = m_inf(V), h = c - n
+(c = mean(h+n) from train data), leaving state (V, n) — simulated
+under the identical protocol and scored on the same metrics.
+Purpose: a sanity range for latent k=2. If learned k=2 ~ the
+hand-derived reduction, the instrument tracks classical model
+reduction; if learned k=2 is awful while the reduction works,
+then COORDINATES AND DYNAMICAL STRUCTURE matter beyond dimension
+— the substrate thesis in one comparison.
+
+## 2-D reduction control result (2026-09-02): coordinates matter,
+## already
+
+The classical reduction (m = m_inf(V), h = 0.8622 - n; slaving
+std 0.035 — Krinsky-Kokoz holds well on our drive) with ZERO
+fitting: F1 0.325 / f-I RMSE 26.4 / rebound EXACTLY 1 (correct).
+Compare fitted-to-this-data 2-state arms: Izhikevich 0.335 / 44.7
+/ 0, AdEx 0.368 / 49.0 / 0. Equal state count, same protocol:
+the derived model inherits HH's coordinates, so the rebound
+mechanism (h de-inactivation under hyperpolarization, preserved
+as h = c - n) and half the f-I error come for free; the fitted
+models bought a few F1 points by abandoning the mechanism.
+Restrained claim: in this one construction, coordinates carry
+behavioral signatures that data-fitting at equal dimension did
+not find. The latent-field k=2 rung now has its sanity range:
+match the reduction ~ instrument tracks classical model
+reduction; fall far below it while the reduction stands ~
+dimension is not sufficient, structure is.
