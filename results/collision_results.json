@@ -1,0 +1,20 @@
+[
+ {
+  "ckpt": "geo_k4_s0",
+  "k": 4,
+  "pairs": 160000,
+  "near_med": 0.2978,
+  "near_p95": 0.7081,
+  "rand_med": 2.1317,
+  "ratio_med": 0.1397
+ },
+ {
+  "ckpt": "geo_k4_s1",
+  "k": 4,
+  "pairs": 160000,
+  "near_med": 0.282,
+  "near_p95": 0.6981,
+  "rand_med": 2.0332,
+  "ratio_med": 0.1387
+ }
+]
