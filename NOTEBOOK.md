@@ -1110,3 +1110,59 @@ equally informative. "Time as geometry" survived contact with
 experiment the best way: not as a replacement for time, but as
 the decomposition exposing which parts of temporal learning
 parallelize and which are tied to self-generated trajectories.
+
+## CREDIT GEOMETRY declared (2026-09-02, user proposal +
+## collaborator development): the backward-time dual
+
+Program (C-track, NOT bolted into HH yet per review): a primitive
+carrying three state kinds — z (dynamical: what am I doing),
+h (history: what past got me here), c (credit/sensitivity: how
+would changing me affect future objectives). Lineage: adjoint
+states, synthetic gradients (predict future gradients from local
+information), e-prop eligibility traces (forward-maintained local
+responsibility x later global learning signals — the biological
+calcium/CaMKII story). Design law adopted: credit state is
+COMPRESSED AND SHARED (a few numbers per neuron/unit, low-rank
+sensitivity factors), never per-weight — per-weight credit
+recreates the Adam problem the program set out to escape.
+Distillation symmetry: expensive ODE integration -> compiled flow
+map; expensive BPTT/adjoint -> compiled credit map. The duality,
+recorded: history geometry makes the FUTURE single-valued
+(forward information problem); credit geometry would make
+LEARNING locally available (backward information problem).
+
+## Immediately testable piece: the SENSITIVITY MAP q(x), zero
+## learning (declared before running)
+
+For HH the Jacobian of the true RHS is analytic — q(x) is
+measurable today. Two parts:
+1. Diagnostic: distribution of the local expansion rate
+   lambda_max(sym J_F) over the state space — where does small
+   error amplify? P-sens1: it concentrates near threshold/
+   upstroke, OVERLAPPING but not identical to the hand-guessed
+   V > -20 mV spike weight (near-rheobase subthreshold regions
+   should get weight the voltage threshold missed).
+2. Sensitivity-weighted field training: rerun the A0b config
+   replacing the hand-guessed spike weight with w ~ measured
+   lambda+. P-sens2 (falsifiable): the OU-timing F1 plateau
+   (0.736-0.770 seed band) shifts up. Either outcome informs:
+   up -> error PLACEMENT was the plateau's cause and credit
+   geometry pays immediately; unchanged -> the plateau is phase
+   drift (gate 3b), not weighting, and the sensitivity map's
+   value moves to the tube/frontier machinery.
+
+## Sensitivity diagnostic result (2026-09-02): the hand-guessed
+## weight aimed PAST the decision
+
+Measured lambda_max(sym J_F) by voltage band (per ms): -90..-70
+CONTRACTING (-0.10); rest 0.25; -60..-50 1.17; -50..-20 (threshold
+approach) 16.4; -20..+20 (spike body) 24.4; >+20 (peak) 9.0.
+Only 45.5% of top-decile sensitivity mass lies inside the
+V > -20 mV region every prior run weighted 10x — the majority
+sits in the -50..-20 mV DECISION zone, which received no extra
+weight in any experiment to date. P-sens1 confirmed with a sharper
+reading: what matters is the commitment to spiking, not the spike
+event. The credit-geometry premise (measured sensitivity beats
+guessed sensitivity) survives its first contact. Part 2
+(sensitivity-weighted A0b config, seeds {0,1}, vs the 0.736-0.770
+plateau band) running.
