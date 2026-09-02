@@ -801,3 +801,49 @@ Takens vindicated empirically on our exact data. Next rung (B2):
 feed delay vectors into the latent-field machinery — state
 inference by geometry, dynamics by tangent training, stability by
 the tube-arm winner.
+
+## Fixed-representation sufficiency + tightenings (2026-09-02)
+
+Zero-learning arms (same protocol): raw4 0.100 | (V,h,n) 0.086 |
+(V,h) 0.092 | (V,n) 0.144 | V alone 0.350 (reproduces D0's 0.347
+— cross-instrument sanity holds).
+
+Readings:
+1. Hand-picked 2-D coordinates beat the learned k=2 encoder
+   decisively on sufficiency (0.09-0.14 vs 0.238) — the
+   coordinates result re-derived by an instrument with zero
+   optimization at ANY stage.
+2. Learned k>=3 encoders (0.133-0.141) sit above the fixed-
+   coordinate floor (0.086-0.100): encoder mixing costs
+   sufficiency even at adequate dimension.
+3. SURPRISE, held with restraint: (V,h) 0.092 vs textbook (V,n)
+   0.144 — under this drive, retaining h pins the remaining
+   hidden state better than retaining n. Candidate micro-finding:
+   the better 2-D reduction may keep (V,h). Needs a dynamics
+   check (simulate a (V,h) reduction with n slaved) before any
+   claim.
+4. The 12 ms delay window (0.140) ties the textbook 2-D
+   reduction: history is a substitute coordinate system, measured.
+
+Epistemic tightenings adopted (per review): observable track had
+a fundamental information bottleneck BEFORE architecture or
+budget entered (not "architecture/budget were irrelevant" — v4
+showed they matter too); "explicit learned recurrence is not
+necessary for STATE INFERENCE in this HH regime" (not
+"recurrence isn't needed" generally); the collision instrument
+"eliminates the optimizer from the MEASUREMENT stage" (learned-
+encoder arms still measure optimized artifacts; the fixed arms
+now provide the zero-learning anchor). k=3 knee stated as "a
+three-dimensional sufficiency floor under this dataset/drive/
+criterion, consistent with the classical fast-m reduction" — not
+"HH's dimension measured".
+
+B2 declared (the first architecture where every ingredient has a
+measured reason): delay vector (5 x 3 ms) -> E -> z, dz/dt =
+G(z, I), stabilization = tube-arm winner, then flow compilation.
+Control: same-dimension delay vectors in short/badly-chosen
+windows vs 12 ms — is the WINDOW special (timescale needed to
+reconstruct h/n) or only the embedding dimension? Each component
+maps to a measured failure: delays fix state ambiguity (0.35 ->
+0.14); tangent training fixes training cost (~14x); tube fixes
+drift (pending); compilation fixes deployment cost (pending).

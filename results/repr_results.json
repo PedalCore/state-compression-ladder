@@ -1,0 +1,42 @@
+[
+ {
+  "repr": "raw4",
+  "dim": 4,
+  "pairs": 160000,
+  "near_med": 0.0618,
+  "near_p95": 0.1259,
+  "ratio_med": 0.1004
+ },
+ {
+  "repr": "vhn",
+  "dim": 3,
+  "pairs": 160000,
+  "near_med": 0.0528,
+  "near_p95": 0.101,
+  "ratio_med": 0.0859
+ },
+ {
+  "repr": "vn",
+  "dim": 2,
+  "pairs": 160000,
+  "near_med": 0.0883,
+  "near_p95": 0.2473,
+  "ratio_med": 0.1438
+ },
+ {
+  "repr": "vh",
+  "dim": 2,
+  "pairs": 160000,
+  "near_med": 0.0566,
+  "near_p95": 0.1192,
+  "ratio_med": 0.0918
+ },
+ {
+  "repr": "v",
+  "dim": 1,
+  "pairs": 160000,
+  "near_med": 0.2143,
+  "near_p95": 0.9429,
+  "ratio_med": 0.3504
+ }
+]
