@@ -782,3 +782,22 @@ Note the instrument inversion: rollout F1 (optimizer-dominated)
 produced no readable ladder; the training-free geometric
 diagnostic produced a textbook one. Measurement quality came from
 REMOVING learning from the measurement.
+
+## D0 result (2026-09-02): history-as-geometry works, measured
+
+Delay-coordinate sufficiency (no training; dispersion of hidden
+(m,h,n) among delay-space near-pairs at matched input / random
+baseline): V_t alone 0.347; 2x1ms 0.260; 5x1ms 0.197; 2x3ms
+0.211; 3x3ms 0.181; 5x3ms 0.140. Monotone in delay count; longer
+lags dominate (HH's slow variables live at 5-20 ms, so 1 ms-
+spaced samples are near-redundant).
+
+Headline: FIVE voltage samples spanning 12 ms reach the same
+sufficiency floor (0.140) as the k>=3 full-state learned encoders
+(0.135-0.141) under the same protocol. Voltage-only insufficiency
+(0.347) is measured as the root cause of the observable track's
+difficulty; a 12 ms delay window repairs it without recurrence.
+Takens vindicated empirically on our exact data. Next rung (B2):
+feed delay vectors into the latent-field machinery — state
+inference by geometry, dynamics by tangent training, stability by
+the tube-arm winner.

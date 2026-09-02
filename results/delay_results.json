@@ -1,0 +1,58 @@
+[
+ {
+  "n_delays": 1,
+  "lag_ms": 1.0,
+  "pairs": 160000,
+  "near_med": 0.2137,
+  "near_p95": 0.9482,
+  "ratio_med": 0.3471
+ },
+ {
+  "n_delays": 2,
+  "lag_ms": 1.0,
+  "pairs": 160000,
+  "near_med": 0.1569,
+  "near_p95": 0.5603,
+  "ratio_med": 0.2596
+ },
+ {
+  "n_delays": 3,
+  "lag_ms": 1.0,
+  "pairs": 160000,
+  "near_med": 0.1374,
+  "near_p95": 0.4994,
+  "ratio_med": 0.2236
+ },
+ {
+  "n_delays": 5,
+  "lag_ms": 1.0,
+  "pairs": 160000,
+  "near_med": 0.1207,
+  "near_p95": 0.4139,
+  "ratio_med": 0.1974
+ },
+ {
+  "n_delays": 2,
+  "lag_ms": 3.0,
+  "pairs": 160000,
+  "near_med": 0.1295,
+  "near_p95": 0.4771,
+  "ratio_med": 0.2107
+ },
+ {
+  "n_delays": 3,
+  "lag_ms": 3.0,
+  "pairs": 160000,
+  "near_med": 0.1107,
+  "near_p95": 0.3623,
+  "ratio_med": 0.181
+ },
+ {
+  "n_delays": 5,
+  "lag_ms": 3.0,
+  "pairs": 160000,
+  "near_med": 0.0854,
+  "near_p95": 0.2299,
+  "ratio_med": 0.1404
+ }
+]
