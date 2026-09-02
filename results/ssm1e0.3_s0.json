@@ -1,0 +1,1 @@
+{"arm": "obs-ssm1-e0.3", "seed": 0, "corr_params": 16, "train_seconds": 117.6, "best_val_f1": 0.017, "spike_f1": 0.011, "f1_by_window": [0.036, 0.0, 0.0, 0.0], "entry_rate": 0.559, "fi_rmse_hz": 53.0, "rebound_spikes": 0}

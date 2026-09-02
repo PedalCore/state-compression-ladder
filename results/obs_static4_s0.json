@@ -1,0 +1,1 @@
+{"arm": "obs-static4", "seed": 0, "corr_params": 33, "train_seconds": 2200.4, "best_val_f1": 0.024, "spike_f1": 0.022, "f1_by_window": [0.074, 0.0, 0.0, 0.0], "entry_rate": 0.516, "fi_rmse_hz": 53.0, "rebound_spikes": 0}

@@ -1936,3 +1936,117 @@ near-perfect f-I and correct rebound — where the correction's
 FORM matters only when the coordinates leave state to be
 inferred. Dimension x coordinates x dynamics x objective,
 measured all the way down.
+
+## OBSERVABLE-TRACK HYBRID declared (2026-09-03, before running)
+## — the deployment test
+
+Synthesis adopted (per review): STATE IS PRIMARILY A RESOURCE FOR
+RESOLVING PARTIAL OBSERVABILITY — scoped to this system, but now
+supported from both directions. The deployment primitive tests it
+constructively: deterministic delay buffer (shift register, no
+learning) + shared window-field (iid-trained on observable
+V-dot, then FROZEN at its known-failed baseline: F1 0.004) +
+k in {1, 2} recurrent corrector, trust-bounded on observed V,
+sequentially trained with val-F1 selection. Voltage-only
+supervision throughout — every ingredient deployment-legitimate.
+
+P-obs1: k=1 rescues the dead formulation to >= 0.80 (a 200x
+        event-fidelity delta from one scalar of state).
+P-obs2: k=2 reaches v4-class (0.87+) — the compact primitive:
+        shared law + buffer + two scalars per neuron.
+P-obs3: correction activity concentrates in the drift/decision
+        voltage bands (the inspectability signature transfers).
+P-obs4: if confirmed, the deployable neuron = ~shared parameters
+        (field + rule) + N x k runtime state, k <= 2 — the
+        original substrate intuition in its measured final form.
+
+## Observable-track guardrails (2026-09-03, per review; declared
+## before scoring)
+
+1. STATIC OBSERVABLE CONTROL declared: delta = eps(V) tanh
+   H(window, I), memoryless, matched params, same trust region /
+   sequential supervision / selection — closes the loophole that
+   the bounded correction NETWORK (not recurrence) rescues B2.
+   Outcome tree pinned: static fails + k=1 succeeds -> "same
+   information + 1 scalar memory -> large functional rescue"
+   becomes a measured architectural statement. k=1 fails but k=2
+   succeeds -> minimal observer ~2-dimensional. Both fail ->
+   information present but this observer architecture too weak
+   (question moves to observer design, NOT information). Success
+   with large corrections everywhere -> hesitate: the win must
+   show tiny c, bounded delta, band-concentrated activity, field
+   carrying bulk dynamics, f-I/rebound preserved — repair of the
+   representation, not replacement of the neuron.
+2. OBSERVER-STATE DIAGNOSTIC declared: if k=1 works, compare c_t
+   against the hidden m, h, n it was never shown — especially
+   the excitability margin and the (n up, h down) initiation
+   signature. The scalar organizing trajectories by hidden
+   excitability = it has spontaneously become an observer state.
+3. LANGUAGE CORRECTED, permanently: the delay embedding did not
+   "fail" — it SOLVED OBSERVABILITY (D0); the recurrent
+   correction solves USABLE STATE RECONSTRUCTION. History stores
+   the evidence; a tiny recurrent state turns evidence into
+   state. That factorization, if k=1 replicates, is the deepest
+   result of the sequence.
+
+## MINI SELECTIVE-SSM CORRECTOR declared (2026-09-03, before
+## running) — the parallelism capstone
+
+Design (Mamba's trick, not Mamba's size): c_{t+1} = a_t c_t + b_t
+with a_t = exp(-dt / (1 + softplus(w_a x_t))) (input-dependent
+forgetting timescale, physically interpretable), b_t = w_b x_t
+(input-dependent injection), delta = eps(V) tanh(head(c)) —
+~16 SHARED parameters, one scalar state. TRAINING IS FULLY
+PARALLEL: under teacher windows the ideal correction is the
+frozen field's RESIDUAL r_t = Vdot_true - f_frozen(window, I), a
+fixed target sequence; a_t, b_t vectorize; the scan evaluates in
+closed form (chunked log-space cumsums); delta regresses onto r_t
+with decision-band weighting. No BPTT anywhere. Sequential cost
+survives ONLY at deployment: one multiply-add per neuron-step.
+Val-F1 rollout selection retained (eval-only sequential).
+
+The A/B/C comparison this completes (same field, trust region,
+data, selection, ~matched params): A GRU corrector (sequential
+training) vs B mini-SSM (parallel training) vs C static (no
+memory). Preregistered readings: SSM ~ GRU >> static -> the
+neuron needs a SELECTIVE ACCUMULATOR, not generic nonlinear
+recurrence — and it parallel-trains; SSM << GRU -> nonlinear
+recurrence is load-bearing and the sequential cost is real;
+teacher-window/self-generated distribution shift is the known
+risk (the B2 disease) — the trust bound and the accumulator's
+reconstruction role are the mitigations under test.
+Hyena-style long-convolution noted as a possible later control
+(parallel temporal filter vs online state), ranked below the SSM.
+
+## Observable run 1: PROTOCOL FLAW — all arms strangled by a
+## bound calibrated for a good base (2026-09-03)
+
+All observable arms (GRU k=1, static, SSM) flat at val-F1
+0.01-0.02: the mechanistic trust region (0.01 outside the band)
+assumed a GOOD frozen base needing only small corrections; the
+observable base is BROKEN (0.004) precisely where the bound is
+tightest (spike band). Same-flaw-all-arms — the A/B/C comparison
+never started. Runs killed by PID inspection. Fix declared before
+relaunch: observable-specific bound eps = 0.05 + 0.25*(V above
+deep hyperpolarization) — real correction headroom everywhere
+dynamics are active, still bounded well below spike-upstroke
+scale (the field must still carry the spikes). Relaunch: GRU k=1,
+static, SSM, seeds {0,1}, otherwise identical.
+
+## Observable A/B/C v2 complete (2026-09-03): PERFECTLY FLAT —
+## the host determines everything
+
+At eps_hi = 0.3 (patch authority), seeds {0, 1}:
+  GRU k=1 (29p, sequential 2130s): {0.005, 0.177}
+  SSM k=1 (16p, parallel 160s):    {0.011, 0.168}
+  static (33p, sequential):        {0.022, 0.171}
+Identical within noise on both seeds; ALL variance is between
+seeds (i.e., between the two broken B2 host fields), none between
+correction forms. The cleanest possible null: on a nonviable
+base, state vs capacity vs selectivity is unmeasurable — a patch
+presupposes a host that keeps the representation alive. One
+positive extracted: SSM matches GRU at 1/13th the training wall-
+clock (the parallel-scan claim demonstrated), pending a setting
+where either works. The VM authority grid (eps_hi up to 1.0,
+k up to 4, both seeds) is the remaining variant with a mechanism
+to escape the host limit.

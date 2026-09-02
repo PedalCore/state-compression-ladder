@@ -1,0 +1,1 @@
+{"arm": "obs-rec1", "seed": 0, "corr_params": 29, "train_seconds": 2132.5, "best_val_f1": 0.02, "spike_f1": 0.005, "f1_by_window": [0.016, 0.0, 0.0, 0.0], "entry_rate": 0.571, "fi_rmse_hz": 53.0, "rebound_spikes": 0}
