@@ -2158,3 +2158,49 @@ distance instrument built exactly this machinery. If v2 climbs,
 the sequential-burden-is-collection claim revives with correct
 labels; if not, closed-loop training of the observable SSM needs
 more than corrective regression.
+
+## JEPA/EBM program declared + DAgger v2 running (2026-09-03)
+
+Declared for the next tier (per review, ranked): (1) MICRO-JEPA
+OBSERVER — train the scalar state to predict REPRESENTATIONS of
+future windows (multi-horizon latent targets from a throwaway
+target encoder), not instantaneous residuals: the state becomes
+"the smallest state that predicts the future dynamical regime."
+Parallel scan preserved; encoders are training apparatus only —
+deployment stays 1 scalar + ~30 shared params. The OBJECTIVE
+LADDER pinned: same SSM/state/field, objectives {residual, raw
+future V, multi-horizon V, JEPA latent future} — if #4 wins, the
+difficulty was the objective, not the state amount. (2) EBM AS
+TEACHER/INSTRUMENT (not as neuron): learn E(state, trajectory-
+tube) so dynamically-valid-though-clock-shifted states score low;
+use -grad E as the phase-free corrective direction; distill.
+Full EBM inference per neuron-step rejected (cost). The house
+pattern again: rich expensive measurement -> tiny compiled
+mechanism.
+
+DAgger v2 (running): PHASE-ALIGNED labels — each collected model
+state paired with the teacher V_dot at the NEAREST teacher window
+within +-3 ms of the same sequence (dynamical similarity, not
+clock), corrective weight annealed 2.0 -> 0.5. P-dag2v2: the
+stability gain of v1 retained WITHOUT the F1 collapse; climb
+resumes.
+
+## DAgger v2 scored (2026-09-03): labels fixed, signal weak —
+## the objective is now the accused
+
+Phase-aligned rounds: s0 {0.197, 0.168, 0.139, 0.087, 0.099,
+0.124} — no crash (v1 hit 0.0), no climb; s1 {0.145, 0.137,
+0.188, 0.162, 0.160, 0.157} — the FIRST sustained above-baseline
+gain of any closed-loop variant (+0.04 at peak, held 4 rounds).
+Verdict: phase alignment eliminates the catastrophic label
+inconsistency on both seeds (do-no-harm confirmed) and produces a
+weak, seed-dependent genuine improvement. Not the 0.2 -> 0.8
+jump; the corrective-REGRESSION signal itself is too weak.
+Sequential cost stayed ~10 s/seed — the DAgger cost structure is
+proven; what's missing is a stronger definition of what the
+scalar state should learn from closed-loop experience. The JEPA
+OBJECTIVE LADDER (residual vs raw-future vs multi-horizon vs
+latent-future, same SSM/state/field) is promoted to the program's
+top open experiment: the accumulated evidence — three weighting
+nulls, marker-not-cause, labels-fixed-still-weak — now all points
+at the OBJECTIVE as the remaining free variable.

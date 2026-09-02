@@ -34,9 +34,13 @@ SUB = 10
 HORIZONS = [100, 200, 400, 800, 1500]      # record steps
 
 
-def collect(model, Vn, I_raw, Ydot, horizon, dev, nseq, rng):
+def collect(model, Vn, I_raw, Ydot, horizon, dev, nseq, rng,
+            align='phase'):
     """Short rollouts from teacher-primed buffers; collect the
-    model's (window, c) at every step, teacher-labeled. Returns
+    model's (window, c) at every step. align='clock': label with
+    teacher V_dot at the same time index. align='phase': label
+    with teacher V_dot at the NEAREST teacher window within
+    +-30 steps (dynamical similarity, not clock). Returns
     (Xc [N, NF], Cc [N, k], Yc [N])."""
     B, T = Vn.shape
     starts = rng.integers(PRIME, T - horizon - 1, nseq)
@@ -68,16 +72,34 @@ def collect(model, Vn, I_raw, Ydot, horizon, dev, nseq, rng):
             hist[:, t] = torch.clamp(vv, -0.6, 1.6)
             Xs.append(x)
             Cs.append(c.clone())
-            Ys.append(torch.tensor(
-                [Ydot[b, t0 + t - PRIME]
-                 for b, t0 in zip(seqs, starts)],
-                dtype=torch.float32))
+            if align == 'clock':
+                Ys.append(torch.tensor(
+                    [Ydot[b, t0 + t - PRIME]
+                     for b, t0 in zip(seqs, starts)],
+                    dtype=torch.float32))
+            else:
+                labels = []
+                wm = x[:, :len(LAGS)].numpy()
+                for j, (b, t0) in enumerate(zip(seqs, starts)):
+                    tc = t0 + t - PRIME
+                    lo = max(tc - 30, LAGS[-1])
+                    hi = min(tc + 30, Vn.shape[1] - 1)
+                    cand = np.stack(
+                        [Vn[b, np.arange(lo, hi) - lg]
+                         for lg in LAGS], -1)
+                    dists = np.linalg.norm(cand - wm[j], axis=1)
+                    tstar = lo + int(np.argmin(dists))
+                    labels.append(Ydot[b, tstar])
+                Ys.append(torch.tensor(labels,
+                                       dtype=torch.float32))
     return torch.cat(Xs), torch.cat(Cs), torch.cat(Ys)
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--seed', type=int, default=0)
+    ap.add_argument('--align', default='phase',
+                    choices=['phase', 'clock'])
     ap.add_argument('--rounds', type=int, default=5)
     ap.add_argument('--epochs0', type=int, default=15)
     ap.add_argument('--epochsr', type=int, default=6)
@@ -123,7 +145,7 @@ def main():
                     j = torch.randint(0, len(Xc), (8192,))
                     pc = model.vdot(Xc[j].to(dev),
                                     Cc[j].to(dev))
-                    loss = loss + 2.0 * (((pc - Yc[j].to(dev))
+                    loss = loss + 0.5 * (((pc - Yc[j].to(dev))
                                           / scale) ** 2).mean()
                 opt.zero_grad()
                 loss.backward()
@@ -138,7 +160,8 @@ def main():
             H = HORIZONS[min(r - 1, len(HORIZONS) - 1)]
             ts = time.time()
             xs, cs, ys = collect(model, Vn_tr, d['train_I'],
-                                 Ydot_full, H, dev, 96, rng)
+                                 Ydot_full, H, dev, 96, rng,
+                                 align=args.align)
             seq_seconds += time.time() - ts
             Xc = xs if Xc is None else torch.cat([Xc, xs])
             Cc = cs if Cc is None else torch.cat([Cc, cs])
@@ -161,14 +184,15 @@ def main():
     if best_state is not None:
         model.load_state_dict(best_state)
     ev = evaluate(model, d, Ste[..., 0], dev)
-    res = dict(arm='dagger-ssm1', seed=args.seed,
+    res = dict(arm=f'dagger-ssm1-{args.align}',
+               seed=args.seed,
                total_seconds=round(time.time() - t0, 1),
                seq_seconds=round(seq_seconds, 1),
                best_val_f1=round(best_vf1, 3), rounds=log, **ev)
     print('RESULT', json.dumps(res), flush=True)
-    torch.save(model.state_dict(),
-               OUT / f'dagger_s{args.seed}.pt')
-    json.dump(res, open(OUT / f'dagger_s{args.seed}.json', 'w'))
+    tag = f'dagger_{args.align}_s{args.seed}'
+    torch.save(model.state_dict(), OUT / f'{tag}.pt')
+    json.dump(res, open(OUT / f'{tag}.json', 'w'))
 
 
 if __name__ == '__main__':
