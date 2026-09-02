@@ -25,20 +25,27 @@ from hh_surrogate import spike_f1                         # noqa
 OUT = pathlib.Path('results')
 
 
-def simulate_2d(I_of_t, B, c):
-    """Reduced model: state (V, n). I_of_t (B, N) at dt=DT."""
+def simulate_2d(I_of_t, B, c, keep='n'):
+    """Reduced model: state (V, keep) with the other slow gate
+    slaved via h + n = c. I_of_t (B, N) at dt=DT."""
     V = np.full(B, -65.0)
     am, bm, ah, bh, an, bn = rates(V)
-    n = an / (an + bn)
+    g = (an / (an + bn)) if keep == 'n' else (ah / (ah + bh))
     N = I_of_t.shape[1]
     rec = np.empty((B, N // REC_EVERY), np.float32)
     for t in range(N):
         am, bm, ah, bh, an, bn = rates(V)
-        tau_n = 1.0 / (an + bn)
-        n_inf = an * tau_n
-        n = n_inf + (n - n_inf) * np.exp(-DT / tau_n)
+        a, b_ = (an, bn) if keep == 'n' else (ah, bh)
+        tau_g = 1.0 / (a + b_)
+        g_inf = a * tau_g
+        g = g_inf + (g - g_inf) * np.exp(-DT / tau_g)
         m = am / (am + bm)                     # instantaneous
-        h = np.clip(c - n, 0.0, 1.0)           # slaved
+        if keep == 'n':
+            n = g
+            h = np.clip(c - g, 0.0, 1.0)       # slaved
+        else:
+            h = g
+            n = np.clip(c - g, 0.0, 1.0)       # slaved
         ina = GNA * m ** 3 * h * (V - ENA)
         ik = GK * n ** 4 * (V - EK)
         il = GL * (V - EL)
@@ -55,30 +62,39 @@ def upsample(I_rec):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--keep', default='n', choices=['n', 'h'])
+    args = ap.parse_args()
     d = dict(np.load(OUT / 'hh_data_full.npz'))
     G = d['train_G']
     c = float((G[1] + G[2]).mean())
     print(f'slaving constant c = mean(h+n) = {c:.4f} '
-          f'(std {(G[1] + G[2]).std():.4f})', flush=True)
-    v_pred = simulate_2d(upsample(d['test_I']), len(d['test_I']), c)
+          f'(std {(G[1] + G[2]).std():.4f}) | keep={args.keep}',
+          flush=True)
+    kp = args.keep
+    v_pred = simulate_2d(upsample(d['test_I']), len(d['test_I']),
+                         c, kp)
     v_true = d['test_V']
     v_rmse = float(np.sqrt(np.mean((v_pred - v_true) ** 2)))
     f1 = spike_f1(v_true, v_pred)
     amps = d['fi_amps']
     N = int(1200.0 / DT)
-    v_fi = simulate_2d(np.repeat(amps[:, None], N, 1), len(amps), c)
+    v_fi = simulate_2d(np.repeat(amps[:, None], N, 1), len(amps),
+                       c, kp)
     rate = np.array([len(spikes_from_v(x[2000:])) for x in v_fi])
     fi_rmse = float(np.sqrt(np.mean((rate - d['fi_rate']) ** 2)))
     N2 = int(400.0 / DT)
     I2 = np.zeros((1, N2))
     I2[0, :N2 // 2] = -3.0
-    v_r = simulate_2d(I2, 1, c)[0]
+    v_r = simulate_2d(I2, 1, c, kp)[0]
     reb = len(spikes_from_v(v_r[len(v_r) // 2:]))
-    res = dict(arm='reduced-2d', c=round(c, 4),
+    res = dict(arm=f'reduced-2d-{kp}', c=round(c, 4),
                v_rmse_mv=round(v_rmse, 2), spike_f1=round(f1, 3),
                fi_rmse_hz=round(fi_rmse, 1), rebound_spikes=reb)
     print('RESULT', json.dumps(res), flush=True)
-    json.dump(res, open(OUT / 'reduced2d_result.json', 'w'))
+    json.dump(res, open(
+        OUT / f'reduced2d_{kp}_result.json', 'w'))
 
 
 if __name__ == '__main__':

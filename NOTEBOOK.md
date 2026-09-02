@@ -847,3 +847,25 @@ reconstruct h/n) or only the embedding dimension? Each component
 maps to a measured failure: delays fix state ambiguity (0.35 ->
 0.14); tangent training fixes training cost (~14x); tube fixes
 drift (pending); compilation fixes deployment cost (pending).
+
+## (V,h) dynamics check (2026-09-02): sufficiency and dynamical
+## adequacy DISSOCIATE — an instrument-scope result
+
+Simulated (V,h) reduction (n slaved): F1 0.202 / f-I 61.7 /
+rebound 1, vs (V,n) (h slaved): 0.325 / 26.4 / 1. The
+representation with BETTER static sufficiency (0.092 vs 0.144)
+generates WORSE dynamics. Reading: h carries more information
+about the remaining hidden state, but n does more dynamical work
+(n^4 drives repolarization); evolving the working variable and
+slaving the informative one wins.
+
+Scope calibration, stated plainly: the collision diagnostic
+measures WHICH COORDINATES IDENTIFY THE STATE (static
+sufficiency), not which coordinates' evolution equations
+reproduce the flow (dynamical adequacy). Its first out-of-domain
+prediction failed, and the failure defines the boundary. Both
+axes are needed: sufficiency bounds what any dynamics could
+recover; adequacy is a property of the dynamics built on top.
+The candidate micro-finding "the better 2-D reduction keeps
+(V,h)" is WITHDRAWN for dynamics and retained only as a statement
+about static state identification.
