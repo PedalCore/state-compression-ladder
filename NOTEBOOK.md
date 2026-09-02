@@ -884,3 +884,62 @@ reconstructing the hidden state that a 12 ms window provides
 explicitly. Standing caveat: single seed per arm (A-seeds
 quantified what that is worth); the k=8 number needs seeds before
 strong claims. The B-track historical baseline is now complete.
+
+## Moving-target confound + FROZEN-CHART variant declared
+## (2026-09-02, before running)
+
+v4 wording tightened per review: "at fixed long training budget,
+larger recurrent state produced a monotone performance trend ON
+THIS SEED" — voltage-only observation is not fundamentally
+insufficient IF recurrence has capacity+budget to reconstruct
+state from history internally (the implicit form of what D0's
+delay window does explicitly; the open comparison is
+computational: implicit recurrent reconstruction vs explicit
+delay geometry, and possibly explicit-for-training ->
+distill-to-recurrent for deployment).
+
+Tube confound identified from the rising training loss: tube
+targets are decode-grounded through the CURRENT E/D — the
+coordinate system and the target both move under G. "Noise tube
+fails" therefore admits two readings: (a) random-neighborhood
+supervision is insufficient; (b) supervision is useful but
+nonstationary. Running preregistered arms continue unchanged.
+
+FROZEN-CHART variant declared: load the geometric checkpoint,
+FREEZE E and D (the collision gate already certified these
+coordinates sufficient at k>=3), train ONLY G — tube targets
+become stationary functions (z', I) -> zdot_target. Quick
+discriminator first: frozen noise + frozen restore, k=4 seed 0.
+Rising-loss disappearing under frozen charts implicates
+nonstationarity; persisting implicates the supervision itself.
+
+Staged pipeline adopted as the project's method template:
+Stage 1 discover coordinates (gate: collision sufficiency) ->
+freeze -> Stage 2 learn robust dynamics on-manifold + tube
+(gate: rollout adequacy + off-manifold stability) -> Stage 3
+integrate/compile (gate: deployment cost). One optimizer per
+stage, one gate per stage.
+
+## Frozen-chart discriminator (2026-09-02): split verdict
+
+Frozen E/D (k=4 s0): noise 0.193/76.6, restore 0.166/63.3 —
+versus joint: noise 0.115/249, restore 0.000/301. Training loss
+now decreases monotonically (0.00122 -> 0.00102); the rising-loss
+signature was nonstationarity, confirmed. BUT stationary targets
++ certified coordinates still do not stabilize rollout: the tube
+supervision as implemented (radius 0.1 std, uniform weight) is
+insufficient even without the confound. Two-stage separation
+validated methodologically; latent stabilization unsolved.
+
+Strategic reprioritization (declared): the A0 field rolls out
+well because x-space is DATA-NATIVE — trajectories fill the
+region rollouts traverse and the true field contracts toward the
+attractor; learned charts manufacture off-manifold territory that
+data-native coordinates simply do not have. Delay coordinates are
+also data-native. B2-delay (field learned directly on the 5x3ms
+delay vector + I, no autoencoder) is promoted ABOVE further
+latent-tube engineering: it may inherit A0's rollout benignity
+for free. Latent tubes remain interesting for the compression
+question but are no longer the critical path. On-policy joint
+arms and rollout references still complete the preregistered
+table.
