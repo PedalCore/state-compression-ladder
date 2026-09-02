@@ -1,0 +1,1 @@
+{"arm": "hyb-static7-trust-sel", "seed": 1, "corr_params": 74, "train_seconds": 2401.1, "spike_f1": 0.879, "f1_by_window": [0.894, 0.923, 0.893, 0.802], "entry_rate": 0.077, "cont_frac": 0.458, "fi_rmse_hz": 2.6, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0011, "-70..-50": 0.0123, "-50..-20": 0.0124, "-20..60": 0.0006}, "best_val_f1": 0.889}

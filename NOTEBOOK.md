@@ -1859,3 +1859,80 @@ THE COMPLETE RECIPE, every ingredient measured into place:
 Total: gate 3 passed at ~1/2 of v4's sequential cost concentrated
 on 0.6% of the parameters, with the physics interpretable and the
 correction inspectable.
+
+## CORRECTOR CAPACITY LADDER declared (2026-09-03, before running)
+
+396 params was the scaffold, not the primitive. Scaling note
+recorded: the corrector is a SHARED LAW — N neurons cost
+396 + N*k (state), not 396*N; the biology bargain. Compression
+question now: how little extra machinery captures what the field
+misses? Ladder: kc in {4, 2, 1} (= 152 / 66 / 32 params; runtime
+state k = kc), trust + val-selection, seeds {0,1}; kc=8 (396)
+already done at 0.903/0.911. Scored on F1-per-parameter and
+F1-per-state. P-cap1: kc=2 retains most of the gain (the
+anatomy's excitability-margin story needs ~1 slow coordinate);
+P-cap2: kc=1 still beats the 0.742 baseline materially; P-cap3:
+if kc=1 ~ kc=8, the eventual primitive is ~32 shared params +
+ONE extra scalar state per neuron — the strongest possible form
+of the answer.
+
+## Post-gate consolidation (2026-09-03, per review)
+
+Framing recorded: the result's weight is the MECHANISM, not the
+0.91 — the neuron decomposed as F_base (bulk dynamics, parallel-
+trained) + bounded deltaF (marginal decisions only), with the
+hard bound structurally preventing interference; the learned
+correction OBSERVED silent outside the drift/decision region.
+The base field was never incapable; it lacked a small amount of
+state for marginal excitability decisions. Unconstrained capacity
+was dangerous; soft penalty delayed; the trust region made the
+optimum safe AND reachable. "First genuinely successful learned
+neuron formulation — demonstrated mechanism, not final primitive."
+
+STATIC CONTROL ARM added to the ladder (declared): static
+correctors at matched budgets (widths 3/7/24 ~ 34/81/268 params)
+under the SAME trust region + selection — discriminates extra
+nonlinear capacity from extra DYNAMICAL STATE at the winning
+protocol. If tiny static matches tiny recurrent, the state story
+weakens; if 1-2-state recurrent beats equal-size static, M13's
+original question gets its strongest answer.
+
+GENERALIZATION declared (R-general, later): replace the hand-
+measured eps(V) bands with eps(x) = g(decision margin / learned
+credit map) — the principle "protect well-modelled dynamics;
+allocate recurrent correction only near qualitative decision
+boundaries" made regime-independent. Next milestone: 0.90+ with
+the fewest recurrent states and shared parameters.
+
+## CROSS-TABLE COMPLETE (2026-09-03): the correction compresses to
+## ~34 params — and form barely matters in complete coordinates
+
+Recurrent (trust+sel): kc8 396p {0.903,0.911} | kc4 152p
+{0.908,0.912} | kc2 66p {0.897,0.910} | kc1 32p {0.868,0.876}.
+Static: w24 244p {0.890,0.888} | w7 74p {0.889,0.879} | w3 34p
+{0.899,0.909}. Baseline 0.742/0.732; v4 GRU 0.869; gate 0.9.
+
+Scoring: P-cap1 CONFIRMED (kc=2, 66 params + 2 states, holds the
+top plateau). P-cap2 CONFIRMED (kc=1 at 0.868/0.876 = exactly
+v4-class from 32 params + ONE scalar). P-cap3 and the state-vs-
+capacity question resolve with a twist: the 34-param STATIC arm
+matches the top plateau ({0.899, 0.909}) — at matched small
+budgets static ~ or > recurrent. In COMPLETE (Markov)
+coordinates, dynamical state confers no material advantage; the
+active ingredients are the HARD TRUST REGION + SEQUENTIAL
+TRAINING + VAL SELECTION applied to any tiny bounded correction.
+The state question's real answer stays where the contamination
+dissociation put it: state is required when coordinates are
+INCOMPLETE (observable track: static fails at 0.004, recurrence
+reaches 0.87+), unnecessary when complete. Everything lands in
+[0.87, 0.91] — a new shared plateau, unchased for now (candidates:
+val-set size, residual event errors needing the 2b hazard
+objective).
+
+M13'S ANSWER, final form: a parallel-trained field (minutes),
+the drive's own entrainment (free), and a ~34-parameter bounded
+correction (30 min sequential, val-selected) reach F1 0.90+ with
+near-perfect f-I and correct rebound — where the correction's
+FORM matters only when the coordinates leave state to be
+inferred. Dimension x coordinates x dynamics x objective,
+measured all the way down.

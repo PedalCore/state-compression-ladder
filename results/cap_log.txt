@@ -1,0 +1,145 @@
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_hybrid.py:223: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+hyb s=0 ep1: val-F1 0.837 (best 0.837)
+hyb s=0 ep2: val-F1 0.775 (best 0.837)
+hyb s=0 ep3: val-F1 0.875 (best 0.875)
+hyb s=0 ep3: {"spike_f1": 0.871, "f1_by_window": [0.918, 0.874, 0.805, 0.883], "entry_rate": 0.066, "cont_frac": 0.528, "fi_rmse_hz": 0.7, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0067, "-50..-20": 0.0112, "-20..60": 0.0009}}
+hyb s=0 ep4: val-F1 0.818 (best 0.875)
+hyb s=0 ep5: val-F1 0.875 (best 0.875)
+hyb s=0 ep6: val-F1 0.859 (best 0.875)
+hyb s=0 ep6: {"spike_f1": 0.877, "f1_by_window": [0.847, 0.896, 0.906, 0.863], "entry_rate": 0.052, "cont_frac": 0.474, "fi_rmse_hz": 9.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0048, "-50..-20": 0.0101, "-20..60": 0.0008}}
+hyb s=0 ep7: val-F1 0.910 (best 0.910)
+hyb s=0 ep8: val-F1 0.854 (best 0.910)
+hyb s=0 ep9: val-F1 0.812 (best 0.910)
+hyb s=0 ep9: {"spike_f1": 0.85, "f1_by_window": [0.842, 0.845, 0.845, 0.871], "entry_rate": 0.058, "cont_frac": 0.527, "fi_rmse_hz": 9.4, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0007, "-70..-50": 0.0084, "-50..-20": 0.0152, "-20..60": 0.0012}}
+hyb s=0 ep10: val-F1 0.804 (best 0.910)
+hyb s=0 ep11: val-F1 0.863 (best 0.910)
+hyb s=0 ep12: val-F1 0.872 (best 0.910)
+hyb s=0 ep12: {"spike_f1": 0.891, "f1_by_window": [0.881, 0.908, 0.885, 0.891], "entry_rate": 0.055, "cont_frac": 0.411, "fi_rmse_hz": 9.5, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0007, "-70..-50": 0.0075, "-50..-20": 0.0149, "-20..60": 0.0012}}
+hyb s=0 ep13: val-F1 0.862 (best 0.910)
+hyb s=0 ep14: val-F1 0.869 (best 0.910)
+hyb s=0 ep15: val-F1 0.840 (best 0.910)
+hyb s=0 ep15: {"spike_f1": 0.875, "f1_by_window": [0.83, 0.857, 0.896, 0.925], "entry_rate": 0.054, "cont_frac": 0.512, "fi_rmse_hz": 9.7, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0007, "-70..-50": 0.0074, "-50..-20": 0.0168, "-20..60": 0.0013}}
+RESULT {"arm": "hyb-rec4-trust-sel", "seed": 0, "corr_params": 152, "train_seconds": 2052.3, "spike_f1": 0.908, "f1_by_window": [0.901, 0.92, 0.897, 0.914], "entry_rate": 0.054, "cont_frac": 0.447, "fi_rmse_hz": 0.5, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0043, "-50..-20": 0.0097, "-20..60": 0.0008}, "best_val_f1": 0.91}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_hybrid.py:223: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+hyb s=1 ep1: val-F1 0.746 (best 0.746)
+hyb s=1 ep2: val-F1 0.717 (best 0.746)
+hyb s=1 ep3: val-F1 0.888 (best 0.888)
+hyb s=1 ep3: {"spike_f1": 0.912, "f1_by_window": [0.892, 0.916, 0.924, 0.909], "entry_rate": 0.05, "cont_frac": 0.451, "fi_rmse_hz": 9.7, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0004, "-70..-50": 0.0061, "-50..-20": 0.0059, "-20..60": 0.0006}}
+hyb s=1 ep4: val-F1 0.886 (best 0.888)
+hyb s=1 ep5: val-F1 0.806 (best 0.888)
+hyb s=1 ep6: val-F1 0.805 (best 0.888)
+hyb s=1 ep6: {"spike_f1": 0.838, "f1_by_window": [0.813, 0.823, 0.84, 0.879], "entry_rate": 0.074, "cont_frac": 0.456, "fi_rmse_hz": 13.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0007, "-70..-50": 0.0106, "-50..-20": 0.0084, "-20..60": 0.0006}}
+hyb s=1 ep7: val-F1 0.773 (best 0.888)
+hyb s=1 ep8: val-F1 0.889 (best 0.889)
+hyb s=1 ep9: val-F1 0.873 (best 0.889)
+hyb s=1 ep9: {"spike_f1": 0.892, "f1_by_window": [0.87, 0.914, 0.873, 0.91], "entry_rate": 0.058, "cont_frac": 0.444, "fi_rmse_hz": 9.5, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0008, "-70..-50": 0.0138, "-50..-20": 0.0108, "-20..60": 0.0008}}
+hyb s=1 ep10: val-F1 0.861 (best 0.889)
+hyb s=1 ep11: val-F1 0.857 (best 0.889)
+hyb s=1 ep12: val-F1 0.862 (best 0.889)
+hyb s=1 ep12: {"spike_f1": 0.867, "f1_by_window": [0.844, 0.847, 0.899, 0.879], "entry_rate": 0.063, "cont_frac": 0.51, "fi_rmse_hz": 9.0, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0009, "-70..-50": 0.0147, "-50..-20": 0.0116, "-20..60": 0.0009}}
+hyb s=1 ep13: val-F1 0.839 (best 0.889)
+hyb s=1 ep14: val-F1 0.868 (best 0.889)
+hyb s=1 ep15: val-F1 0.844 (best 0.889)
+hyb s=1 ep15: {"spike_f1": 0.864, "f1_by_window": [0.865, 0.888, 0.86, 0.842], "entry_rate": 0.059, "cont_frac": 0.521, "fi_rmse_hz": 9.7, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0009, "-70..-50": 0.0161, "-50..-20": 0.0132, "-20..60": 0.001}}
+RESULT {"arm": "hyb-rec4-trust-sel", "seed": 1, "corr_params": 152, "train_seconds": 2366.9, "spike_f1": 0.912, "f1_by_window": [0.895, 0.905, 0.926, 0.922], "entry_rate": 0.056, "cont_frac": 0.413, "fi_rmse_hz": 9.0, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0008, "-70..-50": 0.0124, "-50..-20": 0.01, "-20..60": 0.0007}, "best_val_f1": 0.889}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_hybrid.py:223: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+hyb s=0 ep1: val-F1 0.824 (best 0.824)
+hyb s=0 ep2: val-F1 0.795 (best 0.824)
+hyb s=0 ep3: val-F1 0.748 (best 0.824)
+hyb s=0 ep3: {"spike_f1": 0.798, "f1_by_window": [0.766, 0.797, 0.815, 0.812], "entry_rate": 0.078, "cont_frac": 0.513, "fi_rmse_hz": 14.3, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0004, "-70..-50": 0.0048, "-50..-20": 0.0047, "-20..60": 0.0004}}
+hyb s=0 ep4: val-F1 0.866 (best 0.866)
+hyb s=0 ep5: val-F1 0.845 (best 0.866)
+hyb s=0 ep6: val-F1 0.849 (best 0.866)
+hyb s=0 ep6: {"spike_f1": 0.878, "f1_by_window": [0.865, 0.917, 0.848, 0.883], "entry_rate": 0.054, "cont_frac": 0.488, "fi_rmse_hz": 9.5, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0003, "-70..-50": 0.0039, "-50..-20": 0.005, "-20..60": 0.0007}}
+hyb s=0 ep7: val-F1 0.744 (best 0.866)
+hyb s=0 ep8: val-F1 0.796 (best 0.866)
+hyb s=0 ep9: val-F1 0.888 (best 0.888)
+hyb s=0 ep9: {"spike_f1": 0.897, "f1_by_window": [0.929, 0.911, 0.889, 0.852], "entry_rate": 0.046, "cont_frac": 0.538, "fi_rmse_hz": 0.8, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0003, "-70..-50": 0.0041, "-50..-20": 0.0051, "-20..60": 0.0006}}
+hyb s=0 ep10: val-F1 0.854 (best 0.888)
+hyb s=0 ep11: val-F1 0.773 (best 0.888)
+hyb s=0 ep12: val-F1 0.832 (best 0.888)
+hyb s=0 ep12: {"spike_f1": 0.856, "f1_by_window": [0.837, 0.849, 0.887, 0.852], "entry_rate": 0.063, "cont_frac": 0.5, "fi_rmse_hz": 10.1, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0052, "-50..-20": 0.0053, "-20..60": 0.0005}}
+hyb s=0 ep13: val-F1 0.865 (best 0.888)
+hyb s=0 ep14: val-F1 0.846 (best 0.888)
+hyb s=0 ep15: val-F1 0.859 (best 0.888)
+hyb s=0 ep15: {"spike_f1": 0.85, "f1_by_window": [0.821, 0.885, 0.849, 0.847], "entry_rate": 0.062, "cont_frac": 0.473, "fi_rmse_hz": 9.7, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0042, "-50..-20": 0.0063, "-20..60": 0.0006}}
+RESULT {"arm": "hyb-rec2-trust-sel", "seed": 0, "corr_params": 66, "train_seconds": 2498.9, "spike_f1": 0.897, "f1_by_window": [0.929, 0.911, 0.889, 0.852], "entry_rate": 0.046, "cont_frac": 0.538, "fi_rmse_hz": 0.8, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0003, "-70..-50": 0.0041, "-50..-20": 0.0051, "-20..60": 0.0006}, "best_val_f1": 0.888}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_hybrid.py:223: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+hyb s=1 ep1: val-F1 0.744 (best 0.744)
+hyb s=1 ep2: val-F1 0.855 (best 0.855)
+hyb s=1 ep3: val-F1 0.777 (best 0.855)
+hyb s=1 ep3: {"spike_f1": 0.804, "f1_by_window": [0.799, 0.733, 0.83, 0.85], "entry_rate": 0.084, "cont_frac": 0.534, "fi_rmse_hz": 14.2, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0003, "-70..-50": 0.0056, "-50..-20": 0.0077, "-20..60": 0.0006}}
+hyb s=1 ep4: val-F1 0.848 (best 0.855)
+hyb s=1 ep5: val-F1 0.852 (best 0.855)
+hyb s=1 ep6: val-F1 0.862 (best 0.862)
+hyb s=1 ep6: {"spike_f1": 0.857, "f1_by_window": [0.829, 0.871, 0.848, 0.878], "entry_rate": 0.062, "cont_frac": 0.515, "fi_rmse_hz": 9.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0004, "-70..-50": 0.0072, "-50..-20": 0.0093, "-20..60": 0.0007}}
+hyb s=1 ep7: val-F1 0.834 (best 0.862)
+hyb s=1 ep8: val-F1 0.847 (best 0.862)
+hyb s=1 ep9: val-F1 0.814 (best 0.862)
+hyb s=1 ep9: {"spike_f1": 0.841, "f1_by_window": [0.811, 0.812, 0.875, 0.867], "entry_rate": 0.07, "cont_frac": 0.49, "fi_rmse_hz": 13.5, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0092, "-50..-20": 0.0118, "-20..60": 0.0008}}
+hyb s=1 ep10: val-F1 0.835 (best 0.862)
+hyb s=1 ep11: val-F1 0.808 (best 0.862)
+hyb s=1 ep12: val-F1 0.895 (best 0.895)
+hyb s=1 ep12: {"spike_f1": 0.91, "f1_by_window": [0.894, 0.923, 0.91, 0.915], "entry_rate": 0.052, "cont_frac": 0.453, "fi_rmse_hz": 9.3, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0089, "-50..-20": 0.0116, "-20..60": 0.0008}}
+hyb s=1 ep13: val-F1 0.761 (best 0.895)
+hyb s=1 ep14: val-F1 0.841 (best 0.895)
+hyb s=1 ep15: val-F1 0.893 (best 0.895)
+hyb s=1 ep15: {"spike_f1": 0.901, "f1_by_window": [0.888, 0.899, 0.898, 0.916], "entry_rate": 0.066, "cont_frac": 0.42, "fi_rmse_hz": 0.6, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0006, "-70..-50": 0.0101, "-50..-20": 0.0136, "-20..60": 0.001}}
+RESULT {"arm": "hyb-rec2-trust-sel", "seed": 1, "corr_params": 66, "train_seconds": 2501.1, "spike_f1": 0.91, "f1_by_window": [0.894, 0.923, 0.91, 0.915], "entry_rate": 0.052, "cont_frac": 0.453, "fi_rmse_hz": 9.3, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0089, "-50..-20": 0.0116, "-20..60": 0.0008}, "best_val_f1": 0.895}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_hybrid.py:223: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+hyb s=0 ep1: val-F1 0.825 (best 0.825)
+hyb s=0 ep2: val-F1 0.846 (best 0.846)
+hyb s=0 ep3: val-F1 0.842 (best 0.846)
+hyb s=0 ep3: {"spike_f1": 0.851, "f1_by_window": [0.834, 0.844, 0.866, 0.861], "entry_rate": 0.062, "cont_frac": 0.544, "fi_rmse_hz": 9.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0004, "-70..-50": 0.0063, "-50..-20": 0.0082, "-20..60": 0.0007}}
+hyb s=0 ep4: val-F1 0.821 (best 0.846)
+hyb s=0 ep5: val-F1 0.806 (best 0.846)
+hyb s=0 ep6: val-F1 0.850 (best 0.850)
+hyb s=0 ep6: {"spike_f1": 0.881, "f1_by_window": [0.842, 0.905, 0.89, 0.888], "entry_rate": 0.051, "cont_frac": 0.512, "fi_rmse_hz": 9.5, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0004, "-70..-50": 0.0064, "-50..-20": 0.0092, "-20..60": 0.0008}}
+hyb s=0 ep7: val-F1 0.857 (best 0.857)
+hyb s=0 ep8: val-F1 0.812 (best 0.857)
+hyb s=0 ep9: val-F1 0.825 (best 0.857)
+hyb s=0 ep9: {"spike_f1": 0.851, "f1_by_window": [0.84, 0.874, 0.838, 0.848], "entry_rate": 0.061, "cont_frac": 0.54, "fi_rmse_hz": 9.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.0076, "-50..-20": 0.0117, "-20..60": 0.001}}
+hyb s=0 ep10: val-F1 0.826 (best 0.857)
+hyb s=0 ep11: val-F1 0.800 (best 0.857)
+hyb s=0 ep12: val-F1 0.786 (best 0.857)
+hyb s=0 ep12: {"spike_f1": 0.829, "f1_by_window": [0.828, 0.841, 0.844, 0.803], "entry_rate": 0.071, "cont_frac": 0.509, "fi_rmse_hz": 10.1, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0004, "-70..-50": 0.007, "-50..-20": 0.0121, "-20..60": 0.001}}
+hyb s=0 ep13: val-F1 0.804 (best 0.857)
+hyb s=0 ep14: val-F1 0.787 (best 0.857)
+hyb s=0 ep15: val-F1 0.788 (best 0.857)
+hyb s=0 ep15: {"spike_f1": 0.83, "f1_by_window": [0.813, 0.858, 0.813, 0.837], "entry_rate": 0.067, "cont_frac": 0.505, "fi_rmse_hz": 10.0, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0005, "-70..-50": 0.009, "-50..-20": 0.0153, "-20..60": 0.0013}}
+RESULT {"arm": "hyb-rec1-trust-sel", "seed": 0, "corr_params": 32, "train_seconds": 2406.8, "spike_f1": 0.868, "f1_by_window": [0.844, 0.861, 0.885, 0.886], "entry_rate": 0.061, "cont_frac": 0.495, "fi_rmse_hz": 9.6, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0003, "-70..-50": 0.0053, "-50..-20": 0.0085, "-20..60": 0.0007}, "best_val_f1": 0.857}
+/Users/marycarrigan/coding/morpho-0.2/morpho/whitebox/hh_hybrid.py:223: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:837.)
+  tot += float(loss) * x.numel()
+hyb s=1 ep1: val-F1 0.753 (best 0.753)
+hyb s=1 ep2: val-F1 0.647 (best 0.753)
+hyb s=1 ep3: val-F1 0.740 (best 0.753)
+hyb s=1 ep3: {"spike_f1": 0.798, "f1_by_window": [0.803, 0.81, 0.814, 0.758], "entry_rate": 0.079, "cont_frac": 0.491, "fi_rmse_hz": 17.3, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0008, "-70..-50": 0.0098, "-50..-20": 0.0103, "-20..60": 0.0006}}
+hyb s=1 ep4: val-F1 0.777 (best 0.777)
+hyb s=1 ep5: val-F1 0.749 (best 0.777)
+hyb s=1 ep6: val-F1 0.752 (best 0.777)
+hyb s=1 ep6: {"spike_f1": 0.792, "f1_by_window": [0.829, 0.765, 0.783, 0.786], "entry_rate": 0.075, "cont_frac": 0.553, "fi_rmse_hz": 16.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.001, "-70..-50": 0.0112, "-50..-20": 0.0116, "-20..60": 0.0005}}
+hyb s=1 ep7: val-F1 0.778 (best 0.778)
+hyb s=1 ep8: val-F1 0.796 (best 0.796)
+hyb s=1 ep9: val-F1 0.806 (best 0.806)
+hyb s=1 ep9: {"spike_f1": 0.841, "f1_by_window": [0.871, 0.825, 0.812, 0.856], "entry_rate": 0.064, "cont_frac": 0.5, "fi_rmse_hz": 13.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0015, "-70..-50": 0.0156, "-50..-20": 0.0149, "-20..60": 0.0006}}
+hyb s=1 ep10: val-F1 0.742 (best 0.806)
+hyb s=1 ep11: val-F1 0.785 (best 0.806)
+hyb s=1 ep12: val-F1 0.809 (best 0.809)
+hyb s=1 ep12: {"spike_f1": 0.837, "f1_by_window": [0.813, 0.849, 0.839, 0.847], "entry_rate": 0.07, "cont_frac": 0.48, "fi_rmse_hz": 13.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.002, "-70..-50": 0.0208, "-50..-20": 0.019, "-20..60": 0.0008}}
+hyb s=1 ep13: val-F1 0.802 (best 0.809)
+hyb s=1 ep14: val-F1 0.851 (best 0.851)
+hyb s=1 ep15: val-F1 0.867 (best 0.867)
+hyb s=1 ep15: {"spike_f1": 0.876, "f1_by_window": [0.858, 0.879, 0.861, 0.903], "entry_rate": 0.06, "cont_frac": 0.483, "fi_rmse_hz": 9.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0021, "-70..-50": 0.0215, "-50..-20": 0.0188, "-20..60": 0.001}}
+RESULT {"arm": "hyb-rec1-trust-sel", "seed": 1, "corr_params": 32, "train_seconds": 2298.0, "spike_f1": 0.876, "f1_by_window": [0.858, 0.879, 0.861, 0.903], "entry_rate": 0.06, "cont_frac": 0.483, "fi_rmse_hz": 9.9, "rebound_spikes": 1, "delta_by_band": {"-90..-70": 0.0021, "-70..-50": 0.0215, "-50..-20": 0.0188, "-20..60": 0.001}, "best_val_f1": 0.867}
+=== CAP LADDER DONE ===
