@@ -46,6 +46,7 @@ class Corrector(nn.Module):
         super().__init__()
         self.kind = kind
         self.kc = kc
+        self.trust = False
         if kind == 'rec':
             self.cell = nn.GRUCell(5, kc)
             self.head = nn.Linear(kc, 4)
@@ -58,9 +59,14 @@ class Corrector(nn.Module):
     def forward(self, x, i_t, c):
         if self.kind == 'rec':
             c = self.cell(torch.cat([x, i_t], -1), c)
-            return self.head(c), c
-        z = self.net(torch.cat([x, i_t], -1))
-        return self.head(z), c
+            raw = self.head(c)
+        else:
+            raw = self.head(self.net(torch.cat([x, i_t], -1)))
+        if self.trust:
+            v = x[:, 0:1]
+            eps = 0.01 + 0.14 * ((v > -0.05) & (v < 0.45)).float()
+            raw = eps * torch.tanh(raw)
+        return raw, c
 
 
 def hybrid_roll(field, corr, I_mv, s0, dev, bs=32,
@@ -152,6 +158,7 @@ def main():
                     choices=['rec', 'static'])
     ap.add_argument('--kc', type=int, default=8)
     ap.add_argument('--lam', type=float, default=0.1)
+    ap.add_argument('--trust', action='store_true')
     ap.add_argument('--epochs', type=int, default=15)
     ap.add_argument('--dev', default='cpu')
     args = ap.parse_args()
@@ -170,6 +177,7 @@ def main():
         p_.requires_grad_(False)
     torch.manual_seed(args.seed)
     corr = Corrector(args.kind, args.kc).to(dev)
+    corr.trust = args.trust
     opt = torch.optim.Adam(corr.parameters(), lr=1e-3)
     Itr = torch.tensor(d['train_I'] / IS, dtype=torch.float32)
     Ytr = torch.tensor(Str)
@@ -177,6 +185,7 @@ def main():
     B, T = Itr.shape
     dt = DT * REC_EVERY / SUB
     t0 = time.time()
+    best_vf1, best_state = -1.0, None
     for ep in range(args.epochs):
         perm = torch.randperm(B)
         tot = cnt = 0.0
@@ -213,15 +222,30 @@ def main():
                 c = c.detach()
                 tot += float(loss) * x.numel()
                 cnt += x.numel()
+        Sval = norm_state(d['val_V'], d['val_G'])
+        vtr = hybrid_roll(field, corr, d['val_I'], Sval[:, 0],
+                          dev).cpu().numpy()
+        from hh_surrogate import spike_f1 as _f1
+        vf1 = float(_f1(d['val_V'], vtr[..., 0] * VS - VOFF))
+        if vf1 > best_vf1:
+            best_vf1 = vf1
+            best_state = {k: v.clone() for k, v in
+                          corr.state_dict().items()}
+        print(f'hyb s={args.seed} ep{ep + 1}: val-F1 {vf1:.3f} '
+              f'(best {best_vf1:.3f})', flush=True)
         if (ep + 1) % 3 == 0:
             ev = evaluate(field, corr, d, Ste, rest, dev)
             print(f'hyb s={args.seed} ep{ep + 1}: '
                   f'{json.dumps(ev)}', flush=True)
     ts = time.time() - t0
+    if best_state is not None:
+        corr.load_state_dict(best_state)
     ev = evaluate(field, corr, d, Ste, rest, dev)
+    ev['best_val_f1'] = round(best_vf1, 3)
     nprm = sum(p_.numel() for p_ in corr.parameters())
     arm = (f'hyb-{args.kind}'
-           + (f'{args.kc}' if args.kind == 'rec' else ''))
+           + (f'{args.kc}' if args.kind == 'rec' else '')
+           + ('-trust' if args.trust else '') + '-sel')
     res = dict(arm=arm, seed=args.seed, corr_params=nprm,
                train_seconds=round(ts, 1), **ev)
     print('RESULT', json.dumps(res), flush=True)

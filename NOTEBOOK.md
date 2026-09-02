@@ -1793,3 +1793,69 @@ piece of evidence in the project that internal state is not
 merely an information cache but a COMPUTATIONAL RESOURCE.
 The B2 formulation closes; the internal-state route (GRU, hybrid
 corrector) is the road.
+
+## Two branches declared (2026-09-03, per review)
+
+The thrice-replicated rise-then-collapse (composition 0.802,
+hybrid lam=0 0.751, hybrid lam=0.1 0.838) is reframed: THE GOOD
+SOLUTION EXISTS IN PARAMETER SPACE; trajectory-MSE does not have
+its optimum there. Architecture question and objective question
+separated:
+BRANCH 1 (architecture, runs now): val-F1 checkpoint selection —
+  standard model selection on the untouched val split, matched
+  seeds {0,1} at lam=0.1. Success = reproducible >0.74-ceiling
+  test F1 with preservation. Closes the seed/lambda confound too.
+BRANCH 2a (trust region, runs second): replace the soft penalty
+  with a HARD bound delta = eps(x)*tanh(raw), eps large only in
+  the measured drift+decision region (-70..-20 mV), ~zero
+  elsewhere — the corrector structurally cannot rewrite rebound
+  or f-I. The cartoon operationalized.
+BRANCH 2b (declared, next round): event/decision-aware objective
+  — short-horizon spike-hazard target p(spike within tau | x,c,I)
+  trained around the low-margin band, plus transition loss
+  -log P(correct event at next decision): turn the causal anatomy
+  INTO the objective, so the good region becomes an optimum
+  rather than a waypoint.
+Conceptual finding recorded at full strength (per review): the
+contamination dissociation shows history is sufficient
+INFORMATIONALLY but not COMPUTATIONALLY — a recurrent state
+continuously transforms history into a usable coordinate system;
+a static map over the same buffer leaves the decision geometry
+razor-thin. The hybrid's meaning: accurate physical field + tiny
+learned recurrent coordinate correction, not physics replaced by
+recurrence.
+
+## THE TRUST-REGION HYBRID PASSES THE ORIGINAL GATE (2026-09-03)
+## — both seeds, F1 0.903 / 0.911
+
+Full branch table (frozen stage-0 field + 396-param corrector,
+val-F1 checkpoint selection throughout):
+  hyb-rec8-sel        s0 0.712 (never rose)   s1 0.859
+  hyb-rec8-TRUST-sel  s0 0.903                s1 0.911
+Trust arms: entry rate 0.066/0.067 (baseline 0.141), continuation
+0.463/0.350 (0.653), f-I 0.6/0.4 Hz (project bests), rebound 1/1,
+windows uniformly ~0.9, cross-seed spread 0.008 — the tightest
+training result in the project. delta_by_band, both seeds: ~0.001
+in hyperpolarized and spike bands (the hard eps cap), active ONLY
+in drift (0.008-0.011) and decision (0.012-0.014) bands — the
+credit state OBSERVED doing exactly the job the causal anatomy
+predicted. And the day-one instrument gate (F1 > 0.9), failed by
+every model for the project's entire history, is passed by both
+seeds.
+
+The decisive mechanism: the hard bound did not merely protect the
+field — it made the good region RELIABLY REACHABLE (seed 0, which
+never rose under soft penalty, reached 0.903). Constraining the
+search space to field-respecting corrections turned a lucky
+transient into a stable, replicated optimum-adjacent capture.
+
+THE COMPLETE RECIPE, every ingredient measured into place:
+  1. parallel tangent-trained field (15x cheap): dynamics, rates,
+     rebound, f-I;
+  2. entrainment (free, from the drive): long-horizon composition;
+  3. 396-param recurrent corrector, HARD-BOUNDED to the measured
+     drift+decision region, ~30 min sequential training,
+     val-selected: event fidelity 0.74 -> 0.91.
+Total: gate 3 passed at ~1/2 of v4's sequential cost concentrated
+on 0.6% of the parameters, with the physics interpretable and the
+correction inspectable.
