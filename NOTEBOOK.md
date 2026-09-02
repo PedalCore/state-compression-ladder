@@ -571,3 +571,31 @@ similar timing performance. The eventual 2-state cross-
 comparison (learned-observable vs fitted-classical vs derived-
 reduction vs latent-field) is becoming the project's cleanest
 table.
+
+## A0-seeds result (2026-09-02): the divergence was a lucky seed —
+## and the scalar metric decouples from rollout
+
+A0b config, seeds 1-3 (all ~1.5% one-step rel. error, same as
+seed 0): F1 {0.736, 0.737, 0.770}, f-I {9.3, 13.6, 9.5}, rebound
+{1, 1, 1}. The original A0b (seed 0, F1 0.864) was the OUTLIER;
+A0c's 0.738 sits inside the seed band. Reading (b) wins: no
+behavior regressed with precision.
+
+Revisions this forces:
+1. Hierarchy corrected: at >=1.5% field precision, firing AND
+   rebound are robust (5/5 runs); f-I improves with precision
+   (~10 Hz -> 3.0 at sub-1%); OU-drive spike timing PLATEAUS at
+   ~0.74 (occasional lucky 0.86). Fluctuation-driven timing, not
+   rebound, is the binding behavior.
+2. Near-identical scalar one-step error across seeds yields
+   different rollout F1 (0.736 vs 0.864) — rollout fidelity
+   depends on the residual error's location in state space, not
+   its magnitude. The "precision" axis needs a geometry-aware
+   metric (future diagnostic: error conditional on phase /
+   distance-to-threshold; F1 vs time-within-sequence to separate
+   phase drift from event failure).
+3. Gate still unpassed; the F1~0.74 plateau under OU drive with
+   +-2 ms tolerance over 1000 ms rollouts may be partly
+   accumulated phase drift — the F1-vs-time diagnostic
+   discriminates drift (F1 decays with time) from event failure
+   (uniform). Declared as the next A0 analysis.
