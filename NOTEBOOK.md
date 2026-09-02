@@ -2050,3 +2050,52 @@ clock (the parallel-scan claim demonstrated), pending a setting
 where either works. The VM authority grid (eps_hi up to 1.0,
 k up to 4, both seeds) is the remaining variant with a mechanism
 to escape the host limit.
+
+## Framing correction (2026-09-03, user): the retrofit branch was
+## MY drift — the SSM hypothesis needs JOINT placement
+
+Recorded: the user's question was whether selective-scan state can
+REPLACE recurrence while preserving parallel training — not
+whether a patch can rescue a dead host. The VM sweep answers the
+narrower retrofit question (clearly: no). Retrofit branch CLOSED
+on sweep completion. The strongest-form experiment declared:
+
+JOINT OBSERVABLE SSM: c_{t+1} = A(x_t) c_t + B(x_t) with x_t =
+(teacher window, I) — parallel scan over the whole sequence —
+and dV/dt = F(window, c, I) trained on analytic targets over all
+timepoints at once. FULLY PARALLEL joint training; state
+participates in the dynamics from step one. Deployment:
+sequential with self-generated window and carried c.
+Arms (same F width/data/val protocol): joint-static baseline
+(= B2 v1, already run: {0.007, 0.172}); joint-SSM k {1, 2}
+(parallel); joint-GRU k {1, 2} reference (TBPTT through the
+c-chain — the sequential price the SSM claims to avoid).
+Known risk carried forward honestly: teacher-window training vs
+self-generated rollout (the B2 disease) — the hypothesis under
+test is precisely that participating state changes the rollout
+dynamics class where a static map could not.
+P-joint1: SSM k>=1 rescues rollout far above the static baseline.
+P-joint2: SSM ~ GRU at equal k — with parallel-scan training
+wall-clock << TBPTT (the original claim, in its proper form).
+
+## Joint observable A/B complete; VM stopped (2026-09-03)
+
+joint-SSM k1 {0.243, 0.206} / k2 {0.212, 0.157} (~7 min each,
+parallel scan) vs joint-GRU k1 {0.015, 0.182} / k2 {0.193,
+0.089} (~13 min each, TBPTT) vs static {0.007, 0.172}.
+P-joint2 CONFIRMED: SSM >= GRU throughout, lower variance, half
+the wall-clock — selective accumulation beats nonlinear
+recurrence in the joint observable setting, parallel-trained.
+P-joint1 PARTIAL: participating state lifts the dead seed 30x
+(0.007 -> 0.243) but ceilings at ~0.2-0.26 — the teacher-window/
+self-rollout mismatch (the knowingly carried risk) caps parallel
+training here, exactly as it did for B2. The observable exchange
+rate, remeasured at the architectural level: full parallelism
+buys ~0.2; every path to 0.87+ in this project has run through
+rollout supervision. The mini-Mamba hypothesis lands where the
+evidence puts it: the RIGHT state machinery (selective, scannable,
+cheap), awaiting the rollout-aware training that would let it
+match its GRU-sequential equivalent's ceiling — the hybrid
+mostly-parallel + short-rollout-correction recipe now has a
+second, sharper target. VM stopped; retrofit sweep banked 13/18
+(flat, branch closed).
