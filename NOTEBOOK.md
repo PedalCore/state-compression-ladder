@@ -1046,3 +1046,41 @@ may act as an implicit stabilizer that the raw Euler field lacks.
 Fair-fight caveat: the rollout reference needs a full-budget
 rerun before "sequential supervision fails for this architecture"
 is claimed; queued, not run.
+
+## Session-closing consolidation (2026-09-02, per review)
+
+CONCLUSION TIGHTENED: "trajectory-level supervision is load-
+bearing" is NOT yet established. Two blockers: (a) the rollout
+reference was budget-starved (F1 0.0 at 6 epochs) — so what it
+actually shows is that sequential supervision does not
+AUTOMATICALLY solve gate 3 either; architecture, integration and
+optimization still matter; (b) B2-onpolicy's monotone repair
+(TTD 1.8 -> 8.2 ms) means the mostly-parallel route is slow, not
+dead. The demonstrated references for gate 3 remain v4-k8
+(0.869), experiment A's GRU arms, and the A0 field.
+
+GATE 3 SPLIT (adopted): 3a DISTRIBUTION VALIDITY (rollout visits
+states unlike training) vs 3b ERROR COMPOUNDING / PHASE STABILITY
+(every state locally valid, phase drifts — A0's F1~0.74 plateau
+with intact firing/f-I/rebound is the 3b signature). Next
+B2-onpolicy iteration scores them separately: boundedness, TTD,
+PHASE ERROR VS TIME, F1, f-I, rebound. A model on the right
+attractor drifting 5 ms out of phase is dynamically far better
+than its F1.
+
+EXCHANGE-RATE CURVE formalized as the target quantity:
+d(stable horizon)/d(trajectory supervision), normalized by
+wall-clock. FAILURE-FRONTIER refinement declared: concentrate
+corrective samples at t* (first meaningful divergence) rather
+than uniformly over rollouts — grow the basin of autonomous
+validity outward from the data manifold, spending correction at
+the frontier.
+
+THE PROJECT'S PRODUCT, restated:
+  usable dynamical primitive = sufficient representation
+    + learnable local flow + stable self-generated evolution.
+Instruments exist for the first two; the third is the open
+problem, and "local geometry gives ~15x training speedup, plus a
+small measured amount of sequential correction for global
+stability" — if it holds — is the practically useful result, not
+a compromise.
