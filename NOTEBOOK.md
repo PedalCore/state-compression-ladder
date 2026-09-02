@@ -970,3 +970,53 @@ one-step/tangent supervision of ANY data-native form is
 insufficient for this system's rollout, and sequential
 supervision (v4-style, or hybrid mostly-parallel + short-rollout
 correction) is genuinely load-bearing.
+
+## B2 v2 verdict + the three-gate hierarchy (2026-09-02)
+
+v2 (isotropic lag denoising, sigma 0.03, targets = clean-state
+analytic dV): {0.139, 0.099}, blow-ups softened (74-89 mV vs
+97-153) — marginal improvement, no stabilization. Interpretive
+note recorded per review: corrupted windows are not valid delay
+embeddings of any HH trajectory; v2 deliberately taught a
+DENOISING/CONTRACTION rule around the valid-window manifold, not
+the literal field at corrupted points. Verdict: the basin an
+isotropic rule builds is too small/misshapen — the self-generated
+error distribution is structured (anisotropic).
+
+Three increasingly demanding notions, now each with measured
+instances: (1) state IDENTIFIABLE from the representation
+(collision/D0 gates); (2) local dynamics PREDICTABLE (tangent
+losses; cheap, parallel); (3) representation REMAINS VALID UNDER
+SELF-GENERATED ROLLOUT (the unsolved gate; v4's GRU solves all
+three implicitly at sequential-training cost). B2's purpose
+restated: can explicit history geometry pass gate 3 much more
+cheaply than implicit recurrence.
+
+B2-onpolicy declared (before running): iterative corrective
+training — train on clean tangent samples; roll out briefly from
+teacher-primed buffers; collect the ACTUAL malformed windows the
+model generates; pair each with the clean teacher derivative at
+that time; retrain; grow the rollout horizon per round
+(50 -> 100 -> 200 -> 400 steps). Metrics per round: spike F1 AND
+time-to-divergence (progressive repair is evidence even before
+final metrics look good). Also declared: frozen-chart iterative
+on-policy remains the decisive latent-side test (three moving
+objects reduced to one), and the hybrid fraction (mostly-iid +
+small trajectory supervision) is the quantity to optimize if
+gate 3 demands sequential constraints.
+
+## B2-onpolicy result (2026-09-02): progressive repair confirmed,
+## rate insufficient
+
+TTD per round: 1.8 -> 2.0 -> 5.2 -> 4.9 -> 8.2 ms; V-RMSE 125 ->
+67; F1 ~0 throughout; 104 s total. The iterative corrective loop
+REPAIRS the flow monotonically (the diagnostic signature asked
+for) but at ~4.5x TTD per 4 rounds while gate 3 needs ~1000 ms —
+two orders of magnitude away at this correction budget. First
+hybrid-fraction data point: ~100 s of drift-targeted correction
+buys 8 ms of stability; ~1 h of sequential training (v4) buys
+the full horizon. Gate 3's demand for trajectory-level
+supervision now has a measured exchange rate, not just a verdict.
+Open per declaration: whether many more rounds/denser collection
+change the rate; the frozen-chart latent on-policy remains
+undone; rollout references still completing the tube table.

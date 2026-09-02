@@ -80,6 +80,7 @@ def main():
     ap.add_argument('--epochs', type=int, default=20)
     ap.add_argument('--width', type=int, default=256)
     ap.add_argument('--seed', type=int, default=0)
+    ap.add_argument('--denoise', type=float, default=0.0)
     ap.add_argument('--dev', default='cpu')
     args = ap.parse_args()
     dev = args.dev
@@ -111,7 +112,12 @@ def main():
         tot = cnt = 0.0
         for b0 in range(0, N, 4096):
             idx = perm[b0:b0 + 4096]
-            x = torch.cat([X[idx], Inow[idx]], 1).to(dev)
+            xw = X[idx]
+            if args.denoise > 0:
+                xw = xw.clone()
+                xw[:, 1:] += args.denoise * torch.randn_like(
+                    xw[:, 1:])       # corrupt lags, not V_t
+            x = torch.cat([xw, Inow[idx]], 1).to(dev)
             y = Y[idx].to(dev)
             w = W[idx].to(dev)
             loss = ((((model(x) - y) / scale) ** 2).squeeze(-1)
@@ -148,13 +154,16 @@ def main():
     v_r = rollout(model, I2, rest_prime, dev)[0]
     reb = len(spikes_from_v(v_r[T2 // 2:]))
     nprm = sum(p.numel() for p in model.parameters())
-    res = dict(arm='b2-delay', seed=args.seed, params=nprm,
+    arm = ('b2-delay-dn%.2f' % args.denoise
+           if args.denoise > 0 else 'b2-delay')
+    res = dict(arm=arm, seed=args.seed, params=nprm,
                train_seconds=round(ts, 1),
                v_rmse_mv=round(v_rmse, 2), spike_f1=round(f1, 3),
                fi_rmse_hz=round(fi_rmse, 1), rebound_spikes=reb)
     print('RESULT', json.dumps(res), flush=True)
-    torch.save(model.state_dict(), OUT / f'b2_s{args.seed}.pt')
-    json.dump(res, open(OUT / f'b2_s{args.seed}.json', 'w'))
+    tag = f'b2{"_dn" if args.denoise > 0 else ""}_s{args.seed}'
+    torch.save(model.state_dict(), OUT / f'{tag}.pt')
+    json.dump(res, open(OUT / f'{tag}.json', 'w'))
 
 
 if __name__ == '__main__':
