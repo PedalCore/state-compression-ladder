@@ -1166,3 +1166,69 @@ event. The credit-geometry premise (measured sensitivity beats
 guessed sensitivity) survives its first contact. Part 2
 (sensitivity-weighted A0b config, seeds {0,1}, vs the 0.736-0.770
 plateau band) running.
+
+## Gate-3 mechanism + the composition recipe (2026-09-02, per
+## review; next session's roadmap)
+
+MECHANISM, stated for the record: low one-step error does not
+control long-horizon error — the INCREMENTAL STABILITY of the
+learned field (does evaluating F-hat at self-generated x+delta
+damp or amplify delta) decides rollout fate. Two regimes, mapped
+to our results: amplification -> the 100-600 mV blow-ups (3a);
+neutral-drift along the orbit -> A0's gentle F1~0.74 plateau with
+intact signatures (3b: right attractor, wrong clock — a +-2 ms
+criterion eventually scores pure phase drift as failure).
+Why tubes failed, sharpened: restore/noise fix NORMAL error;
+they do nothing for tangential (speed/phase) error — and
+indiscriminate contraction is actively wrong for oscillators
+(must preserve neutral motion along the orbit). The principled
+version is TRANSVERSE stabilization: penalize expansion normal
+to the orbit, leave the tangent direction alone.
+
+RECIPE (adopted as next session's plan):
+1. certified representation (12 ms delay / collision gate), frozen;
+2. iid/parallel field learning (the 15x win);
+3. diagnose local expansion — normal-to-orbit vs tangent
+   separately (extends the C-track sensitivity map);
+4. short-horizon COMPOSITION curriculum, multiple-shooting style:
+   5 -> 10 -> 20 -> 40 -> 80 ms segments with boundary-consistency
+   penalties; advance horizon only on success;
+5. SEMIGROUP loss: Phi_2dt(x) must equal Phi_dt(Phi_dt(x)) —
+   teach that transformations at different horizons compose;
+6. failure-frontier sampling (concentrate sequential supervision
+   at first divergence, move the frontier outward);
+7. metrics split: transverse error AND phase error vs time
+   (8 ms phase shift with correct rate/f-I/rebound is NOT the
+   same failure as a 593 mV blow-up);
+8. INTEGRATOR ISOLATION CHECK (declared, cheap, not yet run —
+   field checkpoints must be saved first, noted): same learned
+   field under Euler / small-step / RK4 / adaptive reference. If
+   stability appears under RK4, part of gate 3 is discretization,
+   not learning — critical for compiling the eventual cell.
+Expected product: the exchange-rate curve with a hybrid optimum —
+lots of cheap local supervision + a little targeted composition
+supervision, not a return to hour-long sequential training.
+
+## NCA arm declared (user proposal + collaborator development)
+
+The import is the TRAINING PHILOSOPHY, not the grid: Growing-NCA
+hit gate 3 in another field (local rules good over training
+horizon, decay/explode when iterated) and solved it with
+persistence pools — train from the model's own generated,
+corrupted, and damaged states so the target becomes attractor-
+like. "Teach recovery, not just correctness."
+Experiment (A/B/C, declared): on the certified delay
+representation, same budget/params/seeds —
+  A: current B2 MLP (concatenated delays);
+  B: NCA-delay — each delay sample a cell with 4-8 hidden
+     channels, one SHARED local rule (rich local state without
+     parameter blowup — the biology bargain in miniature);
+  C: B + persistence pool (valid + model-generated + corrupted +
+     failure-frontier states).
+Score: TTD, F1, f-I, rebound, phase drift, wall-clock, seed
+variance. C >> B -> self-repair training matters; B >> A ->
+local recurrent organization matters; neither beats B2 -> discard.
+Caveat recorded: NCA training is sequential (BPTT through
+updates) — it buys inductive bias for self-correction, not
+parallelism; scaling vision (population-level NCA, computation as
+self-organizing dynamical material) parked for later.
