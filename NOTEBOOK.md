@@ -1232,3 +1232,40 @@ Caveat recorded: NCA training is sequential (BPTT through
 updates) — it buys inductive bias for self-correction, not
 parallelism; scaling vision (population-level NCA, computation as
 self-organizing dynamical material) parked for later.
+
+## C-track corrections (2026-09-02, per review) + metric check
+## PASSED
+
+1. TERMINOLOGY FIXED: q(x) = lambda_max(sym J) is INSTANTANEOUS
+   LOCAL EXPANSION, not phase sensitivity. The phase object is
+   the iPRC/adjoint Z(theta) — how a perturbation at a given
+   cycle phase shifts future spike timing. Declared as the next
+   zero-learning C-track instrument: q_expand (where error
+   grows) vs q_phase (where error changes timing) NEED NOT peak
+   together, and F1 is a timing metric — q_phase is the one
+   aimed at the plateau.
+2. METRIC-INVARIANCE CHECK RUN AND PASSED: per-std standardized
+   coordinates reproduce the structure (decision zone 13.1/ms,
+   spike body 18.2, overlap 0.444 vs 0.451). The -50..-20 mV
+   decision-zone finding is not a units artifact.
+3. FORK WEAKENED: sensw failure does NOT uniquely identify gate
+   3b — it leaves (a) placement not binding, (b) instantaneous
+   expansion the wrong sensitivity quantity, (c) phase drift.
+   Discriminating between (b) and (c) is exactly what the iPRC
+   map is for.
+4. Declared arms for the weighting comparison (fair total loss
+   mass): plain | old V>-20 | scalar lambda+ | DIRECTIONAL
+   (penalize v_max-aligned field error — errors along locally
+   expanding directions matter disproportionately) | eventually
+   PRC-weighted.
+5. The three-map hierarchy adopted as the C-track's shape:
+   expansion map (trajectory blow-up) -> phase map (timing) ->
+   task/credit map (eventual loss). Current q is a TEACHER
+   ORACLE, per the house pattern: exact expensive object ->
+   measure whether it helps -> distill into a cheap carried
+   predictor q-hat(z) only if it does. The grounded primitive:
+   z (dynamics) + h (history) + q (sensitivity/credit).
+Standing result regardless of sensw outcome: the hand-designed
+weight emphasized the EVENT; measured geometry says much of the
+expansion lives in the pre-spike DECISION region — plausible
+intuition replaced by measurement, which is the project's job.
