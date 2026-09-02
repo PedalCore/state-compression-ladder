@@ -545,3 +545,29 @@ A0c config; if the F1 ordering is stable across seeds, (a) wins
 and "which aspects of the field does each behavior need" becomes
 its own rung — the behavior-ordering observation upgraded from
 curiosity to mechanism.
+
+## v4 interim framing (2026-09-02, per review): budget compresses
+## the state-count gap
+
+Observable track at 60 epochs: k=2 0.365, k=3 0.628 — a 3-state
+voltage-only surrogate nearly matches the previous 8-state best
+(0.67 at 30 ep). Headline: longer training compresses the
+apparent state-count gap; earlier "capacity" differences were
+substantially trainability/convergence-speed differences.
+
+Outcome branches for k=4/k=8, declared before they land:
+(i) ~0.63-0.68 -> ladder flattens; state beyond ~3 buys little
+    at this budget;
+(ii) ~0.8+ -> state still matters, but only visible at
+    sufficient optimization budget;
+(iii) noisy/non-monotone -> observable-track GRUs remain too
+    optimizer-sensitive for dimensional conclusions.
+
+Also logged: observable k=2 (0.365) now sits in the same
+territory as the CMA-fitted classical 2-state arms (Izhikevich
+0.335, AdEx 0.368) — same nominal state count, different
+parameterization, supervision, and trainability, converging on
+similar timing performance. The eventual 2-state cross-
+comparison (learned-observable vs fitted-classical vs derived-
+reduction vs latent-field) is becoming the project's cleanest
+table.
