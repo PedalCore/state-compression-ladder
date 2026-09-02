@@ -2099,3 +2099,62 @@ match its GRU-sequential equivalent's ceiling — the hybrid
 mostly-parallel + short-rollout-correction recipe now has a
 second, sharper target. VM stopped; retrofit sweep banked 13/18
 (flat, branch closed).
+
+## Round-7 synthesis + CLOSED-LOOP AGGREGATION declared
+## (2026-09-03, per review; before running)
+
+Wording softened per review: "at matched tiny state dimension in
+this observable formulation, nonlinear GRU recurrence provides no
+detectable advantage over selective affine accumulation" — both
+still far from functional. The three-way factorization, each
+measured: history contains the information (D0: yes); tiny
+selective state can process it (joint SSM: yes, = matched GRU);
+teacher-history training transfers to self-generated history
+(NO — the isolated bottleneck). The missing ingredient is
+CLOSED-LOOP TRAINING DISTRIBUTION, not state capacity. Elevated
+lesson: state must PARTICIPATE IN DEFINING the dynamics
+F(H, c, I), not arrive as a patch F_bad + delta(c) — state's
+value is changing the coordinate system in which dynamics become
+easy, the project's through-line confirmed architecturally.
+
+DAGGER-FOR-DYNAMICAL-STATE declared: rounds of (1) PARALLEL
+retraining (field iid + SSM scan) on the aggregated corpus;
+(2) short rollouts collecting the model's ACTUAL (window, c)
+visits, concentrated at the failure frontier (first |V_err| >
+10 mV); (3) teacher-labeling those visits (V_dot at matched
+times); (4) aggregate, grow horizon, repeat. Sequential cost =
+EXPERIENCE COLLECTION only; no gradient ever propagates through
+time. v1 scope: corrective pairs train F (the field-with-state);
+A/B stay scan-trained on teacher sequences (declared limitation —
+full closed-loop A/B correction is v2 if v1 moves).
+P-dag1: val-F1 climbs round-over-round (the B2-onpolicy monotone
+repair, now with participating state); P-dag2 (the big one): the
+aggregation moves ~0.2 materially toward the 0.8+ regime,
+demonstrating the residual sequential burden is data collection,
+not backprop-through-time. Exchange rate logged per round:
+sequential rollout-seconds vs functional gain.
+
+## DAgger v1 scored (2026-09-03): FAILED both seeds — with the
+## mechanism visible in the metrics
+
+Rounds (val-F1): s0 {0.197, 0.0, 0.116, 0.002, 0.002, 0.014};
+s1 {0.145, 0.057, 0.0, 0.0, 0.034, 0.096}. P-dag1 FALSIFIED:
+oscillation, not climb; val-selection banks the round-0 baseline
+both seeds. P-dag2 unscored (never left the launchpad).
+Diagnostic split captured in s1 round 1: TTD jumped 20x (0.3 ->
+6.8 ms) WHILE F1 fell — the corrective pairs (teacher V_dot at
+clock-matched times assigned to the model's DRIFTED states) teach
+"return to the teacher's flow": they buy stability and blur
+decisions, because the labels are dynamically inconsistent with
+the states they're attached to. The cost structure worked
+perfectly (271 s total, 4.7 s sequential — the DAgger shape is
+right); the LABELING is wrong.
+
+v2 declared (next session): PHASE-ALIGNED labeling — pair each
+collected model state with the teacher V_dot at the NEAREST
+teacher state (within a +-3 ms window), not the clock-matched
+one; plus corrective weight annealing. The atlas's phase-aligned
+distance instrument built exactly this machinery. If v2 climbs,
+the sequential-burden-is-collection claim revives with correct
+labels; if not, closed-loop training of the observable SSM needs
+more than corrective regression.
