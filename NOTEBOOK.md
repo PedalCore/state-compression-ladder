@@ -869,3 +869,18 @@ recover; adequacy is a property of the dynamics built on top.
 The candidate micro-finding "the better 2-D reduction keeps
 (V,h)" is WITHDRAWN for dynamics and retained only as a statement
 about static state identification.
+
+## v4 final (2026-09-02): branch (ii) — the observable ladder was
+## real, budget revealed it
+
+60-epoch voltage-only GRU ladder: k=2 0.365 / k=3 0.628 / k=4
+0.697 / k=8 0.869 (V-RMSE 13.1, f-I 14.5, rebound EXACTLY 1 —
+first observable-track model to fire the correct rebound).
+Declared branch (ii) confirmed: state still matters; the earlier
+flattening was budget-starvation. Notable: voltage-only k=8 TIES
+the full-state A0b lucky-seed best (0.864) — consistent with D0:
+recurrence acts as an implicit delay embedding, internally
+reconstructing the hidden state that a 12 ms window provides
+explicitly. Standing caveat: single seed per arm (A-seeds
+quantified what that is worth); the k=8 number needs seeds before
+strong claims. The B-track historical baseline is now complete.
