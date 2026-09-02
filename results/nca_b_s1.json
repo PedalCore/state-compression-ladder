@@ -1,0 +1,1 @@
+{"arm": "nca-b", "seed": 1, "params": 2184, "train_seconds": 450.7, "v_rmse_mv": 397.3, "spike_f1": 0.181, "ttd_ms": 0.5, "fi_rmse_hz": 138.0, "rebound_spikes": 35}

@@ -1285,3 +1285,58 @@ peaks?) and the directional-weighting arm tests whether the
 scalar-vs-vector distinction was the miss. The standing
 diagnostic result (decision-zone geometry, metric-robust) is
 unaffected by this null.
+
+## NCA arm predictions (2026-09-03, declared before running)
+
+Design pinned: 5 cells (one per certified delay position) x 8
+channels; V-channel of the newest cell is the prediction; ONE
+shared local rule f(s_left, s_i, s_right, I) applied each 0.1 ms
+step; history maintenance is the rule's job (a learned delay
+line — recurrence inside geometry, literally). Arms B (NCA,
+TBPTT) and C (B + persistence pool: 30% of chunks start from
+model-generated pool states, 20% of pool starts get a damaged
+cell) x seeds {0,1}, 40 epochs. Arm A baseline = B2 v1 (already
+run). Honest caveats recorded: this is SEQUENTIAL training (the
+NCA import is inductive bias, not parallelism), and the shared
+rule (~2.2k params) exceeds v4-k8's 930 — the comparison is
+about state ORGANIZATION, not parameter count.
+
+P-nca1: B reaches the sequential-training class (F1 > 0.6) —
+        shared-local-rule state competitive with monolithic
+        recurrence at equal budget.
+P-nca2 (the point of the arm): C >= B on time-to-divergence AND
+        lower cross-seed variance — persistence/damage training
+        buys gate-3 robustness that correctness training alone
+        does not.
+P-nca3: C's advantage, if any, shows most in free-run stability
+        metrics (TTD, boundedness), not in teacher-adjacent F1.
+
+## NCA interim (2026-09-03): arm B fails; arm C had a DEAD POOL
+## (bug, caught, fixed)
+
+Arm B (pure correctness): {0.09, 0.181}, TTD < 1 ms, blow-ups —
+P-nca1 fails at 40 epochs (budget caveat standing). Arm C's first
+run came back BYTE-IDENTICAL to arm B seed 0 — the persistence-
+pool restart condition could never fire (pool entries store later
+chunk boundaries; restarts were only attempted at the first).
+Dead code, exposed by identical floats. Fixed (restarts at every
+chunk boundary); arm C reruns follow. P-nca2 remains unscored —
+the b-vs-c comparison hasn't actually run yet.
+
+## NCA arm scored (2026-09-03): all predictions failed — discarded
+## at this budget/design
+
+Arm B (correctness only): F1 {0.09, 0.181}, TTD {0.9, 0.5} ms.
+Arm C (persistence pool, CORRECTED after the dead-pool bug):
+F1 {0.002, 0.000}, TTD {1.3, 0.2} ms, drift magnitude mixed
+(110 vs 504 mV). P-nca1 FAILED (nowhere near the sequential-
+training class); P-nca2 FAILED (no consistent TTD gain, no
+variance reduction — seed 1 worse on every metric); P-nca3 moot.
+Per the declared protocol (neither beats B2 -> discard): the
+5-cell delay-geometry NCA is discarded at 40 epochs. Standing
+caveats, honestly: budget (40 ep vs the 60 that mattered for v4),
+one design point (5x8 cells, one damage scheme, one pool policy)
+— the persistence-training PHILOSOPHY is not refuted, but this
+instantiation earned no follow-up priority. The gate-3 critical
+path remains the composition recipe (multiple shooting, semigroup
+loss, failure frontier, transverse/phase split).
