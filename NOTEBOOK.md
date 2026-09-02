@@ -1340,3 +1340,32 @@ one design point (5x8 cells, one damage scheme, one pool policy)
 instantiation earned no follow-up priority. The gate-3 critical
 path remains the composition recipe (multiple shooting, semigroup
 loss, failure frontier, transverse/phase split).
+
+## NCA closing reading (2026-09-03, per review) — the pattern
+## behind the negatives
+
+The narrow, correct statement of the result: at this design point
+and budget, a local shared-rule architecture + persistence-pool
+recovery training did not solve gate 3. The diagnostically
+interesting piece: arm C seed 0 cut drift magnitude (270 -> 110
+mV) while useful dynamics vanished — the persistence objective
+taught CONTAINMENT without teaching the right flow, echoing the
+tube arms. Cross-M13 pattern, elevated to a working law:
+
+    staying nearby != evolving correctly.
+
+Recovery-style objectives (noise tubes, restoration, persistence
+pools) attack where the trajectory is ALLOWED TO LIVE; the
+remaining problem is how it COMPOSES through time while
+preserving orbit and clock. Decision affirmed: no NCA
+architecture search (bigger grids/channels/damage schedules
+would turn a clean negative into a fishing trip). The sharpened
+gate-3 statement: the model does not primarily need to learn how
+to return after damage — it needs the locally accurate rule
+CONSTRAINED so that repeated application preserves the correct
+orbit and clock. Critical path: parallel field fit ->
+short-horizon composition (multiple shooting + semigroup) ->
+failure-frontier correction -> longer horizon, with phase/
+transverse metrics separated. The ledger is positive: plausible
+explanations killed, search space smaller, next experiments
+attack temporal composition itself rather than proxies for it.
