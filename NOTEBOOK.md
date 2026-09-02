@@ -1084,3 +1084,29 @@ problem, and "local geometry gives ~15x training speedup, plus a
 small measured amount of sequential correction for global
 stability" — if it holds — is the practically useful result, not
 a compromise.
+
+## External reviewer's session verdict (2026-09-02, recorded
+## verbatim in substance)
+
+What survives most strongly: (1) representation is measurable
+without rollout — instantaneous V ambiguous, short history
+repairs it, sufficiency knee ~3 under this regime; (2) local
+dynamics: direct field learning ~15x cheaper, real even though
+tangent-only rollout is unstable; (3) autonomous evolution is
+the unsolved piece — and sequential supervision is NOT yet
+established as the clean solution for the field architecture
+either; (4) coordinates matter independently of dimension;
+(5) history and recurrence are two ways of purchasing state
+(v4 implicit, D0/B2 explicit); (6) long-horizon error needs
+decomposition (distribution exit vs phase drift).
+
+The next quantitative object is the PARALLEL-SEQUENTIAL EXCHANGE-
+RATE CURVE — trajectory information required for stability at 10 /
+100 / 1000 ms — not another architecture leaderboard. Favorable
+knee -> mostly-parallel + targeted correction -> compile to cheap
+recurrent cell. No knee -> temporal composition carries
+information local flow matching cannot cheaply substitute — 
+equally informative. "Time as geometry" survived contact with
+experiment the best way: not as a replacement for time, but as
+the decomposition exposing which parts of temporal learning
+parallelize and which are tied to self-generated trajectories.
