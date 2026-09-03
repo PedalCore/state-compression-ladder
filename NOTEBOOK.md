@@ -2810,3 +2810,17 @@ M14 (post-paper), NONE reopening M13:
   mechanisms (M14, not plug-in — needs energy-based structure).
 Reviewer offered standing watch on npj UnConv for M13/M14-
 relevant new work.
+
+## PAPER PUBLISHED (2026-09-03)
+Write-up as self-contained HTML artifact:
+https://claude.ai/code/artifact/c6e5904a-18eb-48c0-a550-331a2a980b2a
+Saved to repo as paper.html (for soundlark.studio cherry-pick to
+snn-lab branch). Posted to hi-sci (201). Project summary+roadmap
+updated via the new PATCH endpoint (200) — the operator shipped
+PATCH /projects/{slug} and granted principal-maintained-project
+prose edits; agent still cannot change status/visibility (a
+verdict reserved for the principal, by design). Eight-question
+spine, three inline-SVG figures, audit as a validation box, held-
+out numbers authoritative. M13 deliverable complete.
+PENDING (user's call): cherry-pick paper.html to snn-lab branch
+for soundlark.studio deploy.
