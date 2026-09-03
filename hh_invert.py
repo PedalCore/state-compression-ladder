@@ -37,6 +37,9 @@ ROLL_H = 1500          # rollout corpus horizon (150 ms)
 ROLL_N = 96
 
 
+STATE_FULL = None   # set in main: full normalized teacher state
+
+
 def gen_corpus(model, Vn, I_raw, Ydot, dev, rng):
     """Model rollouts -> (X [n, T, NF], Y [n, T]) with
     phase-aligned teacher labels. Gradient-free."""
@@ -69,18 +72,23 @@ def gen_corpus(model, Vn, I_raw, Ydot, dev, rng):
                     xw.to(dev), c.to(dev)).cpu()
             hist[:, t] = torch.clamp(vv, -0.6, 1.6)
             Xseq[:, t - PRIME] = x.numpy()
-            # phase-aligned teacher label per sample
+            # phase-aligned label: match on (window, I); label =
+            # hh_rhs(teacher state at t*, ROLLOUT current)
             wm = x[:, :NW].numpy()
+            i_now = (i_t.squeeze(-1).numpy() * IS)
             for j, (b, t0) in enumerate(zip(seqs, starts)):
                 tc = t0 + t - PRIME
                 lo = max(tc - 30, LAGS[-1])
                 hi = min(tc + 30, T - 1)
+                rng_t = np.arange(lo, hi)
                 cand = np.stack(
-                    [Vn[b, np.arange(lo, hi) - lg]
-                     for lg in LAGS], -1)
-                tstar = lo + int(np.argmin(
-                    np.linalg.norm(cand - wm[j], axis=1)))
-                Yseq[j, t - PRIME] = Ydot[b, tstar]
+                    [Vn[b, rng_t - lg] for lg in LAGS], -1)
+                d_w = np.linalg.norm(cand - wm[j], axis=1)
+                d_i = np.abs(I_raw[b, rng_t] - i_now[j]) / IS
+                tstar = lo + int(np.argmin(d_w + d_i))
+                Yseq[j, t - PRIME] = hh_rhs(
+                    STATE_FULL[b, tstar:tstar + 1],
+                    np.array([i_now[j]]))[0, 0]
     return (torch.tensor(Xseq), torch.tensor(Yseq))
 
 
@@ -110,6 +118,8 @@ def main():
     Wtt = torch.where(torch.tensor(
         Vn_tr[:, t_idx], dtype=torch.float32) > 0.45, 10.0, 1.0)
     Vval = norm_state(d['val_V'], d['val_G'])[..., 0]
+    global STATE_FULL
+    STATE_FULL = Str
     torch.manual_seed(args.seed)
     model = JointModel(1, 'ssm').to(dev)
     rng = np.random.default_rng(args.seed)
@@ -170,12 +180,12 @@ def main():
     if best_state is not None:
         model.load_state_dict(best_state)
     ev = evaluate(model, d, Ste[..., 0], dev)
-    res = dict(arm=f'invert-p{args.p}', seed=args.seed,
+    res = dict(arm=f'invert-v2-p{args.p}', seed=args.seed,
                total_seconds=round(time.time() - t0, 1),
                seq_seconds=round(seq_seconds, 1),
                best_val_f1=round(best_vf1, 3), rounds=log, **ev)
     print('RESULT', json.dumps(res), flush=True)
-    tag = f'invert_p{args.p}_s{args.seed}'
+    tag = f'invertv2_p{args.p}_s{args.seed}'
     torch.save(model.state_dict(), OUT / f'{tag}.pt')
     json.dump(res, open(OUT / f'{tag}.json', 'w'))
 

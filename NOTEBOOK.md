@@ -2466,3 +2466,94 @@ the clock (tau map becomes state-dependent, ideally tracking
 T1's structure), the boundary result gains its mechanism: coupled
 gradients are the only signal that reaches the temporal
 selectivity parameters.
+
+## CODE AUDIT (2026-09-03, external reviewer) — four issues;
+## affected claims flagged UNDER AUDIT pending reruns
+
+A1 (hh_hybrid, soft penalty): lam*(delta^2) applied AFTER the
+   chunk loop regularizes only the LAST step's correction. Trust-
+   region results mostly insulated (bound enforced architecturally
+   every step), but "soft penalty load-bearing" claims are
+   WITHDRAWN pending the fix; penalty now accumulated per step.
+A2 (hh_dagger, stale latents): cached Cc computed by the OLD
+   model's state dynamics while wa/wb continue training — the
+   "stale own-distribution data hurts" result is partly
+   confounded with stale LATENT COORDINATES. (The inversion is
+   clean of this — it retrains the scan on trajectory corpora,
+   c recomputed live — but see A3.)
+A3 (phase labels, BIGGER): the nearest-neighbour match uses the
+   voltage window only and copies Ydot[tstar], which was computed
+   with the TEACHER'S current at tstar — while the sample carries
+   the ROLLOUT'S current. dV/dt depends directly on I: the pairs
+   are still dynamically inconsistent. Fix: include I in the
+   match metric AND recompute the label as hh_rhs(teacher state
+   at tstar, I_rollout). THE DAGGER-V2 AND INVERSION BOUNDARY
+   RESULTS ARE NOT SETTLED until this control reruns.
+A4 (hh_hybrid, off-by-one — touches the 0.903/0.911 champion):
+   chunk targets are lagged one sample — s starts at y[:,0],
+   advances one step, and is compared against y[:,0] instead of
+   y[:,1], persisting through the chunk. (hh_comp is correct;
+   hh_xrate's coupled targets verified correct.) Within the
+   +-2 ms tolerance a 0.1 ms shift shouldn't dominate F1, but it
+   can alter the learned correction in the fast spike region:
+   FIX + CONFIRMATION RERUN of the trust champion required.
+A5 (clock): distinguish "optimization chose a fixed clock" from
+   "the scan blocks wa gradients" — gradient-flow diagnostic on
+   wa vs wb declared.
+Reruns launching: fixed hybrid trust (kc=8, seeds {0,1});
+fixed-label inversion (p=1.0, seeds {0,1}); wa-grad check inline.
+
+## A5 resolved + TEST-SET HYGIENE protocol (2026-09-03)
+
+A5: gradients flow to wa (3.6e-2, nonzero; ~6x below wb) and wa
+perturbation changes tau and loss strongly (0.037 -> 0.237) —
+the scan does NOT block clock learning. Verdict: OPTIMIZATION
+CHOSE the fixed clock; no tested objective paid wa to move. The
+dormant clock is a real phenomenon, not an artifact.
+
+HYGIENE (the audit's biggest item, adopted): the test split has
+been adaptively reused (per-stage/per-epoch scoring drove later
+choices) — those numbers are DEVELOPMENT scores, not held-out
+test performance, and will be relabeled as such throughout.
+Protocol: generate a FRESH final-evaluation corpus (new RNG
+realization of the same drive distribution), LOCK it, and after
+the audit reruns complete, evaluate the preregistered finalists
+EXACTLY ONCE: (1) fixed trust-hybrid (post-A4 rerun), (2) stage-0
+field baseline, (3) v4-k8 sequential GRU, (4) best exchange-rate
+model. Those single-shot numbers are the paper's reported test
+results; everything else is labeled dev.
+
+## Exchange-rate raw result (2026-09-03) — INTERPRET ONLY AFTER
+## the audit budget-fix (A-xr), non-monotonic
+
+best-val by p (seeds 0/1): 0.0 {0.214,0.207} | 0.02 {0.212,0.200}
+| 0.05 {0.211,0.204} | 0.15 {0.215,0.202} | 0.5 {0.300,0.216}
+| 1.0 {0.190,0.164}. Peak at p=0.5 seed 0 (0.300, f-I 17.3,
+rebound 1 — the only coupled arm to recover a signature), then
+DOWN at p=1.0. BUT: confounded exactly as the audit's inverted-
+DAgger item warns — coupled segments are 5 ms, parallel batches
+span the full sequence, and optimizer-step count is fixed, so
+higher p = fewer timepoints AND shorter contexts. The p=1.0
+drop and the p=0.5 bump are both partly data-budget artifacts.
+FLAGGED under audit; the budget-matched rerun (A-xr) decides.
+
+## SCAN UNIT TEST PASSED: scan vs explicit recurrence 1.5e-7,
+## grads 1.0e-7 — A5 dormant clock is real optimization behavior.
+
+## FULL AUDIT (2026-09-03, deep-path review) — priority order
+A4  hybrid off-by-one target        FIXED, rerun flagship+ladder
+A3  phase labels I-inconsistent     FIXED (invert), rerun DAgger/inv
+A-budget inverted-DAgger data       teacher crops to 1500 steps,
+    budget (timepoints/steps/ctx)   match seqs+steps+samples
+A-ctrl static NOT param-matched     add width-3 (~34p)/6(~64p)
+A-opt SSM vs GRU step-count         match updates or chunking
+A-jepa not one-change (t_idx/loss   common t_idx, normed aux,
+    scale/random target geometry)   linear random target
+A1  soft penalty last-step-only     FIXED per-step accumulate
+A-diag coarse current bins          I as scaled KD coord (headline)
+A-geo pullback code vs math (F(x)   documented: intended F(x); note
+    vs F(D(z)))                     the math/impl divergence
+HYGIENE locked final corpus         DONE (hh_data_final_LOCKED,
+                                     seed 777, 64 seqs)
+Wording: all repeatedly-scored numbers relabeled DEV, not test;
+single-shot locked-corpus eval of finalists is the paper's test.

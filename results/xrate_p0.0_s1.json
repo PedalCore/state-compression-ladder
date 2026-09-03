@@ -1,0 +1,1 @@
+{"arm": "xrate-p0.0", "seed": 1, "total_seconds": 281.7, "coupled_seconds": 0.0, "n_coupled": 0, "n_parallel": 320, "best_val_f1": 0.207, "spike_f1": 0.192, "f1_by_window": [0.204, 0.195, 0.177, 0.191], "fi_rmse_hz": 106.5, "rebound_spikes": 24}
