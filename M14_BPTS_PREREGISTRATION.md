@@ -106,3 +106,14 @@ whether exact spatial backprop can be replaced by local/GLE-style
 credit while keeping only SHORT BPTT inside each temporal block:
 space-time transpose -> short temporal + spatial credit -> local
 physical learning.
+
+## 3-SEED CONFIRMATION (caveat resolved)
+  1x64  0.595±0.030   (credit-starved outlier)
+  4x16  0.887±0.003
+  8x8   0.959±0.012   (knee)
+  16x4  0.955±0.005   (2x the state of 8x8, NO gain -> not capacity)
+  64x1  0.976±0.002
+Robust: 1x64 outlier, knee by 8x8, and 8x8~16x4 (double state, no
+gain) firmly rejects the readout-capacity explanation. Temporal-
+credit transmission (rho_G, set by BPTT horizon) governs accuracy,
+not spatial state count.
