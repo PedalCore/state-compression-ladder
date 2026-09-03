@@ -1,0 +1,1 @@
+{"arm": "obj-jepa", "seed": 0, "train_seconds": 200.4, "best_val_f1": 0.211, "spike_f1": 0.244, "f1_by_window": [0.286, 0.228, 0.219, 0.24], "fi_rmse_hz": 21.3, "rebound_spikes": 0}

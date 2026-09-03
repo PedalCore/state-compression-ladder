@@ -1,0 +1,1 @@
+{"arm": "obj-multi", "seed": 0, "train_seconds": 189.2, "best_val_f1": 0.223, "spike_f1": 0.239, "f1_by_window": [0.258, 0.253, 0.229, 0.208], "fi_rmse_hz": 25.6, "rebound_spikes": 2}

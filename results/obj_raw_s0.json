@@ -1,0 +1,1 @@
+{"arm": "obj-raw", "seed": 0, "train_seconds": 189.0, "best_val_f1": 0.218, "spike_f1": 0.246, "f1_by_window": [0.286, 0.241, 0.24, 0.213], "fi_rmse_hz": 17.8, "rebound_spikes": 2}

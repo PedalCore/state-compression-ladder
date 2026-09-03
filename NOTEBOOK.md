@@ -2204,3 +2204,59 @@ latent-future, same SSM/state/field) is promoted to the program's
 top open experiment: the accumulated evidence — three weighting
 nulls, marker-not-cause, labels-fixed-still-weak — now all points
 at the OBJECTIVE as the remaining free variable.
+
+## JEPA OBJECTIVE LADDER declared (2026-09-03, before running)
+
+Question: was the difficulty the amount of state, or WHAT THE
+STATE WAS TOLD TO MEAN? Same one-scalar SSM, same field head,
+same data and val protocol; the arms differ ONLY in the auxiliary
+objective shaping the state (total loss = dV-regression + 1.0 *
+L_obj, all parallel over teacher windows):
+  A. none (baseline = joint-ssm1: {0.243, 0.206})
+  B. RAW FUTURE: predict V_{t+5ms} from (window, c, I)
+  C. MULTI-HORIZON: predict V at +5, +10, +20 ms
+  D. MICRO-JEPA: predict the LATENT of the +10 ms future window —
+     target = frozen random projection of the future window
+     (collapse-proof, geometry-preserving); predictor from
+     (window, c, I). Training apparatus discarded at deployment;
+     the surviving primitive is unchanged (1 scalar + shared
+     params).
+P-jepa1: C > B > A (longer-horizon prediction forces the state to
+carry regime information).
+P-jepa2 (the deep one): D >= C — representation-space targets
+beat waveform targets because they tolerate phase (the clock/
+phase lesson, moved into the objective).
+P-jepa3: if D materially exceeds A on ROLLOUT F1, the conclusion
+lands: the state's job was regime prediction, not residual
+regression — the objective was the bottleneck.
+Seeds {0, 1}; rollout eval as always.
+
+## Objective ladder scored (2026-09-03): COMPLETE NULL — and the
+## last suspect standing
+
+raw {0.246, 0.201} | multi {0.239, 0.194} | jepa {0.244, 0.200}
+| baseline {0.243, 0.206}. P-jepa1/2/3 ALL FALSIFIED: neither
+waveform-future nor latent-future targets reshape the scalar
+state in any way that survives rollout. The objective joins the
+exonerated: state amount, state form, capacity, error magnitude,
+error placement, label alignment, and now state-shaping
+objectives — every one removed as the cause, by preregistered
+experiment.
+
+THE INVARIANT LEFT STANDING, stated as the program's finding:
+across every observable-track experiment, the models that reached
+0.87+ were trained INSIDE their own rollout regime (v4: TBPTT on
+self-generated states); every model trained on teacher-regime
+data — whatever its state, capacity, labels, or objective —
+ceilings at ~0.2. The gap is not about what the model is or what
+it is told; it is about WHICH DISTRIBUTION IT EXPERIENCES DURING
+LEARNING while coupled to its own dynamics.
+
+Final declared variant (v3, next session): invert DAgger — make
+the model's OWN long rollouts the primary training distribution
+(cheap to generate, no gradients), phase-aligned teacher labels,
+teacher data as the minority anchor. If that also fails, the
+conclusion is earned in full: closed-loop event fidelity at this
+scale requires learning-while-coupled (sequential gradients), and
+the parallel-training boundary is drawn exactly there — a sharp,
+falsifiable, and honestly-reached edge for the whole program.
