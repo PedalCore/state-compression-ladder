@@ -127,3 +127,108 @@ top of the ladder.
 Draft for reviewer sign-off. On sign-off, exp-1 (sMNIST-8) runs
 first — offline, decisive on well-posedness and the geometry
 question — before any dataset download for exp-2.
+
+---
+# EXP-1 FROZEN AMENDMENTS (reviewer sign-off, 2026-09-03)
+
+## A1. Name the offline version honestly
+sklearn 8x8 digits flattened = 64-step task, NOT sMNIST (28x28=784,
+radically different memory demand). Call it **SeqDigits-64
+qualification** (smoke/well-posedness). Production Exp-1 uses real
+MNIST and is **sMNIST-784**. `SeqDigits-64 -> sMNIST-784`; never
+call both sMNIST.
+
+## A2. Separate presentation speed from numerical resolution
+Frozen common reference timescale `T0`. Physical pixel duration
+`T_p in {0.25,0.5,1,2,4}*T0`, IDENTICAL for every arm (do NOT
+normalize T_p to each cell's own time constant). Integrate each
+continuous arm with `dt = T_p/n`; test convergence `n -> 2n` at
+each T_p WITHOUT changing T_p. This cleanly separates STIMULUS
+timescale from NUMERICAL timescale — the ambiguity M13.5 taught us
+to kill.
+
+## A3. Oscillator = lightweight phase system (NOT HH)
+`theta_i in S^1`,
+`dtheta_i = omega_i + g_in*b_i*u(t) + g_rec*(1/d_i)*sum_j A_ij*sin(theta_j-theta_i)`.
+Uncoupled arm `g_rec=0`; coupled arm `g_rec>0`. Same cell law,
+state dim (1), input masks, frequencies, solver — ONLY coupling
+differs. INVARIANT (unit-tested before any run): coupled model at
+g_rec=0 == uncoupled oscillator exactly (the M14 analog of the
+block experiment's b=1 invariant). HH/M13 are explicitly kept OUT
+of Exp-1 (and out of Exp-2's coordinate bridge) so an oscillator
+effect can't be confounded with HH complexity; they enter only at
+step 3.
+
+## A4. Representation freezes (avoid coordinate artifacts)
+Never expose raw theta (the +/-pi discontinuity is a coordinate
+artifact). Absolute view `A_i = cos(theta_i)`, dim N. Relational
+view `R_ij = [cos(theta_i-theta_j), sin(theta_i-theta_j)]`; because
+that is 2 features/pair, PRESELECT exactly N/2 pairs (fixed from the
+topology seed before results) so `dim R = N = dim A`. A+R uses the
+already-frozen matched-dimension rule (PCA->N), NOT 2N raw features.
+Kuramoto R_K is DIAGNOSTIC only, not in the primary classifier.
+
+## A5. Equal-N is the whole claim scope
+Exp-1 is a GEOMETRY experiment. The only admissible conclusion is
+"at equal cell count, this temporal geometry produced a more/less
+useful representation." NO per-hardware-cost claim (a sin-coupling
+op may cost far more than an LIF leak); that normalization waits
+until something is worth normalizing. Do not repeat M13.5 in
+miniature.
+
+## Crisp Exp-1 question
+Equal N, identical serialized input, arms {trace | LIF | uncoupled
+phase osc | coupled phase osc}, sweep common T_p:
+PRIMARY -> does classification depend systematically on the match
+between input timescale and substrate dynamics? SECONDARY (coupled
+arm only, early indicator, no headline) -> A vs R vs A+R.
+
+---
+# EXP-1 SeqDigits-64 QUALIFICATION RESULT (2026-09-03)
+
+Invariant coupled(g_rec=0)==uncoupled: PASS (max|diff|=0). N=16,
+chance=0.10, 600 train / 300 test, T0=1, bounded solver dt~0.1.
+
+CONVERGENCE GATE (|Δacc| dt vs dt/2, before ranking):
+- FIRST run (coarse dt=Tp/n, n=2..4) FLAGGED the controls: trace
+  worst 0.398 (0.60->0.20 at Tp=4), LIF 0.035 — forward-Euler on
+  leaky integrators is stiff at large Tp with few substeps. The
+  oscillators were exact/stable. The "simple" arms were the
+  numerically fragile ones. Gate did its job.
+- BOUNDED dt (dt~0.1, substeps scaled to Tp) FIXED it: trace 0.003
+  stable, LIF 0.030 borderline-stable, osc 0.000. osc_coupled
+  flagged 0.043 UNSTABLE but ONLY in the large-Tp NEAR-CHANCE tail
+  (Tp1-4 acc~0.10-0.12 = chance +/- sampling noise); at its
+  informative point (Tp0.25) it is exactly stable (0.45/0.45). So
+  the flag is a worst-case-metric artifact of chance-regime noise,
+  not a dynamical instability.
+
+GEOMETRY SWEEP (median acc, bounded dt):
+  trace       Tp0.25:0.50 0.5:0.49 1:0.43 2:0.34 4:0.26  peak 0.25
+  LIF         Tp0.25:0.40 0.5:0.43 1:0.36 2:0.34 4:0.31  peak 0.5
+  osc(uncpl)  Tp0.25:0.14 0.5:0.16 1:0.15 2:0.09 4:0.11  ~chance
+  osc_coupled Tp0.25:0.41 0.5:0.25 1:0.11 2:0.12 4:0.12  peak 0.25
+
+FINDINGS (honest, equal-N scope only — NO per-hardware claim):
+1. Harness well-posed: invariant exact; with bounded dt all
+   rankable arms step-halving stable. Bounded dt is now REQUIRED
+   (fold into frozen protocol); convergence should be assessed only
+   where acc is materially above chance (metric refinement for
+   sMNIST-784).
+2. NO temporal-geometry RESONANCE: every arm peaks at the smallest
+   Tp and declines; no non-trivial preferred stimulus:internal
+   ratio. On SeqDigits-64 (artificial serialized time), matching
+   temporal geometry does NOT buy computation — the pre-committed
+   "artificial time may not reward it" branch. (This is exactly why
+   N-MNIST, with real event timing, is the serious test.)
+3. COUPLING adds real separability: osc_coupled (0.41) >> osc
+   uncoupled (0.14) at the informative Tp, lifting a ~1-state phase
+   oscillator to near the leaky-integrator controls (trace 0.50,
+   LIF 0.40). Early positive for the coupling/relational direction,
+   to be properly tested (A|R|A+R) on N-MNIST.
+
+VERDICT: harness QUALIFIED (well-posed) to proceed. Geometry-
+resonance hypothesis: null on this artificial-time control.
+Coupling: promising. NEXT = sMNIST-784 (real 28x28, needs MNIST
+download) to confirm at scale, and EXP-2 N-MNIST coordinate bridge
+(needs event data + loader) for the relational headline.
