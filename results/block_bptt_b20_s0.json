@@ -1,0 +1,1 @@
+{"arm": "block-bptt-b20", "seed": 0, "coupled_seconds": 88.9, "best_val_f1": 0.251, "spike_f1": 0.269, "f1_by_window": [0.195, 0.297, 0.288, 0.304], "fi_rmse_hz": 53.0, "rebound_spikes": 0}

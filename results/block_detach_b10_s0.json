@@ -1,0 +1,1 @@
+{"arm": "block-detach-b10", "seed": 0, "coupled_seconds": 45.9, "best_val_f1": 0.047, "spike_f1": 0.061, "f1_by_window": [0.07, 0.048, 0.041, 0.076], "fi_rmse_hz": 53.0, "rebound_spikes": 1}
