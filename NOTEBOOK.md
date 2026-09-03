@@ -2260,3 +2260,84 @@ conclusion is earned in full: closed-loop event fidelity at this
 scale requires learning-while-coupled (sequential gradients), and
 the parallel-training boundary is drawn exactly there — a sharp,
 falsifiable, and honestly-reached edge for the whole program.
+
+## Wording correction + three levels + CTM layer parked
+## (2026-09-03, per review)
+
+Round-9 conclusion SCOPED: "across the TESTED observable
+architectures, state forms, capacities and objectives, the
+persistent predictor of success is whether training occurred
+within the model's own rollout regime" — an untested architecture
+could still break the pattern. Refined conclusion adopted: the
+meaning of state is inseparable from the closed-loop dynamics in
+which it will be used; c -> V -> H -> c is a loop, and one side
+cannot be fully learned while pretending the other stays
+teacher-generated. Why DAgger helped only weakly: it always
+learns from the PREVIOUS model's rollout distribution.
+
+THREE LEVELS pinned: (1) teacher distribution — exhaustively
+ruled out; (2) model distribution collected offline — the
+INVERSION tests this properly; (3) current-model distribution
+while parameters change (contemporaneous coupling) — implicated
+only if (2) fails. Either outcome names what the sequential core
+buys: closed-loop EXPERIENCE (if inversion works: "experience
+necessary, gradients-through-time not") or contemporaneous CREDIT
+ASSIGNMENT (if it fails and short current-model BPTT succeeds).
+
+CTM LAYER declared (not run): internal tick-time as a second time
+axis; the geometrization move — represent internal trajectories
+in a mode basis z_i(tau) = sum_r a_ir phi_r(tau) so
+synchronization S_ij = a_i^T G a_j becomes geometry, computable
+without marching ticks; dynamic role assignment (same unit,
+different coalition per phase) as conditional effective
+connectivity W_eff = W g(r_i, r_j) — the computational graph as a
+dynamical object. Next conceptual layer AFTER the closed-loop
+question resolves; premature for one neuron.
+
+## INVERTED DAGGER declared (before running)
+
+One variable only: the TRAINING DISTRIBUTION. Rounds of
+{generate large model-rollout trajectory corpus with the CURRENT
+model (gradient-free); phase-align teacher labels per step;
+retrain BOTH the scan (A/B) and the field on a batch mixture} —
+rollout sequences train identically to teacher sequences (scan +
+vdot loss), so the state dynamics themselves adapt to the model
+distribution, unlike DAgger v1/v2 (F-only). Sweep p_rollout in
+{0.5, 0.8, 0.95, 1.0}, seeds {0, 1}; 3 aggregation rounds; same
+scalar SSM, field, phase matcher, optimizer.
+P-inv1: F1 rises with p_rollout.
+P-inv2: flat ~0.2 through p=1.0 -> level two ruled out; the
+irreducible ingredient is contemporaneous coupling, and the
+parallel-training boundary is drawn there — precisely.
+
+## INVERSION SCORED (2026-09-03): LEVEL TWO RULED OUT — the
+## boundary is contemporaneous coupling
+
+Best-val by p_rollout (seeds 0/1): 0.5 {0.201, 0.170} | 0.8
+{0.201, 0.175} | 0.95 {0.201, 0.144} | 1.0 {0.201, 0.148} — at
+every dose, best ~ round-0 baseline; within rounds, rollout-heavy
+training COLLAPSES (round 1 injections drive seed 0 to ~0.002-
+0.02). P-inv1 FALSIFIED: F1 does not rise with own-distribution
+fraction; it falls. Level two — offline training on the model's
+own distribution, even at 100%, with adapting state dynamics and
+phase-aligned labels — is ruled out.
+
+One recurring micro-signal, noted: seed 1 shows a small (+0.03)
+round-1 bump at EVERY dose before collapse — one round of FRESH
+own-distribution data helps slightly; aggregated STALE data (from
+previous parameter settings) harms. The staleness gradient itself
+supports the level-three reading from inside the data.
+
+THE BOUNDARY, drawn precisely and earned by ten rounds of
+preregistered experiments: state propagation, field fitting,
+representation learning, corrective optimization, and even
+own-distribution data GENERATION all parallelize; what does not —
+by any of the nine mechanisms tested — is the FEEDBACK BETWEEN
+PARAMETER UPDATES AND THE DISTRIBUTION THOSE PARAMETERS INDUCE.
+Contemporaneous credit assignment through the closed loop is what
+the ~0.87 sequential models buy. The scoped conclusion: for the
+tested observable formulations, closed-loop event fidelity
+requires learning while coupled; the exchange-rate question
+(how LITTLE contemporaneous coupling suffices — the 99%-parallel
++ brief current-model-BPTT experiment) is the declared successor,
+alongside the parked CTM layer.
