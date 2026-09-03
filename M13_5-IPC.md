@@ -331,3 +331,61 @@ borderline and carry the looseness as a documented caveat on all
 M13 numbers; or (c) if long-delay score drift persists at a
 skillful point, conclude P2 also fails for M13 at long delay ->
 P3. NOT advancing to the full ladder until this is resolved.
+
+## P2 QUALIFICATION = FAIL (2026-09-03, reviewer ruling). Positive
+## attenuation result banked. M13.5 at a strategic fork.
+
+The automated mean-based PASS=True is SUPERSEDED. Under the frozen
+per-seed criterion (F3+F6), M13-kc1 did NOT meet the gate:
+- one topology (seed2) exceeded 0.03 at d=8 (dR2=0.040);
+- another (seed0) lay on the boundary (d=2 dAcc=0.030);
+- long-delay recall decreased SYSTEMATICALLY under step halving
+  (0.053->0.024, 0.060->0.020, 0.018->0.011) — not jitter around a
+  stable value; apparent long-memory skill partly disappears as the
+  numerical solution is refined;
+- the qualification operating point produced near-null skill, so the
+  gate is a weak functional-stability test (0.05->0.02 is tiny in
+  absolute terms but huge relative to the useful computation).
+Code fixed: PASS now enforces per-seed worst<0.03, not mean.
+
+RESULT-LOG WORDING (reviewer): "Task-level readouts strongly
+attenuated the discretization sensitivity observed in per-window
+spiking features, reducing changes by roughly one to two orders of
+magnitude. However, the canonical M13-kc1 arm did not satisfy the
+preregistered per-seed convergence criterion: one topology exceeded
+the 0.03 tolerance, another lay on the boundary, and long-delay
+recall decreased systematically under step halving. Because the
+qualification operating point produced near-null task skill, the
+experiment establishes attenuation of microscopic timing
+sensitivity but does not establish convergence of useful
+computation."
+
+TWO HYPOTHESES, now separated:
+- P1 FALSIFIED: "the compressed field regularizes away event
+  sensitivity." It does not.
+- P2 PARTIALLY SUPPORTED: "functional decoding can suppress event
+  sensitivity." Yes, strongly (1-2 orders of magnitude).
+- P2 NOT ESTABLISHED: "useful decoded computation is
+  discretization-stable." Open.
+
+METHODOLOGICAL RESULTS BANKED (publishable as-is):
+1. Event-faithful spiking dynamics are hard to rank with passive
+   common-clock capacity probes.
+2. Task decoding suppresses much of that sensitivity, but not
+   enough to certify stable USEFUL computation under the tested
+   protocol.
+
+FORK (reviewer): either (P2b) ONE final preregistered experiment —
+select each arm's operating point by COARSE-STEP validation skill
+under an equal fixed search budget, REQUIRE a minimum useful skill
+(e.g. recall R2>0.2 or parity materially above chance) BEFORE
+convergence is assessed, freeze, then test n vs 2n on untouched
+data (asks: when the primitive is actually computing usefully, is
+that computation stable to refinement?) — labelled a NEW prereg,
+NOT a repair, and the LAST M13.5 attempt; OR close M13.5 now
+without a hardware-advantage claim and move to M14. Reviewer leans
+CLOSE-AND-M14 unless proving M13's per-cost advantage is
+strategically essential. Note the failure points AT M14: the
+fragile quantity is t_spike; the stable quantity is the downstream
+relational one (task decision -> phase/sync/cluster regimes), which
+is exactly what M14/ONN measures. No further rescue tree after P2b.

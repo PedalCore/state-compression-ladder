@@ -191,3 +191,13 @@ a common discretized interface. The deeper prize if it PASSES:
 macroscopic computation stable despite discretization-sensitive
 microscopic event placement is itself a hardware-relevant property
 (silicon has jitter/mismatch/finite timing resolution too).
+
+---
+# P2 QUALIFICATION OUTCOME (2026-09-03): FAILED. Per-seed
+# convergence criterion (F3+F6) not met by M13-kc1 (seed breach at
+# d=8, boundary at d=2, systematic long-delay drift, near-null
+# skill at the representative point). Positive result retained:
+# task decoding attenuates event-timing sensitivity by 1-2 orders
+# vs P1 features, but does NOT certify stable useful computation.
+# Next: either preregistered P2b (min-skill-gated convergence, the
+# LAST M13.5 attempt) or close M13.5 and move to M14.
