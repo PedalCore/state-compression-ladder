@@ -116,3 +116,149 @@ preregister (this doc) -> reviewer sign-off on the four non-
 negotiables -> implement v3 -> smoke controls (trace~0 nonlinear;
 C_total not >> N; step-halving stable) -> production. No manual
 rescue runs; no per-arm hand-tuning outside the shared grid.
+
+---
+
+# AMENDMENTS (reviewer conditional sign-off, 2026-09-03) — FROZEN
+
+Reviewer verdict: **approved in principle for M13.5-A / harness
+qualification**, subject to the eight points below being frozen
+before implementation. The final "IPC per hardware cost"
+conclusion is NOT signed off until B1's cost metric is frozen;
+gate/energy efficiency is reserved for a later synthesis protocol
+(B2). All loose phrases below are now formulas/deterministic rules.
+
+## A1. Recurrent observable — exact
+
+Voltage-based cells feed the recurrent net and readout the SAME
+normalized observable: `y_i = (V_i + 65 mV) / 100 mV`, constants
+identical across all voltage arms (raw V never enters W — its DC
+offset would make a model-dependent recurrent bias). Trace/
+control arms define their dimensionless state directly as `y_i`.
+Readout may standardize features by TRAINING-SET mean/std, but
+that standardization NEVER feeds back into the reservoir. The
+linear trace arm contains NO clipping, saturation, or nonlinear
+normalization anywhere (else the "linear null" acquires nonlinear
+IPC — the v2 failure mode).
+
+## A2. IPC target library — deterministic
+
+Orders `d in {1,2,3,4}`; single-tap delays `tau in {1..L}`,
+`L = 20`; **tau=0 EXCLUDED from the primary score** (direct
+input sensitivity is not memory/computation). Cross-delay
+products: for orders 2 and 3, include all delay pairs/triples
+drawn from a fixed deterministic list (seed-0 enumeration of
+`tau_a < tau_b [< tau_c] <= L`, capped at 200 order-2 and 100
+order-3 targets, generated once and frozen). Rename the aggregate
+`C_total -> C_{<=4,L}`: the capacity in THIS finite delay/order
+library, not a theoretical total.
+
+## A3. Readout estimator — locked
+
+washout `1000`; readout-train length `15000`; held-out test
+length `8000` (fresh sequence). Features: training-set centering
++ unit-variance scaling; explicit intercept column. Estimator:
+ridge; `lambda` chosen ONCE per arm by validation on a held-out
+slice of the CALIBRATION sequence over `{1e-8,1e-7,...,1e-2}`,
+then frozen; `rcond = 1e-12` in the solve. Identical for all arms.
+
+## A4. Null rule — mathematical
+
+For each target q, build a null from `20` fixed circular shifts
+of that target; `C_q^primary = max(0, R2_q_heldout)` iff
+`R2_q_heldout > Q_0.95(R2_null)`, else 0. Report BOTH raw
+held-out IPC (literature-comparable) and null-thresholded IPC
+(primary robust measurement).
+
+## A5. Operating-point selection — locked objective
+
+`(I0, g_in, g_rec)* = argmax C_{<=4,L}^calibration`, then frozen;
+IPC computed on NEW test sequences. Grids (equal budget, every
+arm): `g_in in logspace(-1, 1, 7)`, `g_rec in {0, 0.1, 0.3, 0.5,
+0.7, 0.9, 1.1}`, `I0 in {-0.5, 0, 0.5}` (spiking arms only; 0 for
+continuous). Divergence = any |state| > 1e3 or non-finite over
+the calibration run -> point marked invalid, excluded, never
+rescued. Tie-break: smallest g_rec, then smallest g_in. Calibration
+sequence is a SEPARATE realization from the IPC test sequence. No
+inspecting individual C_d to pick a "better-looking" point.
+
+## A6. Baseline fairness — later phase
+
+Qualification: canonical fixed LIF is fine. FINAL comparison adds
+BOTH a labelled canonical LIF AND an optimized-LIF given the SAME
+preregistered candidate-configuration budget as M13's operating-
+point search (equal number of candidate configs, not equal
+tunable params). Same for AdEx. This blocks "M13 was pretrained
+while LIF's tau/thr/reset were arbitrary."
+
+## A7. M13 state count — no shorthand
+
+FORBIDDEN anywhere in M13.5: "one-state M13". kc=1 is one
+CORRECTION state; the deployed runtime primitive also carries the
+mechanistic field state. Intrinsic table states column reads
+`M13-kc1 = 4+1`, `M13-kc8 = 4+8`. Hardware ledger includes the
+ENTIRE frozen field evaluation and its integrator substeps, not
+just the corrector's 32 params.
+
+## A8. Statistical unit — no pseudoreplication
+
+Average the 2 input-sequence results WITHIN each topology seed;
+treat the `8` topology seeds as `n=8` PAIRED units (same reservoir
+realization across cell types). Report all paired points; paired
+bootstrap CI over topology seeds for every difference/ratio.
+
+## B split — algorithmic proxy now, synthesis later
+
+**B1 (preregisterable now):** states/sample, state bits,
+parameter bits, mults, adds, LUT/nonlinear ops, integration
+substeps, edge MACs — all PER PHYSICAL SAMPLE, all deployed M13
+arithmetic counted. This is the hardware proxy for M13.5.
+**B2 (reserved):** synthesized area/pJ under a fixed requirement
+("advance all N cells one physical step every T_s") at fixed
+precision + synthesis flow — a later protocol, NOT this paper.
+"IPC/gate-cost" is NOT a primary M13.5 result (gate cost depends
+on precision, time-multiplex-vs-replicate, clock, library — none
+fixed yet).
+
+## Passage-to-production gates (all must pass; else STOP and find
+## the harness source, do NOT tune until it looks right)
+
+1. linear-trace nonlinear C_{2:4} statistically indistinguishable
+   from its null;
+2. C_{<=4,L} within finite-sample tolerance of the feature-
+   dimension bound (not >> N exposed scalars);
+3. halving the integration step does not materially reorder arms;
+4. gain maps show a genuine stable operating REGION, not a single
+   pathological optimum;
+5. an independent implementation reproduces one small IPC case
+   analytically/numerically.
+
+## g_rec=0 diagnostic panel (before production)
+
+Run a zero-recurrence slice as a diagnostic (not a headline arm):
+separates single-cell temporal computation from computation
+CREATED by recurrent interaction. If M13's nonlinear-IPC advantage
+is already present at g_rec=0, the substrate does the work; if it
+appears only with coupling, the resource is the interaction of
+local dynamics with recurrence. Central to the original question.
+
+## What a convincing M13 result looks like (preregistered shape)
+
+NOT `C_M13 > C_LIF` alone. The target signature:
+`C1_M13 ~= C1_LIF` (comparable linear memory) BUT
+`C_{2:4}_M13 >> C_{2:4}_LIF` (more nonlinear basis), AND
+`C_{<=4,L}_M13 / cost_M13 > C_{<=4,L}_LIF / cost_LIF`.
+That says the richer state turns history into useful nonlinear
+basis functions efficiently, not merely stores more of it.
+Falsifier retained: if the multi-timescale LINEAR bank matches
+M13 after state/cost normalization, the resource was the
+TIMESCALE SPECTRUM, not HH nonlinear geometry — still an
+excellent result.
+
+## Status after amendments
+
+M13.5-A / harness qualification: **signed off** with the above
+frozen. Qualification arms remain THREE (linear trace | LIF |
+M13-kc1). v3 may be implemented against this spec; production
+gated on the five passage tests. Final efficiency conclusion
+gated on B1 cost metric being frozen; B2 synthesis is future work.
