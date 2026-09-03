@@ -288,3 +288,96 @@ means — a preregistration decision, not a mid-run tuning knob.
 Full diagnostic + four candidate resolutions in M13_5-IPC.md.
 **No production IPC numbers exist. M13.5-A is NOT qualified until
 the spiking-observability question is resolved in writing.**
+
+---
+
+# AMENDMENT II (2026-09-03) — reviewer ruling on the qualification
+# halt. FROZEN before v3-production. Approve 1+2+4; 3 in modified
+# (two-operating-point) form.
+
+## II.1 Symbol-held common input (hold chosen by convergence, not IPC)
+
+Input is piecewise-constant per symbol: `u(t) = u_k` for
+`k*Th <= t < (k+1)*Th`, `u_k ~ U[-1,1]` iid. EVERY primitive gets
+the SAME `Th`. `Th` is chosen from the candidate set
+`Th in {0.5, 1, 2, 5} ms` as the SMALLEST value passing a
+convergence criterion evaluated WITHOUT looking at IPC:
+- run identical input under `dt` and `dt/2`; require the raw
+  exposed window statistic `y_i[k]` (II.2) to change by
+  `< tol_stat = 2%` (relative RMS over cells and symbols);
+- for spiking arms additionally require per-cell event count
+  agreement within `<= 5%` and mean spike-time shift `< 0.1 ms`.
+`Th* = smallest common hold giving converged dynamics for ALL
+qualification arms`. If no candidate passes, qualification FAILS
+(no production). IPC delays are SYMBOL delays `tau = 1..L`;
+physical memory horizon `t_memory = tau * Th*` (reported, and used
+when comparing slower vs faster primitives).
+
+## II.2 Common LINEAR window-average observable (primary)
+
+Primary observable for ALL arms:
+`y_i[k] = (1/Th) * integral_{kTh}^{(k+1)Th} z_i(t) dt`, where
+`z_i(t)` is the ONE exposed scalar: affine-normalized `V_i` for
+voltage cells (identical constants), the scalar state for the
+trace bank. A window MEAN is a linear observation operator and
+cannot manufacture nonlinear IPC — this is why it, not spike
+count, is the cross-arm primary. Spike count is a SECONDARY
+spiking-only analysis, never the headline. The window accumulator/
+register is counted in the B1 ledger.
+CRITICAL: the window average is ONLY what the linear readout sees.
+It is NOT fed back into the reservoir and is NOT extra reservoir
+state. Recurrent coupling stays instantaneous and one-scalar for
+every arm during the hold:
+`I_i(t) = I0 + g_in*b_i*u_k + g_rec * sum_j W_ij * z_j(t)`.
+The measurement layer must not change the dynamics.
+
+## II.3 TWO preregistered operating points (replaces single argmax)
+
+On the calibration set, freeze BOTH:
+`theta_total* = argmax_theta C_{<=4,L}` (general-purpose capacity)
+`theta_NL*    = argmax_theta (C2+C3+C4)` (nonlinear feature-gen),
+`theta = (I0, g_in, g_rec)`. Evaluate BOTH once on test. Report
+both, AND the full gain-map Pareto front of `C1 vs C_{2:4}`.
+Rationale: argmax-total alone can pick a subthreshold linear
+regime; argmax-NL alone would deliberately flatter spikers.
+Reporting both answers two distinct questions and lets a
+subthreshold total-capacity optimum stand as a RESULT, not be
+forced away.
+
+## II.4 Substep + physical-time cost in B1 (not normalized away)
+
+If preserving richer dynamics needs `n_substep` internal field
+evaluations per input symbol while LIF needs one, those
+evaluations ARE part of the price. Per physical input symbol,
+ledger: `n_substep`, all field evals, adds, mults, nonlinear ops,
+recurrent-edge ops, state bits, window accumulator. Report BOTH
+`IPC / input_symbol` AND `IPC / physical_second = (IPC/symbol)/Th*`
+so a long hold cannot buy free capacity by letting a rich
+substrate compute longer per symbol. B1 primary ratios now:
+`IPC/operation, IPC/state_bit, IPC/physical_time`.
+
+## II.5 Diagnosis wording (softened before publication)
+
+The v3 finding is NOT "a stiff spiker cannot be observably stable."
+It is: **under the instantaneous-snapshot protocol and the tested
+integration scheme, the HH-like substrate did not yield an
+observable simultaneously numerically converged AND informative at
+the shared sampling interval.** The general lesson —
+`equal sample clock != equal observation of dynamical computation`
+when primitives have very different dynamical bandwidths — is the
+real scientific content. Snapshot IPC is not a neutral measurement
+interface across bandwidths; a common symbol timescale + linear
+temporal observation + explicit physical-time cost is the
+defensible comparison.
+
+## II.6 Revised qualification gates (ALL must pass to sign off prod)
+
+1. linear-trace nonlinear capacity remains at null;
+2. `C_{<=4,L}` respects the feature-dimension bound;
+3. the raw dynamical / window observable is step-halving converged
+   (this is the II.1 selection criterion);
+4. IPC itself is subsequently step-halving stable;
+5. LIF AND M13/HH both possess non-pathological regions in the
+   common gain grid;
+6. no production statistic is taken from an unstable trajectory.
+Passing all six -> production signed off.
