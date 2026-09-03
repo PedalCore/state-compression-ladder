@@ -2602,3 +2602,211 @@ near-perfect f-I; a 34-parameter one-scalar corrector holds
 ~0.85 — the compression claim survives on locked data.
 Reporting convention fixed: dev numbers labeled dev; these four
 locked numbers are the reported test performance.
+
+## SCOPE FROZEN -> PAPER (2026-09-03)
+
+M13 scope locked to two claims: (1) a compact dynamical neuron
+primitive; (2) what part of learning a self-coupled dynamical
+system resists parallelization. CTM, network synchronization,
+richer neuron families = M14. HARD RULE: no new M13 experiment
+unless a draft sentence cannot be defended without it. The three
+audit-tightening controls are sanctioned (each defends a specific
+claim's control column); everything else is closed. Locked corpus
+is authoritative; dev numbers appear only as selection history.
+NOT chasing 0.88 higher — the positive result is proven.
+
+## PAPER CLAIM -> EVIDENCE TABLE (v1; locked numbers authoritative)
+| # | Claim | Evidence | Number | Control/caveat |
+| 1 | short V-history suffices | delay collision | ~12 ms knee | sufficiency != rollout |
+| 2 | local HH dynamics parallelize | A0 field | 0.74 dev F1, f-I 1.4 | event ceiling remains |
+| 3 | integrator not the gap | RK4 vs Euler | null | - |
+| 4 | plateau = event-decision, episodic | F1-by-window flat, P(miss|miss)=0.69 | 5.4 ms recovery | driven regime |
+| 5 | tiny bounded correction solves most event error | LOCKED hybrid kc8 | 0.879/0.888 | full/mechanistic coords; trust bound |
+| 6 | benefit needs little state | LOCKED kc1 | 0.861/0.836 | 2 seeds; s1 f-I 9.9 |
+| 7 | in complete coords, state form ~ irrelevant | static~SSM~GRU | matched-param control PENDING (A-ctrl) | |
+| 8 | selective accumulation = recurrence, parallel-trainable | joint SSM vs GRU | half wall-clock | step-match PENDING (A-opt) |
+| 9 | observable parallel training has a ceiling | corrected baseline | ~0.264 | tested formulations |
+| 10 | state amount/labels/objective all exonerated | ladders + JEPA | nulls | JEPA common-support PENDING (A-jepa) |
+| 11 | offline own-distribution insufficient | corrected inversion | collapse both seeds | contemporaneous coupling remains |
+| 12 | learned clock stayed fixed | timescale maps + scan test 1e-7 | tau~1.6 ms flat | coupled-wake check optional |
+Rows 7/8/10 have PENDING controls = the three sanctioned runs.
+
+## REPRO PATH declared: repro/ with make_teacher.sh, train_
+## headline.sh, locked_eval.sh, fixed seeds/configs, env.txt, and
+## numbers.json mapping every paper number -> checkpoint/JSON.
+
+## A-ctrl interim + PRIMITIVE-ADAPTATION regimes (2026-09-03)
+
+A-ctrl run 1 (static width-3, ~34 params, matched to recurrent
+kc=1/2): best-val 0.901 = recurrent kc=8. Claim #7 SHARPENED and
+confirmed at MATCHED PARAMETER COUNT: in complete coordinates,
+recurrence adds nothing a same-size static corrector can't — the
+earlier control was param-confounded (static had 244), now it
+isn't. Three runs finishing.
+
+"Can the primitive be trained in parallel AFTER pretraining?"
+answered structurally + one experiment declared:
+  Regime 1 (freeze dynamics, train connectivity/readout around
+    it): fully parallel — the coupling problem is gone because
+    theta's rollout distribution stops moving. This is the
+    deployment model.
+  Regime 2 (frozen base + tiny BOUNDED adapter): should be
+    mostly parallel — the trust bound limits distribution shift,
+    which is exactly the already-validated trust-hybrid regime.
+  Regime 3 (freely rewrite the dynamics): coupling problem
+    RETURNS by construction (theta -> theta' moves p_theta(s)).
+Paper sentence this defends: "coupled pretraining need not
+recur — once the dynamics are frozen or adaptation is bounded,
+subsequent training parallelizes; the coupling cost is paid once."
+PHENOTYPE-ADAPTATION experiment declared (M14-adjacent, cheap,
+uses existing frozen field): learn a NEW target regime (shifted
+rheobase via I-offset) three ways — (A) full coupled retrain,
+(B) parallel all-weight fine-tune, (C) frozen base + parallel
+bounded adapter. C~=A would prove "expensive coupling once, cheap
+parallel adaptation after." Deferred to M14 per scope freeze
+UNLESS the paper claims it — then it is in-scope as that claim's
+evidence.
+
+## TTT connection + BLOCK-COUPLING experiment declared
+## (2024 arXiv:2407.04620; recorded 2026-09-03)
+
+TTT's mini-batch trick (compute gradients at block-START state
+for b samples in parallel; only block boundaries sequential;
+b=16 in their work) reframes our exchange-rate axis correctly:
+not "fraction of coupled updates" (my xrate confound — random
+interleave) but COUPLING BLOCK SIZE b — how far the model runs
+between synchronizations with its own self-induced trajectory.
+Key difference honestly noted: TTT's tokens are EXOGENOUS; our
+V_{t+1} is endogenous (theta -> V -> H -> c -> V), so the forward
+rollout stays sequential — but the GRADIENT computation over a
+detached block can parallelize. Maps our own finding (stale
+harmful / fresh helps / full coupling needed) onto: maybe the
+irreducible resource is SYNCHRONIZATION FREQUENCY, not gradients-
+through-time.
+
+Experiment (in-scope: it defends the paper's boundary sentence):
+per block — current model -> generate b-sample current-policy
+rollout (sequential) -> DETACH -> all-b local gradients in
+parallel -> one update -> regenerate from new model. Sweep
+b in {1,5,10,20,50}, vs true-BPTT-over-b at matched b.
+Three-way discriminator:
+  detached-blockwise works        -> synchronization was the
+                                     resource; BPTT not needed
+                                     (the strong, cheap result)
+  only BPTT works                 -> genuine temporal credit
+                                     irreducible
+  both work, BPTT better          -> quantify the trade
+This is the cleanest remaining test of the closed-loop boundary;
+run it, then freeze for the paper. TTT-as-hidden-state (state = a
+tiny online learner, could explain the dormant 1.6 ms clock) =
+M14.
+
+## A-ctrl partial + relaunch (2026-09-03)
+
+A-ctrl/A-opt shared a shell that ended when A-opt finished, so
+only static3 s0 (dev 0.883 / val 0.901 — = recurrent kc=1 at
+matched ~34 params) banked; static3 s1 and static6 s0/s1 were
+cut. Claim #7's core is made (matched-param static = recurrent);
+the missing runs are completeness, relaunched independently.
+A-opt recorded: step-matched SSM {0.195, 0.379} — SSM >= GRU at
+matched steps, with an optimizer-step-frequency sensitivity on
+seed 1 (flagged, not smoothed).
+
+## Block discriminator CONFOUND CAUGHT + fixed (2026-09-03)
+
+First block runs KILLED (PID inspection): detach arm regressed
+per-step V-dot while bptt used trajectory-V loss — objective AND
+credit-path both differed, so "bptt wins" would not have isolated
+temporal credit. The stale b=1 0.023 / b=5 0.22 numbers are
+DISCARDED. Rewrite: both arms share the identical generated
+block, identical per-step next-V target, identical loss and
+optimizer budget; ONLY stop-gradient toggles. Fixed rollout-
+sample budget (nroll=400) so b = synchronization interval
+(syncs/epoch = 400//b). Built-in invariant: b=1 detach == bptt
+(no earlier generated state for credit to flow through) — if they
+diverge at b=1, something other than temporal credit still
+differs. Relaunching detach {1,5,10,20,50} + bptt {1,5,20,50}.
+
+## Clean block discriminator — detach arm (2026-09-03): b=1
+## invariant PASSED; freshness alone insufficient
+
+b=1 INVARIANT PASSED EXACTLY: detach == bptt, 0.215 val / 0.240
+test, byte-identical — harness clean, divergence at larger b is
+attributable to the credit path alone.
+Detach curve (val): b1 0.215 | b5 0.023 | b10 0.047 | b20 0.194 |
+b50 0.111. Wording pinned: AT-OR-BELOW baseline with no positive
+trend and clearly NON-MONOTONE (not "flat" — values differ). Rules
+out a specific hypothesis: fresh current-policy states + immediate
+resynchronization, gradient stopped through the trajectory, do NOT
+recover fidelity. The boundary sharpens: not "offline data is
+stale" but FRESHNESS ALONE IS INSUFFICIENT.
+
+Evidence stack (all insufficient): teacher data / phase-correct
+own-distribution / mostly-or-pure own-distribution retrain /
+fresh current-model trajectories + detached update. Last
+discriminator running: do GRADIENTS THROUGH those same fresh
+trajectories change it (bptt b5/20/50)?
+- bptt rises, detach flat -> "high-fidelity closed-loop learning
+  requires a nonzero through-time credit path; fresh states alone
+  insufficient" (the strong, precise boundary sentence).
+- bptt also ~0.24 -> exchange-rate bump was not temporal credit
+  in this construction; note the residual confound honestly.
+- threshold (b5 low, b20 up, b50 strong) -> MINIMUM USEFUL CREDIT
+  HORIZON; compare to fast-m / 5 ms entrainment / 12 ms window.
+STOP RULE: no further M13 experiment after this unless the bptt
+curve is ambiguous. This is where a clean conclusion is either
+banked or spoiled by one question too many.
+
+## BLOCK DISCRIMINATOR COMPLETE (2026-09-03): the "ambiguous"
+## branch fires — and it is itself the finding
+
+Full clean table (val-F1, seed 0, same loss/targets/budget, only
+stop-grad differs; fixed rollout-sample budget):
+  detach: b1 0.215 | b5 0.023 | b10 0.047 | b20 0.194 | b50 0.111
+  bptt  : b1 0.215 | b5 0.009 | b20 0.251 | b50 0.227
+b=1 INVARIANT HOLDS EXACTLY (detach 0.215 == bptt 0.215). Neither
+arm rises meaningfully above the ~0.24-0.26 baseline at any block
+size; bptt-b20's 0.251 is the high point and it is within noise of
+baseline. Per the pre-committed stop rule this is the "ambiguous"
+outcome, and its honest reading is DEFINITE: in this short-block
+construction, temporal credit through the block does NOT recover
+the high-fidelity regime either. So the ~0.87 gap is not bought by
+short-horizon coupling of EITHER kind (detached or through-time)
+at these budgets. Only long-horizon sequential training (v4's
+full-trajectory TBPTT, 0.869) has ever crossed it.
+
+Boundary sentence, final and scoped: "within the tested
+observable formulations, high-fidelity closed-loop learning was
+achieved only by long-horizon sequential training; neither fresh-
+state resynchronization, nor short-block through-time credit, nor
+any offline distribution/label/objective correction reached it."
+The irreducible ingredient is LONG-HORIZON contemporaneous
+credit, not merely coupling per se — a stronger, more specific
+boundary than we could state before. STOP RULE HONORED: M13
+experimentation closes here.
+
+## LITERATURE -> ROADMAP (ONN review + npj UnConv scan, filed)
+Ref: Todri-Sanial, Delacour, Abernot, Sabo, "Computing with
+oscillators", npj Unconv. Comput. 1:14 (2024),
+s44335-024-00015-z (~/Downloads). Key carry-forwards, all M13.5/
+M14 (post-paper), NONE reopening M13:
+- M13.5 PRIMARY METRIC = Information Processing Capacity (Dambre
+  linear + order-2/3/4 nonlinear) + NARMA, per hardware cost
+  (state bits / MACs / gates / pJ). Arms: frozen LIF, AdEx,
+  M13-kc1, M13-kc8 in one reservoir, linear readout only.
+- Timescale-spectrum control: 1 exp / 2 modes / 4 modes /
+  fractional kernel — is computation set by STATE COUNT or the
+  TIMESCALE SPECTRUM? (fractional-order paper; our dormant-clock
+  result is the motivation).
+- M14 four-neuron hyper-flexibility: fixed weights, sweep bias/
+  context z only; count robust distinct functions; M13 vs LIF/
+  AdEx at equal cost — the CTM/re-tasking bridge.
+- Contingency (only if BPTT had won, which it did not cleanly):
+  low-rank gradient compressibility (SVD spike-BP paper).
+- Connectivity cost measured SEPARATELY from neuron cost (ONN
+  scalability warning: coupling ~ quadratic dominates); the real
+  hardware win may be fewer-neurons -> far-fewer-connections.
+- EP / local reward rules = candidate train-around-frozen-cell
+  mechanisms (M14, not plug-in — needs energy-based structure).
+Reviewer offered standing watch on npj UnConv for M13/M14-
+relevant new work.
