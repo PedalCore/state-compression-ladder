@@ -262,3 +262,29 @@ frozen. Qualification arms remain THREE (linear trace | LIF |
 M13-kc1). v3 may be implemented against this spec; production
 gated on the five passage tests. Final efficiency conclusion
 gated on B1 cost metric being frozen; B2 synthesis is future work.
+
+---
+
+# QUALIFICATION OUTCOME (2026-09-03) — HALT FOR REVIEWER RULING
+
+The v3 harness was built to this spec and run in qualification.
+**Integrity gates pass** (linear-trace nonlinear IPC = 0.007 ~=
+null; C_{<=4,L} <= N; LIF step-halving-stable). **The spiking-
+substrate step-halving gate FAILS structurally**: an instantaneous
+membrane-snapshot observable at a fixed shared sample interval
+cannot be simultaneously (i) step-halving-stable and (ii) able to
+expose HH's spike nonlinearity — coarse sampling aliases the spike
+(IPC never dt-converges: C1 0.08->0.80), fine sampling is dt-stable
+but membrane-low-passes the fast input to ~0 IPC, and a low-pass
+observable stabilises by smoothing the nonlinearity away. Leaky-
+integrator arms pass trivially because they have no stiff event.
+
+This is exactly the harness flaw qualification exists to catch,
+found before any headline number was trusted. Fixing it (input-
+hold/masking; a windowed observable applied identically to every
+arm; a nonlinear-capacity operating-point objective; a stated HH
+substep floor folded into the B1 cost) changes what "IPC of HH"
+means — a preregistration decision, not a mid-run tuning knob.
+Full diagnostic + four candidate resolutions in M13_5-IPC.md.
+**No production IPC numbers exist. M13.5-A is NOT qualified until
+the spiking-observability question is resolved in writing.**
