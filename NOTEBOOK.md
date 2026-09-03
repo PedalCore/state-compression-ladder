@@ -2341,3 +2341,128 @@ requires learning while coupled; the exchange-rate question
 (how LITTLE contemporaneous coupling suffices — the 99%-parallel
 + brief current-model-BPTT experiment) is the declared successor,
 alongside the parked CTM layer.
+
+## Endgame plan + two experiments declared (2026-09-03)
+
+ADOPTED: paper write-up is the deliverable; the exchange-rate
+experiment is the one result that strengthens the ending without
+changing the story; CTM = M14 (the handoff: M13 asks what
+irreducible state/coupling a dynamical unit needs; M14 asks
+whether tick-space + synchronization geometry lets populations
+reorganize computation). Paper wording pinned: no "cannot" —
+"within the tested formulations and regimes, contemporaneous
+closed-loop training was the only condition associated with high
+event fidelity, after extensive controls." Narrative = the eight
+isolated questions, not chronology.
+
+EXCHANGE-RATE EXPERIMENT declared: mostly-parallel training
+(scan + iid on teacher data) with a fraction p of optimizer
+updates replaced by COUPLED updates — short (5 ms) current-model
+BPTT segments from teacher-primed starts, loss on the model's own
+rollout vs teacher. Sweep p in {0, 0.02, 0.05, 0.15, 0.5, 1.0},
+seeds {0, 1}. The curve F1(p) is the signature figure candidate:
+"temporal credit necessary, but only sparsely" if a small p
+recovers most of the gap.
+
+LOOKAHEAD declared (user proposal; fixed-lag smoothing): can one
+sample of future observation substitute for hidden state?
+Stage 1 (zero training, runs first): the decision-conditioned
+collision diagnostic on H_t vs H_t + V_{t+1} vs H_t + forward
+difference — does one-step lookahead collapse decision-band
+ambiguity? Only if yes: (A) causal SSM vs (B) one-tick-delayed
+smoother vs (C) predictor-corrector internal tick (the autonomous
+analogue — no true future exists for a standalone neuron; the
+internal tick asks "what does my provisional next step imply
+about my current state?" — the CTM bridge in miniature).
+Principle at stake: latency <-> state complexity, a hardware-
+grade trade.
+
+## Lookahead stage 1 (2026-09-03): NULL — stopped per rule
+
+Decision-band collision: H 0.0178 | H+V(t+1) 0.0170 | H+dV+
+0.0178. The window's decision ambiguity is already at floor (E2
+redux); one-step lookahead has nothing to collapse. The latency-
+for-state trade has no purchase in this system because
+INFORMATION was never the deficit — the branch stops at stage 1
+as declared. Predictor-corrector/internal-tick survives as an
+M14 concept only.
+
+## Exchange-rate watch-list (2026-09-03, per review; recorded
+## while the sweep runs)
+
+1. Primary axis = SECONDS of coupled optimization (schedule-
+   independent, generalizable), not fraction p; both are logged
+   per run (coupled_seconds, n_coupled).
+2. Current sweep uses UNIFORM interleaving (recorded). If the
+   curve has a knee, the conditional follow-up sweeps SCHEDULE at
+   fixed p: uniform vs early-concentrated vs late vs after-
+   parallel-convergence — discriminating basin-INITIALIZATION
+   (coupling moves the model into the right basin once, parallel
+   training keeps it there -> the sequential core is even less
+   fundamental) from continuous CALIBRATION (performance decays
+   when coupling stops).
+3. NON-MONOTONICITY watch: composition history predicts p=0.02/
+   0.05 may beat p=0.5/1.0. If so, the conclusion upgrades:
+   parallel local supervision and coupled temporal credit are
+   COMPLEMENTARY (local physics + consequence-aware credit), not
+   approximations of each other — the hybrid recipe would be
+   conceptually cleaner than full BPTT, not merely cheaper.
+4. The lookahead null's role in the paper: removes the "just
+   needed a bit more information" escape hatch — the bottleneck
+   was never information content.
+
+## Primitive roadmap + timescale maps declared (2026-09-03)
+
+PRIMITIVE PATH recorded (per review): pretrain once -> freeze/
+share -> train structures around it. Phase A: fully-frozen
+M13Cell, train connectivity only — the "useful primitive vs good
+impersonator" test (vs LIF/AdEx/Izhikevich at matched state/
+params/gates on temporal tasks). Phase B: shared law + tiny
+per-population code c_i (1-4 numbers: cell types). Scaling risk
+named: in-network input distributions (coupled, correlated,
+oscillatory) differ from training drives — scale 1 -> 2 -> 8 ->
+32, with the TWO-NEURON coupling sweep (synchronize/destabilize/
+sensible regimes) as the first composition test. Training/
+deployment separation: rich differentiable teacher form for
+network-gradient purposes, compiled tiny cell for hardware. The
+stack: primitive -> connectivity -> synchronization/routing (M14)
+-> task.
+
+TIMESCALE MAPS declared (two zero-cost instruments, run now):
+T1: HH local Jacobian spectrum — tau_i(x) = 1/|Re lambda_i| by
+    voltage band; check against the measured fingerprints (12 ms
+    sufficiency window, 5.4 ms entrainment, slow n/h drift,
+    fast-m).
+T2: learned SSM effective clock — tau_SSM(t) = -dt/log a_t by
+    band; prediction: short memory where input determines state,
+    long memory in the ISI where excitability must be
+    reconstructed — one state with a STATE-DEPENDENT CLOCK.
+
+## Timescale maps (2026-09-03): the physics has a state-dependent
+## clock; the learned primitive's clock NEVER WOKE
+
+T1 (HH Jacobian, median ms fast->slow by band): hyperpol {0.15,
+0.30, 4.4, 7.8} | subthreshold {0.21, 4.9, 5.2, 8.4} | decision
+{0.05, 1.0, 2.5, 4.4} | spike {0.04, 0.24, 0.69, 1.05}.
+Fingerprints validated: 5.4 ms entrainment ~ the ~5 ms
+contracting mode; 12 ms sufficiency window ~ 1.5x the slowest
+mode (8.4 ms); decision-band fast-mode collapse (0.05 ms) = the
+initiation instability. Effective timescale structure varies
+FOURFOLD across regimes — "how many states" refines again: the
+active timescales are state-dependent.
+
+T2 (learned SSM effective clock): FLAT at tau ~ 1.6 ms in every
+band (p10-p90 ~ 0.1 ms) — which equals the INITIALIZATION value
+(1 + softplus(0)). The selective gate never trained: no
+non-coupled objective ever pressured a_t to vary. The SSM ran as
+a fixed leaky trace with dormant selectivity — retro-explaining
+SSM ~ GRU ~ static from a new angle, and adding a candidate
+mechanism to the boundary story: perhaps CONTEMPORANEOUS COUPLING
+is what trains the clock.
+
+DECLARED CHECK: when the exchange-rate sweep lands, rerun T2 on
+the p=0.5 / p=1.0 checkpoints vs p=0 — if coupled training wakes
+the clock (tau map becomes state-dependent, ideally tracking
+T1's structure), the boundary result gains its mechanism: coupled
+gradients are the only signal that reaches the temporal
+selectivity parameters.
