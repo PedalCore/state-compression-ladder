@@ -232,3 +232,36 @@ resonance hypothesis: null on this artificial-time control.
 Coupling: promising. NEXT = sMNIST-784 (real 28x28, needs MNIST
 download) to confirm at scale, and EXP-2 N-MNIST coordinate bridge
 (needs event data + loader) for the relational headline.
+
+---
+# sMNIST-784 CONFIRMATORY SPOT-CHECK (2026-09-03) — tempers the
+# SeqDigits coupling positive. (400/300, 1 seed, dt~0.25, Tp{.25,1,4}.)
+
+Invariant PASS. Convergence: LIF stable (.017), osc stable (.000);
+trace (.033) & osc_coupled (.033) UNSTABLE (borderline, near-chance
+regime) -> not ranked. Accuracy (bounded dt):
+  LIF        Tp.25:0.41 1:0.36 4:0.34   peak .25   (best, length-robust)
+  osc(uncpl) Tp.25:0.23 1:0.21 4:0.16   peak .25
+  trace      Tp.25:0.17 1:0.12 4:0.12   near-chance [unstable]
+  osc_coupled Tp.25:0.11 ~chance         [unstable]
+
+FINDINGS vs SeqDigits-64:
+1. NO-RESONANCE SURVIVES: both datasets peak at smallest Tp; no
+   preferred stimulus:internal ratio. Robust.
+2. COUPLING BENEFIT DOES NOT SURVIVE the 784 horizon: osc_coupled
+   collapsed 0.41 (64-step) -> ~chance & unstable (784-step). The
+   SeqDigits coupling lift was horizon-specific, NOT confirmed at
+   scale. (Caveat: coarse spot-check; osc_coupled borderline-
+   under-resolved. But it does NOT support the lift.)
+3. LONG-HORIZON MEMORY: trace COLLAPSES at 784 (leaky forgetting);
+   LIF and the uncoupled oscillator (accumulated-phase integral)
+   are the length-robust codes. The 784 memory demand reorders arms
+   vs 64 exactly as predicted.
+
+NET: M14's first positive (coupling separability) is TEMPERED — it
+did not survive the memory horizon. The robust cross-dataset facts
+are (a) no temporal-geometry resonance and (b) different substrates
+encode serialized input very differently, with memory horizon
+reordering them. Relational headline still rests on Exp-2/N-MNIST
+(event timing), where the frozen final-state bridge failed
+convergence -> Exp-2b (time-averaged relational) is the open fork.
