@@ -229,6 +229,18 @@
   recurrent horizon and running the lanes in parallel &mdash; not credit
   assignment through a spatial hierarchy. What we have demonstrated is
   the transpose; the "real BPTS" step did not earn its keep on this task.</p>
+  <p>So the honest name is not backprop-through-space but the
+  <strong>space&#8596;time transpose (STT)</strong>: a long sequence split
+  into many short, shared-recurrent blocks run in parallel, their final
+  states simply concatenated for a cheap wide readout.</p>
+  <p class="callout big">Use recurrence <em>locally</em>; use a parallel
+  spatial representation <em>globally</em>.</p>
+  <p>The trade is explicit in the ledger: STT exchanges long recurrence
+  for more parallel blocks and a wider readout &mdash; 49&times;32 = 1568
+  features, more simultaneous state. But it is not merely buying accuracy
+  with width. <strong>98&times;8 carries <em>more</em> simultaneous state
+  than 49&times;16 and scores <em>lower</em></strong> &mdash; so the sweet
+  spot is a genuine temporal/parallel balance, not the biggest model.</p>
 
   <h2><span class="n">05</span>Where it sits, and what's next</h2>
   <p>Set against the two earlier negatives, the shape of the whole
