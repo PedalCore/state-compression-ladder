@@ -78,3 +78,57 @@ Kuramoto R_K diagnostic only, not in the primary classifier.
 ## Status
 Preprocessing frozen. Acquisition (tonic -> neutral cache) and the
 convergence gate run before any classification number is read.
+
+---
+# EXP-2 RESULT (2026-09-03) — frozen relational-final-state bridge
+# FAILS the convergence gate on N-MNIST. Honest negative. Fork.
+
+Neutral cache built (2000 train / 1000 test, balanced, checksummed;
+sensor 34x34x2, t in us ~305ms, polarity {0,1} preserved, no
+framing, no stabilize). g_rec=0 invariant exact (0). N=16 tiles.
+
+CONVERGENCE GATE (|Δacc|, nbin vs 2*nbin), coupled, BEFORE classify:
+                     nbin=60          nbin=120         verdict
+  R_state (cosθ)     0.28/0.35 Δ.067  0.35/0.45 Δ.105  UNSTABLE
+  R_events (rate)    0.71/0.71 Δ.000  0.71/0.71 Δ.000  stable
+  R_rel  (cos/sinΔθ) 0.26/0.32 Δ.061  0.32/0.39 Δ.076  UNSTABLE
+Same with an impulsive drive AND with a frozen exponential kernel
+(TAU_K=0.5): the kernel did NOT rescue it. Accuracy CLIMBS
+monotonically with finer dt (0.28->0.35->0.45) — the phase-final-
+state readout is not converging; halving dt keeps changing it.
+
+DIAGNOSIS. The only stable view is R_events — a STATIC spatial
+event-rate histogram (no dynamics), trivially dt-independent, and
+it dominates at 0.711. The phase-coordinate views (absolute
+R_state and relational R_rel) read the FINAL phase, which
+accumulates dt-dependent drift over the ~5-period recording; the
+cells are event-driven and do NOT phase-lock, so the relative
+phases drift differently and R_rel does not cancel the drift. This
+is the M13.5 discretization-fragility lesson, reproduced on real
+event data: a final-state phase readout of a non-locking driven
+network is not step-halving stable.
+
+RECONCILIATION WITH v0 (important). v0's STABLE relational quantity
+was the TIME-AVERAGED synchronization of a CONSTANT-driven, phase-
+LOCKING network (Kuramoto R corr 0.997). Exp-2's UNSTABLE quantity
+is the FINAL-STATE phase of an EVENT-driven, NON-locking network.
+So v0 and Exp-2 are consistent: relational structure is robust when
+it is time-averaged over a locking regime, fragile when read as a
+single accumulated final phase of a non-locking one.
+
+DECISION (pre-committed tree): R_rel FAILS the convergence gate ->
+the frozen relational-final-state bridge is NOT well-posed on
+N-MNIST -> honest negative. No classification ranking of R_rel vs
+R_state is read (both non-converged). R_events (spatial rate 0.71)
+is the stable baseline and the number to beat.
+
+FORK (do NOT self-rescue mid-run; a NEW preregistration, like
+M13.5 P2->P2b): Exp-2b = TIME-AVERAGED relational readout (the
+v0-stable observable: window-/recording-averaged cos/sin Δθ and
+Kuramoto R over the trajectory, not the final snapshot), possibly
+with a stronger-coupling locking regime, re-gated for convergence
+BEFORE classification. Question unchanged: at matched dimension,
+does a time-averaged relational view expose the class better than
+absolute state — i.e. does information live in the relationships?
+Reviewer to choose Exp-2b vs close the relational bridge as
+"well-posed only for time-averaged locking observables."
