@@ -108,15 +108,20 @@ def main():
     Vn_tr = Str[..., 0]
     B, T = Vn_tr.shape
     Ydot_full = hh_rhs(Str, d['train_I'])[..., 0]
-    t_idx = np.arange(LAGS[-1], T)
+    # A-budget: teacher CROPS matched to rollout length so
+    # p sweeps distribution only (same timepoints/context/steps)
+    CROP = ROLL_H
+    ncr = (T - LAGS[-1]) // CROP
+    t_idx = np.arange(LAGS[-1], LAGS[-1] + ncr * CROP)
     Wd = np.stack([Vn_tr[:, t_idx - lg] for lg in LAGS], -1)
     Iw = d['train_I'][:, t_idx]
     Xt = torch.tensor(np.concatenate(
-        [Wd, (Iw / IS)[..., None]], -1), dtype=torch.float32)
-    Yt = torch.tensor(Ydot_full[:, t_idx], dtype=torch.float32)
+        [Wd, (Iw / IS)[..., None]], -1),
+        dtype=torch.float32).reshape(B * ncr, CROP, NF)
+    Yt = torch.tensor(Ydot_full[:, t_idx],
+                      dtype=torch.float32).reshape(B * ncr, CROP)
     scale = Yt.std() + 1e-8
-    Wtt = torch.where(torch.tensor(
-        Vn_tr[:, t_idx], dtype=torch.float32) > 0.45, 10.0, 1.0)
+    Wtt = torch.where(Xt[..., 0] > 0.45, 10.0, 1.0)
     Vval = norm_state(d['val_V'], d['val_G'])[..., 0]
     global STATE_FULL
     STATE_FULL = Str
@@ -141,7 +146,7 @@ def main():
                     w_ = torch.where(x[..., 0] > 0.45, 10.0,
                                      1.0)
                 else:
-                    j = rng.integers(0, B, 32)
+                    j = rng.integers(0, len(Xt), 32)
                     x = Xt[j].to(dev)
                     y = Yt[j].to(dev)
                     w_ = Wtt[j].to(dev)

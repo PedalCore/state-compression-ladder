@@ -51,8 +51,8 @@ class Corrector(nn.Module):
             self.cell = nn.GRUCell(5, kc)
             self.head = nn.Linear(kc, 4)
         else:
-            self.net = nn.Sequential(nn.Linear(5, 24), nn.Tanh())
-            self.head = nn.Linear(24, 4)
+            self.net = nn.Sequential(nn.Linear(5, kc), nn.Tanh())
+            self.head = nn.Linear(kc, 4)
         nn.init.zeros_(self.head.weight)
         nn.init.zeros_(self.head.bias)
 
@@ -192,27 +192,30 @@ def main():
         for b0 in range(0, B, 32):
             idx = perm[b0:b0 + 32]
             s = c = None
-            for c0 in range(0, T, CHUNK):
-                x = Itr[idx, c0:c0 + CHUNK].to(dev)
-                y = Ytr[idx, c0:c0 + CHUNK].to(dev)
-                w = W[idx, c0:c0 + CHUNK].to(dev)
+            for c0 in range(0, T - 1, CHUNK):
+                hi = min(c0 + CHUNK, T - 1)
+                x = Itr[idx, c0:hi].to(dev)
+                y0 = Ytr[idx, c0].to(dev)
+                y = Ytr[idx, c0 + 1:hi + 1].to(dev)   # NEXT state
+                w = W[idx, c0 + 1:hi + 1].to(dev)
                 if s is None:
-                    s = y[:, 0]
+                    s = y0
                     c = s.new_zeros(len(s), max(corr.kc, 1))
                 else:
                     s = s.detach()
                     c = c.detach()
-                preds = []
+                preds, dpen = [], 0.0
                 for t in range(x.shape[1]):
                     i_t = x[:, t:t + 1]
                     delta, c = corr(s, i_t, c)
+                    dpen = dpen + (delta ** 2).mean()
                     for _ in range(SUB):
                         s = s + dt * (field(s, i_t) + delta)
                     s = torch.clamp(s, -0.5, 1.5)
                     preds.append(s)
                 pred = torch.stack(preds, 1)
                 loss = (((pred - y) ** 2).mean(-1) * w).mean() \
-                    + args.lam * (delta ** 2).mean()
+                    + args.lam * dpen / x.shape[1]
                 opt.zero_grad()
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(
@@ -243,9 +246,8 @@ def main():
     ev = evaluate(field, corr, d, Ste, rest, dev)
     ev['best_val_f1'] = round(best_vf1, 3)
     nprm = sum(p_.numel() for p_ in corr.parameters())
-    arm = (f'hyb-{args.kind}'
-           + (f'{args.kc}' if args.kind == 'rec' else '')
-           + ('-trust' if args.trust else '') + '-sel')
+    arm = (f'hyb-{args.kind}{args.kc}'
+           + ('-trust' if args.trust else '') + '-sel-v2')
     res = dict(arm=arm, seed=args.seed, corr_params=nprm,
                train_seconds=round(ts, 1), **ev)
     print('RESULT', json.dumps(res), flush=True)

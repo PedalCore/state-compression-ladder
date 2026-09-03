@@ -2557,3 +2557,48 @@ HYGIENE locked final corpus         DONE (hh_data_final_LOCKED,
                                      seed 777, 64 seqs)
 Wording: all repeatedly-scored numbers relabeled DEV, not test;
 single-shot locked-corpus eval of finalists is the paper's test.
+
+## AUDIT RERUNS COMPLETE (2026-09-03): headline SURVIVES, cleaner
+
+Fixed hybrid (A4 off-by-one + A1 per-step penalty), dev-val
+selected:
+  kc=8 (396p): {0.903, 0.883}  (was {0.903, 0.911})
+  kc=1 (32p) : {0.891, 0.893}  (was {0.868, 0.876})
+The A4 fix TIGHTENED the compression story: with correct next-
+state targets, ONE scalar + ~30 shared params reaches ~0.89 =
+kc=8 within noise. Flagship still clears 0.9 (seed 0); the
+0.903/0.911 pair becomes 0.903/0.883 (kc=8) — conclusion
+unchanged, seed 1 slightly lower as the audit predicted a fast-
+region correction change might. delta-profiles still band-
+localized on every arm.
+
+Inversion (A3 current-consistent labels + A-budget matched
+crops): baseline anchor RAISED to ~0.264 (long-sequence context
+was itself suppressing it); every coupled dose still collapses
+below it, both seeds. THE BOUNDARY SURVIVES BOTH FIXES.
+
+Net effect of the audit on conclusions: (1) observable baseline
+was under-reported (~0.20 -> ~0.264) — a correction we publish;
+(2) the compression claim strengthened; (3) flagship and boundary
+both robust. No conclusion reversed; two sharpened; one number
+corrected upward. Remaining audit items (A-ctrl matched static,
+A-opt SSM/GRU steps, A-jepa) are control-tightening, not
+headline-threatening — queued. Now: single-shot LOCKED-corpus
+eval of finalists.
+
+## LOCKED-CORPUS SINGLE-SHOT EVAL (2026-09-03) — the paper's
+## held-out numbers
+
+Fresh corpus (seed 777, never used for any decision), evaluated
+ONCE on the fixed finalists:
+  hybrid kc=8: s0 0.879 / s1 0.888   (dev 0.903 / 0.883)
+  hybrid kc=1: s0 0.861 / s1 0.836   (dev 0.891 / 0.893)
+All f-I 0.3-0.6 (s1 kc1 9.9), rebound correct on all four.
+Generalization gap dev->locked ~0.02-0.06, no collapse — the
+hygiene protocol's reassurance delivered: the result is NOT an
+artifact of adaptive test reuse. PAPER HEADLINE (held-out): the
+trust-hybrid reaches ~0.88 spike-F1 with correct rebound and
+near-perfect f-I; a 34-parameter one-scalar corrector holds
+~0.85 — the compression claim survives on locked data.
+Reporting convention fixed: dev numbers labeled dev; these four
+locked numbers are the reported test performance.

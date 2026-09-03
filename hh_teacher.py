@@ -128,11 +128,19 @@ def rebound():
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--seed', type=int, default=0)
+    ap.add_argument('--final', action='store_true',
+                    help='generate the LOCKED final-eval corpus')
+    args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    rng = np.random.default_rng(0)
+    rng = np.random.default_rng(args.seed)
     N = int(T_MS / DT)
     splits = {}
-    for name, B in (('train', 256), ('val', 32), ('test', 32)):
+    sizes = ((('final', 64),) if args.final
+             else (('train', 256), ('val', 32), ('test', 32)))
+    for name, B in sizes:
         I = make_drive(B, N, rng)
         V, G = simulate(I, B, full=True)
         Irec = I[:, REC_EVERY - 1::REC_EVERY].astype(np.float32)
@@ -149,9 +157,11 @@ def main():
           f'(type II expects discontinuous ~50)', flush=True)
     print(f'anodal-break rebound spikes after release: {len(reb)} '
           f'at {np.round(reb, 1)} ms', flush=True)
-    np.savez_compressed(OUT / 'hh_data_full.npz', fi_amps=amps,
+    fname = ('hh_data_final_LOCKED.npz' if args.final
+             else 'hh_data_full.npz')
+    np.savez_compressed(OUT / fname, fi_amps=amps,
                         fi_rate=rate, rebound_v=vreb, **splits)
-    print('wrote', OUT / 'hh_data_full.npz', flush=True)
+    print('wrote', OUT / fname, flush=True)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,16 @@
+ROUND {"round": 0, "val_f1": 0.264, "roll_seqs": 0, "seq_s": 0.0}
+ROUND {"round": 1, "val_f1": 0.098, "roll_seqs": 96, "seq_s": 11.6}
+ROUND {"round": 2, "val_f1": 0.02, "roll_seqs": 192, "seq_s": 22.7}
+ROUND {"round": 3, "val_f1": 0.016, "roll_seqs": 288, "seq_s": 34.4}
+RESULT {"arm": "invert-v2-p1.0", "seed": 0, "total_seconds": 119.2, "seq_seconds": 34.4, "best_val_f1": 0.264, "rounds": [{"round": 0, "val_f1": 0.264, "roll_seqs": 0, "seq_s": 0.0}, {"round": 1, "val_f1": 0.098, "roll_seqs": 96, "seq_s": 11.6}, {"round": 2, "val_f1": 0.02, "roll_seqs": 192, "seq_s": 22.7}, {"round": 3, "val_f1": 0.016, "roll_seqs": 288, "seq_s": 34.4}], "spike_f1": 0.274, "f1_by_window": [0.3, 0.266, 0.257, 0.269], "fi_rmse_hz": 20.9, "rebound_spikes": 1}
+ROUND {"round": 0, "val_f1": 0.119, "roll_seqs": 0, "seq_s": 0.0}
+ROUND {"round": 1, "val_f1": 0.007, "roll_seqs": 96, "seq_s": 11.5}
+ROUND {"round": 2, "val_f1": 0.094, "roll_seqs": 192, "seq_s": 23.7}
+ROUND {"round": 3, "val_f1": 0.009, "roll_seqs": 288, "seq_s": 36.5}
+RESULT {"arm": "invert-v2-p1.0", "seed": 1, "total_seconds": 136.8, "seq_seconds": 36.5, "best_val_f1": 0.119, "rounds": [{"round": 0, "val_f1": 0.119, "roll_seqs": 0, "seq_s": 0.0}, {"round": 1, "val_f1": 0.007, "roll_seqs": 96, "seq_s": 11.5}, {"round": 2, "val_f1": 0.094, "roll_seqs": 192, "seq_s": 23.7}, {"round": 3, "val_f1": 0.009, "roll_seqs": 288, "seq_s": 36.5}], "spike_f1": 0.117, "f1_by_window": [0.113, 0.096, 0.115, 0.136], "fi_rmse_hz": 57.9, "rebound_spikes": 13}
+ROUND {"round": 0, "val_f1": 0.264, "roll_seqs": 0, "seq_s": 0.0}
+ROUND {"round": 1, "val_f1": 0.126, "roll_seqs": 96, "seq_s": 12.7}
+ROUND {"round": 2, "val_f1": 0.011, "roll_seqs": 192, "seq_s": 26.1}
+ROUND {"round": 3, "val_f1": 0.063, "roll_seqs": 288, "seq_s": 39.4}
+RESULT {"arm": "invert-v2-p0.5", "seed": 0, "total_seconds": 144.0, "seq_seconds": 39.4, "best_val_f1": 0.264, "rounds": [{"round": 0, "val_f1": 0.264, "roll_seqs": 0, "seq_s": 0.0}, {"round": 1, "val_f1": 0.126, "roll_seqs": 96, "seq_s": 12.7}, {"round": 2, "val_f1": 0.011, "roll_seqs": 192, "seq_s": 26.1}, {"round": 3, "val_f1": 0.063, "roll_seqs": 288, "seq_s": 39.4}], "spike_f1": 0.274, "f1_by_window": [0.3, 0.266, 0.257, 0.269], "fi_rmse_hz": 20.9, "rebound_spikes": 1}
+=== INVV2 DONE ===
