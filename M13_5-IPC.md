@@ -389,3 +389,58 @@ strategically essential. Note the failure points AT M14: the
 fragile quantity is t_spike; the stable quantity is the downstream
 relational one (task decision -> phase/sync/cluster regimes), which
 is exactly what M14/ONN measures. No further rescue tree after P2b.
+
+## P2b RESULT (2026-09-03) — M13-kc1 reaches min-skill at NO
+## equal-budget operating point. M13.5 CLOSES, no hardware-
+## advantage claim. Decision-tree branch 3. No rescue after this.
+
+Skill-selected equal-budget operating points (18-config grid,
+selection on validation S_recall only, coarse step), then min-skill
+gate, then convergence on 6 HELD-OUT topology seeds:
+  trace   op=(0.0,2.0,0.3)  val R2(d2)=0.224  min-skill=YES  ->
+          convergence PASS per-seed (worst dR2 0.004, dAcc 0.005).
+  LIF     op=(0.0,0.5,0.3)  val R2(d2)=0.227  min-skill=YES  ->
+          convergence PASS per-seed (worst dR2 0.004, dAcc 0.005).
+  M13-kc1 op=(0.0,1.0,0.3)  val R2(d2)=0.110  parity acc=0.544
+          -> min-skill=NO (need R2>0.2 OR parity>0.55). Convergence
+          NOT assessed (honest, per prereg).
+
+M13-kc1's SKILL-MAXIMIZING point across the whole equal-budget grid
+reaches only recall R2=0.11 (half of trace/LIF's 0.22) and parity
+0.544 (below the 0.55 gate). At equal cell count it delivers LESS
+useful temporal skill than a leaky integrator, and below the useful
+threshold — so there is no useful computation whose convergence
+could be certified. Pre-committed branch 3: cannot certify -> M13.5
+closes with NO hardware-advantage claim. Reviewer's rule: no rescue
+tree after P2b. This is final.
+
+SCOPE OF THE NEGATIVE (stated precisely, not overclaimed): as a
+FROZEN reservoir cell under a passive common-clock linear-readout
+protocol with affine input, M13-kc1 does not provide more useful
+temporal task skill than LIF at equal budget. This does NOT
+contradict the M13 paper (M13 was validated as a TRAINED closed-
+loop corrector reproducing HH spike trains at F1>0.9) — it says the
+founding M13.5 hypothesis ("richer neuron dynamics buy more
+computation per hardware cost") is NOT supported by this
+measurement of the frozen primitive as a passive reservoir. A
+charitable "M13 needs more cells" would mean MORE hardware for LESS
+skill — the opposite of a per-cost advantage.
+
+M13.5 FINAL LEDGER (three banked results, one closed hypothesis):
++ P1: M13 faithfully preserves spike-event geometry -> falsifies
+  "compression regularizes observability."
++ P2: task decoding attenuates event-timing sensitivity 1-2 orders
+  vs passive features (a real, hardware-relevant robustness).
++ Methodological: event-faithful stiff spikers are hard to rank
+  with passive common-clock capacity probes; and even skill-gated
+  task decoding does not certify a per-cost advantage for the
+  frozen M13 primitive.
+- Hypothesis "richer dynamics buy computation per cost": NOT
+  supported under this measurement. No claim made.
+
+NEXT: M14. The fragile quantity throughout was t_spike; the stable,
+useful quantities are relational/downstream (task decision ->
+phase relationships, synchronisation, cluster membership,
+integrated collective regimes) — exactly M14/ONN's object, which is
+intrinsically less dependent on which side of a 0.5ms window a
+spike landed. The M13.5 failure points directly at M14.

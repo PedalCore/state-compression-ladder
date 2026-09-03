@@ -70,3 +70,12 @@ that are intrinsically less dependent on exact spike windows).
 ## Status
 Frozen. Implementing and running now (the reviewer specified this
 exact design). Result recorded whichever branch obtains.
+
+---
+# P2b OUTCOME (2026-09-03): branch 3 — M13-kc1 reached the min-skill
+# gate at NO equal-budget operating point (best val recall R2=0.11
+# < 0.2; parity 0.544 < 0.55), while trace/LIF reached ~0.22 and
+# passed convergence cleanly. M13.5 CLOSES with no hardware-
+# advantage claim. Banked positives stand (P1 event-faithfulness;
+# P2 1-2 order task-decoding attenuation). No rescue after P2b.
+# Next: M14 (relational/synchronisation quantities).
