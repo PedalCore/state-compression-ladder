@@ -381,3 +381,25 @@ defensible comparison.
    common gain grid;
 6. no production statistic is taken from an unstable trajectory.
 Passing all six -> production signed off.
+
+---
+
+# P1 OUTCOME (2026-09-03) — deployed M13 primitive also fails
+# passive-IPC convergence. Pre-registered tree -> P2.
+
+The legitimate M13 arm (frozen learned field, and canonical
+kc=1 = field+trust-corrector) was run under the exact Amendment-II
+protocol, no retraining. Gate II.1 (field-substep halving, no
+IPC): M13-field 44/61/82%, M13-kc1 55/66/88% rel-RMS at
+g_rec 0/0.1/0.3 — both FAIL, ~as raw HH. Gate 4 IPC near-null and
+unstable for both. Diagnostic answered: the bounded corrector does
+not regularize (marginally worse); the learned field reproduces
+spikes and so inherits the threshold-event fragility. Per the
+pre-registered interpretation tree this is branch 3.
+
+NEXT: P2 (task-based temporal-capacity per hardware cost) for
+spiking arms; passive linear-readout IPC (P3) retained only for
+smooth/rate substrates, with this result as the documented reason
+for excluding event-based spikers. P2 needs its own
+preregistration + reviewer sign-off before any run. No production
+IPC numbers exist for any spiking arm.

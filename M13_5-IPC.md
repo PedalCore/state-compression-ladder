@@ -226,3 +226,63 @@ STATUS: harness code committed; integrity gates (trace-null,
 C<=N) green; HH substrate fails gates 3 AND 4 robustly. No
 production IPC numbers. M13.5-A remains unqualified pending the
 reviewer's choice among P1/P2/P3.
+
+## P1 RESULT (2026-09-03) — the FROZEN M13 primitive ALSO fails
+## passive-IPC convergence. Diagnostic settled. Pre-registered
+## tree -> branch 3 -> P2 (task-based). Not a config artifact.
+
+Ran the EXACT deployed M13 primitives as reservoir cells (no
+retraining, no adapter change, no IPC-friendly tweak): the frozen
+learned field comp_stage0_s0 (diagnostic) and the canonical
+kc=1 = field + bounded trust corrector (hyb-rec1-trust-sel-v2_s0,
+audit-fixed). Same symbol-held input, affine path, W, one-scalar
+V observable, linear window mean, target library. Gate II.1 halves
+the FIELD substep (SUB 10 vs 20); the corrector's 0.1ms cadence is
+model definition, held fixed.
+
+Gate II.1 (window-mean rel-RMS, NO IPC), g_rec = 0 / 0.1 / 0.3:
+  M13-field  44.0% / 61.1% / 81.5%
+  M13-kc1    54.6% / 65.6% / 88.2%
+Gate 4 (IPC estimate stability, Th=1ms, echo-state g_rec=0.1):
+  M13-field  tot 0.12 -> 0.47 (sub 10->20), NL = 0.00
+  M13-kc1    tot 0.08 -> 0.00 (sub 10->20), NL = 0.00
+
+BOTH fail convergence, ~as badly as raw analytic HH (44% at
+g_rec=0 field vs 45.7% HH). The bounded corrector does NOT
+regularize — it is marginally WORSE (adds a small discrete
+per-record perturbation to near-threshold cells). Gate 4 IPC is
+near-null AND unstable for both.
+
+DIAGNOSTIC (the reviewer's field-vs-field+delta question, ANSWERED):
+stability does not come from the field approximation, and the
+corrector does not add it. The learned surrogate was trained to
+REPRODUCE spikes, so it reproduces the threshold-event structure
+that makes per-window spike assignment dt-fragile. MLP smoothness
+is irrelevant: the trajectory still has near-threshold
+branchpoints. Compression preserved behaviour WITHOUT changing
+numerical/observational accessibility under passive linear-readout
+IPC. (So NOT the "better-conditioned coordinates" result.)
+
+NARROW, DEFENSIBLE METHODOLOGICAL FINDING (final wording):
+Under a passive reservoir-IPC protocol with fixed symbol windows
+and a linear scalar observation, neither analytic HH nor the
+deployed M13 surrogate admits a per-symbol feature representation
+that is simultaneously step-halving-converged and informative in
+the spiking regime. Aggregate integration converges; the
+instability is localized to event assignment across observation
+windows, and it is intrinsic to spike-producing dynamics (learned
+or biological), not to a particular integrator or to the HH
+equations specifically.
+
+DECISION (pre-registered interpretation tree, branch 3): STOP
+forcing spiking substrates into passive IPC. Move to P2 =
+task-based temporal-capacity benchmarks (accuracy on NARMA /
+delayed-parity per hardware cost), whose scores are expectations
+robust to spike-time jitter. Retain P3 as documentation: passive
+linear-readout IPC is kept for SMOOTH / rate substrates (trace
+banks, and any smooth readout models); event-based spikers are
+EXCLUDED from the passive-IPC table because the observable is not
+numerically well-posed under the common protocol — with THIS
+result as the cited reason, not a silent omission. P2 is a new
+protocol and requires its own preregistration + reviewer sign-off
+before any run.
