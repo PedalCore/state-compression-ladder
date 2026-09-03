@@ -286,3 +286,48 @@ numerically well-posed under the common protocol — with THIS
 result as the cited reason, not a silent omission. P2 is a new
 protocol and requires its own preregistration + reviewer sign-off
 before any run.
+
+## P2 CONVERGENCE GATE (2026-09-03) — DIRECTION confirmed;
+## M13 result BORDERLINE, not a clean pass. Halt for reviewer.
+
+Ran the frozen F4 minimal gate (trace|LIF|M13-kc1, d=2,8, delayed
+recall + 2-bit parity, substeps n vs 2n, op=(0,1,0.1), Th=1ms,
+4 paired topology seeds, frozen F5 readouts, ±1 shared drive).
+
+Task-score deltas (|dR2| recall, |dAcc| parity):
+  trace   mean dR2 0.000-0.003, worst 0.004; dAcc <=0.011.  clean.
+  LIF     mean dR2 0.000-0.003, worst 0.004; dAcc <=0.005.  clean.
+  M13-kc1 mean dR2 0.011 (d2)/0.021 (d8), WORST dR2 0.040 (d8);
+          mean dAcc 0.019 (d2)/0.010 (d8), worst dAcc 0.030 (d2).
+
+READ (honest; the auto PASS=True checked only the mean and is too
+lenient vs F3+F6):
++ DIRECTION CONFIRMED: task scores are 10-40x more convergent than
+  P1 feature-level (44-88% RMS -> ~1-4% abs). Functional output is
+  far more stable than microscopic event placement, as P2 bet.
+- NOT a clean pass for M13: convergence ~1 order looser than the
+  smooth arms; seed2 d=8 dR2=0.040 BREACHES the 0.03 tolerance
+  (the catastrophic-seed case F6 says to weigh); seed0 d=2
+  dAcc=0.030 on the line.
+- SYSTEMATIC, not noise: d=8 recall R2 drops sub10->sub20 on every
+  seed (0.053->0.024, 0.060->0.020, 0.018->0.011). Halving dt
+  consistently reduces M13's long-delay skill; the score is
+  attenuating like the features, heavily damped but not converged.
+- UNDERPOWERED: at the frozen representative point M13 skill is
+  near-null (recall R2<=0.12, one negative; parity ~chance), so a
+  0.04 delta is ~80% relative. The gate can barely exercise M13
+  here; the representative point may simply be a poor M13 operating
+  point (weak echo-state / not usefully spiking).
+
+VERDICT: borderline. The task-based reframing clearly helps
+(orders of magnitude), but M13's score is not yet demonstrably
+step-converged at long delay, and the test is confounded by
+near-null skill at the fixed point. Fix (code): PASS logic must
+enforce F3 per-seed, not mean-only. Decision needed from reviewer:
+(a) re-run the gate at an M13 operating point with non-trivial
+skill selected by the FROZEN calibration rule (not hunted), with
+more seeds, to test convergence where skill exists; or (b) accept
+borderline and carry the looseness as a documented caveat on all
+M13 numbers; or (c) if long-delay score drift persists at a
+skillful point, conclude P2 also fails for M13 at long delay ->
+P3. NOT advancing to the full ladder until this is resolved.

@@ -129,3 +129,65 @@ as before.
 Draft. Requires reviewer sign-off before the harness runs. Cost
 metric for the final efficiency claim (B1) already frozen; B2
 synthesis remains future work.
+
+---
+
+# P2 FREEZES (reviewer conditional sign-off, 2026-09-03) — FROZEN
+# before the convergence-only run.
+
+## F1. Null-adjusted skill metric (never raw accuracy/cost)
+`S_recall = max(0, R^2)`; for balanced binary parity
+`S_parity = max(0, 2*(accuracy - 0.5))`. Cost-normalize S, not raw
+accuracy (a useless 0.5 classifier must score 0). PRIMARY hardware
+result is a performance-cost FRONTIER — "cost to reach S=0.8" —
+not S/ops, which is easier to game.
+
+## F2. Deterministic parity target (no post-hoc delay tuples)
+2-bit sign parity `y_k = sign(u_{k-d} * u_{k-2d})`,
+`d in {1,2,4,8,16}`. 3-/4-bit parity is a LATER difficulty
+extension, delays fixed in advance.
+
+## F3. Absolute convergence criterion
+Recall: `|Delta R^2| < 0.03`; parity: `|Delta accuracy| < 0.03`,
+between substeps n and 2n, with IDENTICAL input sequence, topology,
+initial condition, operating point, train/val/test split and
+readout procedure. Object of the gate (the P2 hypothesis): does the
+FUNCTIONAL OUTPUT converge even when individual event windows do
+NOT? Internal feature values are NOT required to converge (P1
+showed they don't).
+
+## F4. Minimal convergence gate (no full ladder, no grid search)
+Arms trace | LIF | M13-kc1, identical paired seeds + data. Only
+`d = 2` and `d = 8`, on delayed-recall AND 2-bit delayed-parity, at
+substeps n vs 2n. Single preregistered representative operating
+point `(I0,g_in,g_rec) = (0.0, 1.0, 0.1)`, `Th = 1 ms` (echo-state,
+from the calibration rule on a fixed tiny set) — NO operating-point
+search at this stage. Input `u_k ~ U{-1,+1}` (Bernoulli +/-1) for
+BOTH tasks so a single shared reservoir drive feeds identical
+features to both readouts. Pass = task scores stable to F3 AND no
+pathological numerical failure. At this stage DO NOT interpret which
+arm scores higher — well-posedness only.
+
+## F5. Readout regularization frozen
+Recall: ridge, fixed `lambda = 1e-2`, features standardized by
+train mean/std, intercept fitted. Parity: logistic regression, L2,
+`C = 1.0`, `class_weight='balanced'`, lbfgs, `tol=1e-4`,
+`max_iter=1000`, decision threshold 0.5, same standardization.
+Identical for every arm.
+
+## F6. Topology seed = statistical unit
+The 2 input sequences are within-seed repeats, NOT independent n.
+Convergence criterion must hold on the PAIRED topology-level mean
+Delta, and EVERY seed is inspected — a single catastrophic M13 seed
+is scientifically different from a tiny median change hidden by
+averaging; both are reported.
+
+## Decision
+Pass -> freeze harness -> full calibration -> locked test ladder.
+M13 fails task-score convergence too -> STOP P2, do not rescue;
+P3 conclusion strengthens to: low-bandwidth downstream probes are
+not neutral enough to compare these event-based stiff spikers under
+a common discretized interface. The deeper prize if it PASSES:
+macroscopic computation stable despite discretization-sensitive
+microscopic event placement is itself a hardware-relevant property
+(silicon has jitter/mismatch/finite timing resolution too).
