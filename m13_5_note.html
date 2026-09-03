@@ -1,4 +1,4 @@
-<title>M13.5 — When faithful isn't useful</title>
+<title>M13.5 &mdash; When faithful isn't useful</title>
 <style>
   :root{
     --bg:#14110d; --surface:#1e1a14; --surface2:#26211a;
@@ -95,18 +95,18 @@
 </style>
 
 <div class="wrap">
-  <p class="eyebrow">State-compression ladder · Note M13.5</p>
+  <p class="eyebrow">State-compression ladder &middot; Note M13.5</p>
   <h1>When faithful <em>isn't</em> useful</h1>
   <p class="dek">A neuron that perfectly reproduces rich biological
   dynamics is not, for that reason, a better computational primitive.
-  A preregistered negative result — and the deeper question it hands
+  A preregistered negative result &mdash; and the deeper question it hands
   forward.</p>
-  <p class="meta"><span>2026 · whitebox program</span>
+  <p class="meta"><span>2026 &middot; whitebox program</span>
   <span>companion to the M13 paper</span>
   <span>all stages preregistered</span></p>
 
-  <p class="lede">M13 showed that a Hodgkin–Huxley teacher of known
-  dimension can be <strong>compactly approximated</strong> — a frozen
+  <p class="lede">M13 showed that a Hodgkin&ndash;Huxley teacher of known
+  dimension can be <strong>compactly approximated</strong> &mdash; a frozen
   learned vector field plus a one-scalar correction reproduces its
   spike trains at F1&nbsp;&gt;&nbsp;0.9. M13.5 asked the obvious next
   question, the one the whole program is built around:</p>
@@ -118,7 +118,7 @@
 
   <p>It does not. Under a preregistered common-clock protocol, the
   deployed M13 primitive was <strong>less</strong> useful than the
-  simple controls — and the way it failed is more instructive than a
+  simple controls &mdash; and the way it failed is more instructive than a
   win would have been.</p>
 
   <h2><span class="n">01</span>The measurement, and the failures it caught</h2>
@@ -129,7 +129,7 @@
   harness until a spiking arm "looked good."</p>
   <p>That discipline did its job. A passive information-capacity probe
   was <strong>abandoned</strong> when qualification showed it could not
-  be made step-halving stable for a stiff spiking substrate — the
+  be made step-halving stable for a stiff spiking substrate &mdash; the
   spike-timing that carries the nonlinearity is exactly what a common
   sampling clock scrambles. A task-based reframing recovered far more
   stability, but the canonical M13 arm still missed the preregistered
@@ -141,7 +141,7 @@
   <h2><span class="n">02</span>The result</h2>
   <p>At its <em>best</em> equal-budget operating point, across the whole
   grid, the M13 cell reached only about half the memory skill of the
-  controls — and never cleared the minimum-skill threshold at all.
+  controls &mdash; and never cleared the minimum-skill threshold at all.
   There was not enough useful computation to even proceed to the
   hardware-cost comparison.</p>
 
@@ -152,7 +152,7 @@
       <line class="gate" x1="70" y1="58" x2="620" y2="58"
         stroke-dasharray="5 4" stroke-width="1.5"/>
       <text class="mono sD" x="620" y="50" text-anchor="end"
-        font-size="12">min-skill gate · R²=0.20</text>
+        font-size="12">min-skill gate &middot; R&sup2;=0.20</text>
       <rect class="barC" x="110" y="40" width="90" height="170" rx="3"/>
       <text class="mono sT" x="155" y="30" text-anchor="middle" font-size="15">0.224</text>
       <text class="sans sM" x="155" y="232" text-anchor="middle" font-size="13">trace bank</text>
@@ -162,9 +162,9 @@
       <rect class="barM" x="440" y="126" width="90" height="84" rx="3"/>
       <text class="mono sD" x="485" y="116" text-anchor="middle" font-size="15">0.110</text>
       <text class="sans sT" x="485" y="232" text-anchor="middle" font-size="13">M13-kc1</text>
-      <text class="mono sF" x="70" y="230" font-size="12">R²</text>
+      <text class="mono sF" x="70" y="230" font-size="12">R&sup2;</text>
     </svg>
-    <figcaption>Delayed-recall skill (held-out R², short delay) at each
+    <figcaption>Delayed-recall skill (held-out R&sup2;, short delay) at each
     arm's skill-selected, equal-budget operating point. The two simple
     controls clear the preregistered minimum-skill line; the deployed
     M13 primitive reaches half their skill and falls below it. Parity
@@ -177,7 +177,7 @@
 
   <ol class="six">
     <li><b>Fidelity is not utility.</b> M13 is excellent at what it was
-    trained for — turning input current into HH-like dynamics. Being
+    trained for &mdash; turning input current into HH-like dynamics. Being
     frozen and asked to expose features to a cheap decoder is a
     different demand, and it met it worse than a leaky integrator.</li>
     <li><b>More state is not more <em>accessible</em> state.</b> The
@@ -185,15 +185,15 @@
     can do real internal work without producing coordinates a simple
     readout can use.</li>
     <li><b>Rich dynamics have a <em>shape</em>.</b> HH's richness is
-    tuned for spike initiation, refractoriness, ionic recovery — not
+    tuned for spike initiation, refractoriness, ionic recovery &mdash; not
     for arbitrary delayed recall or parity. M13 faithfully inherited
     that shape, useful basis and all its irrelevance.</li>
     <li><b>The simplest memory did its job.</b> A boring exponential
-    trace, <span class="k">c ← a·c + b·u</span>, was already a good
-    coordinate for the memory task. No threshold, no gating — just a
+    trace, <span class="k">c &larr; a&middot;c + b&middot;u</span>, was already a good
+    coordinate for the memory task. No threshold, no gating &mdash; just a
     well-placed timescale.</li>
     <li><b>LIF did well for the same reason:</b> leak + threshold +
-    reset is a cheap, generic basis — memory plus one nonlinearity —
+    reset is a cheap, generic basis &mdash; memory plus one nonlinearity &mdash;
     and on this evidence a better one than HH-shaped dynamics.</li>
     <li><b>So the founding ratio does not rise.</b> If LIF delivers
     equal-or-better useful computation while being dramatically cheaper,
@@ -204,13 +204,13 @@
   computational capacity. What matters is whether the dynamics expose
   useful, <em>robust</em> coordinates to the rest of the system.</p>
 
-  <h2><span class="n">04</span>The second result — robustness, for free</h2>
+  <h2><span class="n">04</span>The second result &mdash; robustness, for free</h2>
   <p>Independently of the hardware question, the arc produced a finding
   worth keeping. At the microscopic level the spike time
   <span class="k">t_spike</span> is wildly sensitive to numerical
   refinement. But decoded into a task, the <em>score</em> became
-  10–40× more stable. Push further — to genuinely relational
-  observables — and the sensitivity nearly vanishes.</p>
+  10&ndash;40&times; more stable. Push further &mdash; to genuinely relational
+  observables &mdash; and the sensitivity nearly vanishes.</p>
 
   <figure>
     <svg viewBox="0 0 640 210" role="img"
@@ -220,11 +220,11 @@
       <rect class="barM" x="200" y="58" width="70" height="92" rx="3"/>
       <text class="mono sM" x="145" y="114" text-anchor="middle" font-size="12">0.031</text>
       <text class="mono sD" x="235" y="50" text-anchor="middle" font-size="13">0.102 ms</text>
-      <text class="sans sT" x="190" y="172" text-anchor="middle" font-size="12.5">absolute spike time — drifts &amp; accumulates</text>
+      <text class="sans sT" x="190" y="172" text-anchor="middle" font-size="12.5">absolute spike time &mdash; drifts &amp; accumulates</text>
       <rect class="barC" x="410" y="146" width="70" height="4" rx="2"/>
       <rect class="barC" x="500" y="146" width="70" height="4" rx="2"/>
-      <text class="mono sC" x="540" y="138" text-anchor="middle" font-size="13">≈0.0005 · r=0.997</text>
-      <text class="sans sT" x="490" y="172" text-anchor="middle" font-size="12.5">relational (phase / sync) — invariant</text>
+      <text class="mono sC" x="540" y="138" text-anchor="middle" font-size="13">&asymp;0.0005 &middot; r=0.997</text>
+      <text class="sans sT" x="490" y="172" text-anchor="middle" font-size="12.5">relational (phase / sync) &mdash; invariant</text>
     </svg>
     <figcaption>Coupled HH network under a halved integration step.
     Absolute spike-timing disagreement grows across the run; the
@@ -240,36 +240,36 @@
   <h2><span class="n">05</span>The ledger</h2>
   <table class="ledger">
     <tr><td class="plus">+</td><td><strong>P1.</strong> The compressed
-      M13 field faithfully preserves the spike-event geometry — which
+      M13 field faithfully preserves the spike-event geometry &mdash; which
       <em>falsifies</em> the hope that compression would regularize
       away that sensitivity.</td>
       <td><span class="tag plus">banked</span></td></tr>
     <tr><td class="plus">+</td><td><strong>P2.</strong> Task-level
-      decoding suppresses event-timing sensitivity by 1–2 orders of
-      magnitude — a real, hardware-relevant robustness.</td>
+      decoding suppresses event-timing sensitivity by 1&ndash;2 orders of
+      magnitude &mdash; a real, hardware-relevant robustness.</td>
       <td><span class="tag plus">banked</span></td></tr>
     <tr><td class="plus">+</td><td><strong>Method.</strong> Event-faithful
       stiff spikers cannot be ranked by passive common-clock capacity
       probes; a fair, skill-gated task test is needed even to ask the
       question.</td>
       <td><span class="tag plus">banked</span></td></tr>
-    <tr><td class="minus">–</td><td><strong>Hypothesis.</strong> "Richer
-      local dynamics buy more computation per hardware cost" — not
+    <tr><td class="minus">&ndash;</td><td><strong>Hypothesis.</strong> "Richer
+      local dynamics buy more computation per hardware cost" &mdash; not
       supported under this measurement. No claim made.</td>
       <td><span class="tag minus">closed</span></td></tr>
   </table>
   <p style="font-size:.92rem;color:var(--muted)">None of this contradicts
   the M13 paper: M13 was validated as a <em>trained, closed-loop</em>
-  corrector. The negative is precise — as a <em>frozen, passive</em>
+  corrector. The negative is precise &mdash; as a <em>frozen, passive</em>
   reservoir cell under a common clock, it does not out-compute a leaky
   integrator at equal budget.</p>
 
-  <h2><span class="n">06</span>Where it points — M14</h2>
+  <h2><span class="n">06</span>Where it points &mdash; M14</h2>
   <p>Every failure in this arc had the same shape: the fragile thing was
   the individual event; the stable, useful things were relational. So
   the next question moves the computational object off the single cell
-  and into the <strong>relationships between cells</strong> — relative
-  timing, phase, synchronization, cluster membership — the natural
+  and into the <strong>relationships between cells</strong> &mdash; relative
+  timing, phase, synchronization, cluster membership &mdash; the natural
   territory of oscillatory / ONN computing, and quantities the M14 v0
   diagnostic above already shows are numerically robust.</p>
   <p class="callout">The thing worth paying hardware for may not be more
