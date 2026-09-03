@@ -1,0 +1,15 @@
+{
+ "held_out_locked": {
+   "corpus": "results/hh_data_final_LOCKED.npz (seed 777)",
+   "hybrid_kc8_s0": {"f1": 0.879, "src": "hyb-rec8-trust-sel-v2_s0.pt"},
+   "hybrid_kc8_s1": {"f1": 0.888, "src": "hyb-rec8-trust-sel-v2_s1.pt"},
+   "hybrid_kc1_s0": {"f1": 0.861, "src": "hyb-rec1-trust-sel-v2_s0.pt"},
+   "hybrid_kc1_s1": {"f1": 0.836, "src": "hyb-rec1-trust-sel-v2_s1.pt"},
+   "eval_json": "results/locked_eval.json"
+ },
+ "dev_selection_history": {
+   "hybrid_kc8": [0.903, 0.883], "hybrid_kc1": [0.891, 0.893],
+   "observable_baseline": 0.264
+ },
+ "note": "dev numbers = model-selection history only; held_out_locked = reported test performance"
+}
