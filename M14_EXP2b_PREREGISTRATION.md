@@ -78,3 +78,44 @@ Exp-2b. Statistical unit = reservoir seed; report every seed.
 ## Status
 Draft, frozen. Convergence gate runs before any classification
 number is read.
+
+---
+# EXP-2b RESULT (2026-09-03) — time-averaged relational readout of a
+# LOCKING net ALSO fails convergence. Relational bridge CLOSED.
+
+Op-point selection (skill-neutral) DID find locking regimes:
+  g_rec=2 gain{.5,1,2}: medR 0.45/0.39/0.35 (band)
+  g_rec=4 gain2: medR 0.508 (band, ~0.5) <- FROZEN
+  g_rec=4 gain{.5,1}: 0.90/0.72 ; g_rec=8: 0.98/0.92/0.76
+So the substrate CAN lock under event drive. Invariant exact (0).
+
+CONVERGENCE GATE (time-averaged, locking g_rec=4 gain=2):
+  R_state_avg  acc 0.207/0.307  |Δ|=0.100  UNSTABLE
+  R_rel_avg    acc 0.292/0.409  |Δ|=0.117  UNSTABLE
+Accuracy still CLIMBS with finer dt; time-averaging did NOT rescue
+convergence. Per the pre-committed tree -> CLOSE the relational
+bridge on event-driven N-MNIST. No rescue after 2b.
+
+DEEP DIAGNOSIS (sharpens M14). v0's relational robustness (corr
+0.997) was for a CONSTANT-driven AUTONOMOUS locking network — no
+input perturbation, so time-averaged relative phases settle and are
+dt-stable. N-MNIST is EVENT-DRIVEN: the saccade events ARE the
+perturbation, delivered throughout the recording, and their
+integration is resolution-dependent. So even a locked, time-
+averaged network inherits dt-fragility FROM THE INPUT EVENTS. The
+relational-coordinate robustness does NOT transfer from autonomous
+collective dynamics to input-event-driven temporal computation
+under a common discretized interface. This is the M13.5 lesson at a
+new level: the fragile quantity is tied to input event timing, and
+no downstream relational/time-averaging operation removes it.
+
+STANDING RESULT. On N-MNIST the STATIC spatial event-rate histogram
+(R_events, 0.711) is the stable, dominant readout; every phase-
+DYNAMICS view (absolute or relational, final-state or time-
+averaged, weak or locking coupling) fails step-halving. The M14
+"computation in relationships" thesis is NOT supported on real
+event data. Robust M14 findings are methodological: (i) no
+temporal-geometry resonance (Exp-1, both datasets); (ii) memory-
+horizon reorders substrates (Exp-1 784 vs 64); (iii) input-event-
+driven phase readouts are discretization-fragile and relational/
+time-averaging does not fix it (Exp-2/2b).
