@@ -124,3 +124,13 @@ seed.
 Draft for reviewer sign-off. Step 3 (richer local dynamics -> better
 relational basis, at matched network size + relational interface)
 becomes scientifically clean ONLY if step 2's bridge holds.
+
+---
+# SUPERSEDED (2026-09-03, before sign-off, never run): the reviewer
+# steered M14's benchmark from synthetic recall/parity to the
+# MNIST-temporal ladder (memory -> relationships -> prediction).
+# The coordinate-system methodology here (A|R|A+R views, matched
+# dimension, convergence-before-performance, frozen relational
+# basis) is PRESERVED and carried into M14_BENCHMARK.md, where it
+# lands on N-MNIST (exp2) — the dataset where event timing is
+# genuinely meaningful. See M14_BENCHMARK.md.
